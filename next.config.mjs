@@ -8,6 +8,12 @@ const nextConfig = {
   },
   images: {
     unoptimized: true,
+    remotePatterns:[
+      {
+        //TODO: add hostname for google drive
+        hostname: "",
+      }
+    ]
   },
 }
 
