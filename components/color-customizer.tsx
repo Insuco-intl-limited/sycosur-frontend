@@ -41,15 +41,6 @@ const colorPresets = [
       sidebarBackground: "24 95% 95%",
     },
   },
-  {
-    name: "Sombre",
-    colors: {
-      primary: "217.2 91.2% 59.8%",
-      accent: "217.2 32.6% 17.5%",
-      sidebar: "222.2 84% 4.9%",
-      sidebarBackground: "217.2 32.6% 15%",
-    },
-  },
 ]
 
 export function ColorCustomizer() {

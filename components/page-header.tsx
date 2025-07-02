@@ -24,8 +24,6 @@ export function PageHeader() {
         return "text-theme-purple"
       case "orange":
         return "text-theme-orange"
-      case "dark":
-        return "text-theme-dark"
       default:
         return "text-dashboard-muted-foreground"
     }

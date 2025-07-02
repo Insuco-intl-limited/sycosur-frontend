@@ -1,43 +1,27 @@
 import { baseApiSlice } from "@/lib/redux/features/api/baseApiSlice";
 import {
-	NonTenantResponse,
 	ProfileData,
 	ProfileResponse,
 	ProfilesResponse,
-	QueryParams,
 } from "@/types";
 
 export const usersApiSlice = baseApiSlice.injectEndpoints({
 	endpoints: (builder) => ({
-		getAllUsers: builder.query<ProfilesResponse, QueryParams>({
-			query: (params = {}) => {
-				const queryString = new URLSearchParams();
-
-				if (params.page) {
-					queryString.append("page", params.page.toString());
-				}
-				if (params.searchTerm) {
-					queryString.append("search", params.searchTerm);
-				}
-				return `/profiles/all/?${queryString.toString()}`;
-			},
-			providesTags: ["User"],
-		}),
-
-		getAllTechnicians: builder.query<NonTenantResponse, QueryParams>({
-			query: (params = {}) => {
-				const queryString = new URLSearchParams();
-
-				if (params.page) {
-					queryString.append("page", params.page.toString());
-				}
-				if (params.searchTerm) {
-					queryString.append("search", params.searchTerm);
-				}
-				return `/profiles/non-tenant-profiles/?${queryString.toString()}`;
-			},
-			providesTags: ["User"],
-		}),
+		// getAllUsers: builder.query<ProfilesResponse, ProfileData>({
+		// 	query: (params = {}) => {
+		// 		const queryString = new URLSearchParams();
+		//
+		// 		if (params.page) {
+		// 			queryString.append("page", params.page.toString());
+		// 		}
+		// 		if (params.searchTerm) {
+		// 			queryString.append("search", params.searchTerm);
+		// 		}
+		// 		return `/profiles/all/?${queryString.toString()}`;
+		// 	},
+		// 	providesTags: ["User"],
+		// }),
+		//
 		getUserProfile: builder.query<ProfileResponse, void>({
 			query: () => "/profiles/user/my-profile/",
 			providesTags: ["User"],
@@ -54,8 +38,8 @@ export const usersApiSlice = baseApiSlice.injectEndpoints({
 });
 
 export const {
-	useGetAllUsersQuery,
+	// useGetAllUsersQuery,wq<
 	useGetUserProfileQuery,
 	useUpdateUserProfileMutation,
-	useGetAllTechniciansQuery,
+
 } = usersApiSlice;

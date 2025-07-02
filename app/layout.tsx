@@ -3,12 +3,15 @@ import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
+import Toast from "@/components/shared/Toast";
+import ReduxProvider from "@/lib/redux/provider";
+import PersistAuth from "../utils/PersistAuth";
 
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Dashboard Template",
-  description: "Template de dashboard configurable avec Next.js",
+  title: "SYCOSUR2.0",
+  description: "Application de festion de données sociales",
     generator: 'v0.dev'
 }
 
@@ -20,9 +23,13 @@ export default function RootLayout({
   return (
     <html lang="fr" suppressHydrationWarning>
       <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          {children}
-        </ThemeProvider>
+            < Toast />
+            <ReduxProvider>
+              <PersistAuth/>
+              <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+                {children}
+              </ThemeProvider>
+            </ReduxProvider>
       </body>
     </html>
   )

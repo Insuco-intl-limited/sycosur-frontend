@@ -30,7 +30,7 @@ export function useThemeColor(): ThemeColor {
 
     // Écouter les changements de thème personnalisés
     const handleThemeChange = () => {
-      setTimeout(detectThemeColor, 100) // Petit délai pour laisser les CSS se mettre à jour
+      setTimeout(detectThemeColor, 100)
     }
 
     window.addEventListener("themeColorChanged", handleThemeChange)

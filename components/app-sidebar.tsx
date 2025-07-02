@@ -2,7 +2,7 @@
 
 import { BarChart3, Home, Settings, Users, ChevronDown, LogOut } from "lucide-react"
 import Link from "next/link"
-import { usePathname, useRouter } from "next/navigation"
+import { usePathname } from "next/navigation"
 
 import {
   Sidebar,
@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/sidebar"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
+import { useAuthNavigation } from "@/hooks/useAuthNavigation"
 
 const menuItems = [
   {
@@ -57,11 +58,7 @@ const menuItems = [
 
 export function AppSidebar() {
   const pathname = usePathname()
-  const router = useRouter()
-
-  const handleLogout = () => {
-    router.push("/")
-  }
+  const { handleLogout, isAuthenticated } = useAuthNavigation()
 
   return (
     <Sidebar className="bg-dashboard-sidebar-background border-dashboard-border">
@@ -141,7 +138,10 @@ export function AppSidebar() {
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
               <DropdownMenuContent side="top" className="w-[--radix-popper-anchor-width]">
-                <DropdownMenuItem onClick={handleLogout}>
+                <DropdownMenuItem 
+                  onClick={handleLogout}
+                  className="cursor-pointer text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 focus:bg-red-50 dark:focus:bg-red-900/20"
+                >
                   <LogOut className="w-4 h-4 mr-2" />
                   Déconnexion
                 </DropdownMenuItem>

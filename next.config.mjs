@@ -1,5 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/login',
+        permanent: false, // Redirection temporaire (302)
+      },
+    ]
+  },
+
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -10,8 +20,12 @@ const nextConfig = {
     unoptimized: true,
     remotePatterns:[
       {
-        //TODO: add hostname for google drive
-        hostname: "",
+        protocol: 'https',
+        hostname: 'drive.google.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
       }
     ]
   },

@@ -73,15 +73,15 @@ export default function LoginPage() {
   ]
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/20 via-background to-secondary/20 p-4">
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-primary/20 via-background to-secondary/20 p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
-          <div className="flex items-center justify-center mb-4">
-            <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
-              <Lock className="w-6 h-6 text-primary-foreground" />
+          <div className="mb-4 flex items-center justify-center">
+            <div className="flex size-12 items-center justify-center rounded-lg bg-primary">
+              <Lock className="size-6 text-primary-foreground" />
             </div>
           </div>
-          <CardTitle className="text-2xl font-bold text-center">Connexion</CardTitle>
+          <CardTitle className="text-center text-2xl font-bold">Connexion</CardTitle>
           <CardDescription className="text-center">Choisissez votre méthode de connexion préférée</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -117,7 +117,7 @@ export default function LoginPage() {
               <Button
                 key={provider.name}
                 variant="outline"
-                className={`w-full h-11 ${provider.color} transition-colors`}
+                className={`h-11 w-full ${provider.color} transition-colors`}
                 onClick={() => {
                   if (provider.type === "sso") {
                     setShowSSODomain(!showSSODomain)
@@ -128,9 +128,9 @@ export default function LoginPage() {
                 disabled={ssoLoading !== null}
               >
                 {ssoLoading === provider.name.toLowerCase() ? (
-                  <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin mr-2" />
+                  <div className="mr-2 size-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
                 ) : (
-                  <provider.icon className={`w-4 h-4 mr-2 ${provider.textColor}`} />
+                  <provider.icon className={`mr-2 size-4 ${provider.textColor}`} />
                 )}
                 <span className={provider.textColor}>
                   {provider.type === "sso" ? "Connexion SSO Entreprise" : `Continuer avec ${provider.name}`}
@@ -154,7 +154,7 @@ export default function LoginPage() {
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <div className="relative">
-                <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                <Mail className="absolute left-3 top-3 size-4 text-muted-foreground" />
                 <Input
                   id="email"
                   type="email"
@@ -170,14 +170,14 @@ export default function LoginPage() {
             <div className="space-y-2">
               <Label htmlFor="password">Mot de passe</Label>
               <div className="relative">
-                <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                <Lock className="absolute left-3 top-3 size-4 text-muted-foreground" />
                 <Input
                   id="password"
                   type={showPassword ? "text" : "password"}
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="pl-10 pr-10"
+                  className="px-10"
                   required
                   disabled={isLoading || ssoLoading !== null}
                 />
@@ -190,20 +190,20 @@ export default function LoginPage() {
                   disabled={isLoading || ssoLoading !== null}
                 >
                   {showPassword ? (
-                    <EyeOff className="h-4 w-4 text-muted-foreground" />
+                    <EyeOff className="size-4 text-muted-foreground" />
                   ) : (
-                    <Eye className="h-4 w-4 text-muted-foreground" />
+                    <Eye className="size-4 text-muted-foreground" />
                   )}
                 </Button>
               </div>
             </div>
 
             <div className="flex items-center justify-between text-sm">
-              <label className="flex items-center space-x-2 cursor-pointer">
+              <label className="flex cursor-pointer items-center space-x-2">
                 <input type="checkbox" className="rounded border-gray-300" />
                 <span className="text-muted-foreground">Se souvenir de moi</span>
               </label>
-              <Button variant="link" className="p-0 h-auto text-sm">
+              <Button variant="link" className="h-auto p-0 text-sm">
                 Mot de passe oublié ?
               </Button>
             </div>
@@ -211,7 +211,7 @@ export default function LoginPage() {
             <Button type="submit" className="w-full" disabled={isLoading || ssoLoading !== null}>
               {isLoading ? (
                 <>
-                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
+                  <div className="mr-2 size-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
                   Connexion...
                 </>
               ) : (
@@ -224,7 +224,7 @@ export default function LoginPage() {
           <div className="text-center text-sm text-muted-foreground">
             <p>
               Pas encore de compte ?{" "}
-              <Button variant="link" className="p-0 h-auto text-sm font-medium">
+              <Button variant="link" className="h-auto p-0 text-sm font-medium">
                 Créer un compte
               </Button>
             </p>

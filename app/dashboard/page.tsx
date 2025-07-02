@@ -33,10 +33,10 @@ export default function DashboardPage() {
     <div className="space-y-6">
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         {stats.map((stat, index) => (
-          <Card key={index} className="bg-dashboard-card border-dashboard-border">
+          <Card key={index} className="border-dashboard-border bg-dashboard-card">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-dashboard-foreground">{stat.title}</CardTitle>
-              <stat.icon className="h-4 w-4 text-dashboard-muted-foreground" />
+              <stat.icon className="size-4 text-dashboard-muted-foreground" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-dashboard-foreground">{stat.value}</div>
@@ -47,17 +47,17 @@ export default function DashboardPage() {
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-        <Card className="col-span-4 bg-dashboard-card border-dashboard-border">
+        <Card className="col-span-4 border-dashboard-border bg-dashboard-card">
           <CardHeader>
             <CardTitle className="text-dashboard-foreground">Aperçu</CardTitle>
           </CardHeader>
           <CardContent className="pl-2">
-            <div className="h-[200px] flex items-center justify-center text-dashboard-muted-foreground">
+            <div className="flex h-[200px] items-center justify-center text-dashboard-muted-foreground">
               Graphique à venir
             </div>
           </CardContent>
         </Card>
-        <Card className="col-span-3 bg-dashboard-card border-dashboard-border">
+        <Card className="col-span-3 border-dashboard-border bg-dashboard-card">
           <CardHeader>
             <CardTitle className="text-dashboard-foreground">Activité récente</CardTitle>
             <CardDescription className="text-dashboard-muted-foreground">
@@ -68,7 +68,7 @@ export default function DashboardPage() {
             <div className="space-y-8">
               {[1, 2, 3].map((item) => (
                 <div key={item} className="flex items-center">
-                  <div className="w-9 h-9 bg-dashboard-accent rounded-full flex items-center justify-center">
+                  <div className="flex size-9 items-center justify-center rounded-full bg-dashboard-accent">
                     <span className="text-sm font-medium text-dashboard-accent-foreground">{item}</span>
                   </div>
                   <div className="ml-4 space-y-1">
