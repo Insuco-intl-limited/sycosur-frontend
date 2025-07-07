@@ -14,9 +14,8 @@ import { FormFieldComponent } from "@/components/forms/FormFieldComponent";
 import { MailIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Spinner from "@/components/shared/Spinner";
-import {useLoginUserMutation} from "@/lib/redux/features/auth/authApiSlice";
-import {LoginUserSchema, TLoginUserSchema} from "@/lib/validationSchemas";
-
+import { useLoginUserMutation } from "@/lib/redux/features/auth/authApiSlice";
+import { LoginUserSchema, TLoginUserSchema } from "@/lib/validationSchemas";
 
 /**
  * LoginForm component for user authentication.
@@ -108,10 +107,16 @@ function LoginForm() {
 				{/* Submit button with loading indicator */}
 				<Button
 					type="submit"
-					className="h4-semibold bg-green-600 dark:bg-pumpkin w-full text-white"
+					className="h4-semibold bg-green-600 dark:bg-pumpkin w-full text-white flex items-center justify-center min-h-[44px]"
 					disabled={isLoading}
 				>
-					{isLoading ? <Spinner size="sm" /> : `Sign In`}
+					{isLoading ? (
+						<div className="flex items-center justify-center">
+							<Spinner size="sm" />
+						</div>
+					) : (
+						`Sign In`
+					)}
 				</Button>
 			</form>
 		</main>

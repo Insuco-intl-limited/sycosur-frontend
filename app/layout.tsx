@@ -11,7 +11,7 @@ const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   title: "SYCOSUR2.0",
-  description: "Application de festion de données sociales",
+  description: "Application de gestion de données sociales",
     generator: 'v0.dev'
 }
 

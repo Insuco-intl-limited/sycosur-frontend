@@ -5,7 +5,7 @@ import PasswordResetRequestForm from "@/components/forms/auth/PasswordResetReque
 
 // add metadata for SEO purposes
 export const metadata: Metadata = {
-	title: "Ayiek real estate | Password reset",
+	title: "Sycosur2.0 | Password reset",
 	description: "Password reset request page",
 };
 
@@ -20,8 +20,7 @@ function ForgotPassword() {
 			/>
 			<div className=" mt-7 sm:mx-auto sm:w-full sm:max-w-[480px]">
 				<div className="bg-lightGrey dark:bg-deepBlueGrey px-6 py-12 shadow sm:rounded-lg sm:px-12 md:rounded-3xl">
-					<PasswordResetRequestForm
-					/>
+					<PasswordResetRequestForm />
 				</div>
 			</div>
 		</div>

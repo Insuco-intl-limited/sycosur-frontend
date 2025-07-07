@@ -13,7 +13,7 @@ import * as z from "zod";
 import { FormFieldComponent } from "@/components/forms/FormFieldComponent";
 import { Button } from "@/components/ui/button";
 import Spinner from "@/components/shared/Spinner";
-import {useResetPasswordConfirmMutation} from "@/lib/redux/features/auth/authApiSlice";
+import { useResetPasswordConfirmMutation } from "@/lib/redux/features/auth/authApiSlice";
 
 export default function PasswordResetConfirmForm() {
 	const router = useRouter();
@@ -29,7 +29,7 @@ export default function PasswordResetConfirmForm() {
 		register,
 		handleSubmit,
 		reset,
-		formState: { errors } /* to capture errors */ ,
+		formState: { errors } /* to capture errors */,
 	} = useForm<TPasswordResetConfirmSchema>({
 		mode: "all",
 		defaultValues: {
@@ -84,7 +84,7 @@ export default function PasswordResetConfirmForm() {
 				/>
 				<Button
 					type="submit"
-					className="h4-semibold bg-eerieBlack dark:bg-pumpkin w-full text-white"
+					className="h4-semibold bg-green-800 dark:bg-pumpkin w-full text-white"
 					disabled={isLoading}
 				>
 					{isLoading ? <Spinner size="sm" /> : `Confirm New Password`}
