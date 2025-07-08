@@ -1,0 +1,29 @@
+{
+  "auth": {
+    "login": "Connexion",
+    "email": "Email",
+    "password": "Mot de passe",
+    "signIn": "Se connecter",
+    "welcome": "Bon retour",
+    "loginDescription": "Entrez vos identifiants pour accéder à votre compte"
+  },
+  "dashboard": {
+    "title": "Tableau de bord",
+    "welcome": "Bienvenue sur votre tableau de bord",
+    "overview": "Aperçu",
+    "analytics": "Analytiques",
+    "users": "Utilisateurs",
+    "settings": "Paramètres",
+    "logout": "Déconnexion"
+  },
+  "navigation": {
+    "home": "Accueil",
+    "about": "À propos",
+    "contact": "Contact"
+  },
+  "notFound": {
+    "title": "Page non trouvée",
+    "description": "La page que vous recherchez n'existe pas.",
+    "goHome": "Retour à l'accueil"
+  }
+}

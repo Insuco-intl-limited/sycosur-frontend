@@ -8,7 +8,7 @@ const useRedirectIfAuthenticated = () => {
 
 	useEffect(() => {
 		if (isAuthenticated) {
-			router.push("/dashboard");
+			router.push("/en/dashboard");
 		}
 	}, [isAuthenticated, router]);
 };

@@ -43,7 +43,7 @@ export default function useSocialAuth(authenticate: any, provider: string) {
 					// Notify user of successful login
 					toast.success("Logged in successfully");
 					// Redirect to dashboard upon successful authentication
-					router.push("/dashboard");
+					router.push("/en/dashboard");
 				})
 				.catch(() => {
 					// Handle authentication failures

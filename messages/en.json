@@ -1,0 +1,29 @@
+{
+  "auth": {
+    "login": "Login",
+    "email": "Email",
+    "password": "Password",
+    "signIn": "Sign In",
+    "welcome": "Welcome back",
+    "loginDescription": "Enter your credentials to access your account"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome to your dashboard",
+    "overview": "Overview",
+    "analytics": "Analytics",
+    "users": "Users",
+    "settings": "Settings",
+    "logout": "Logout"
+  },
+  "navigation": {
+    "home": "Home",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "description": "The page you are looking for does not exist.",
+    "goHome": "Go back home"
+  }
+}

@@ -1,9 +1,9 @@
 "use client";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
+import React, { useState } from "react";
 
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useAppDispatch } from "@/lib/redux/hooks/typedHooks";
 import { useForm } from "react-hook-form";
 
@@ -16,11 +16,16 @@ import { Button } from "@/components/ui/button";
 import Spinner from "@/components/shared/Spinner";
 import { useLoginUserMutation } from "@/lib/redux/features/auth/authApiSlice";
 import { LoginUserSchema, TLoginUserSchema } from "@/lib/validationSchemas";
-
+import { useTranslations } from "next-intl";
 /**
  * LoginForm component for user authentication.
  * Uses react-hook-form for form management, Zod for validation, and RTK Query for API calls.
  */
+const languages = [
+	{ code: "en", name: "English", flag: "🇺🇸" },
+	{ code: "fr", name: "Français", flag: "🇫🇷" },
+	{ code: "es", name: "Español", flag: "🇪🇸" },
+];
 function LoginForm() {
 	/**
 	 * RTK Query hook for the login API call.
@@ -42,6 +47,17 @@ function LoginForm() {
 	 * React Hook Form setup for managing form state and validation.
 	 * Uses Zod resolver for schema-based validation.
 	 */
+
+	const [selectedLocale, setSelectedLocale] = useState("en");
+
+	const getPreferredLocale = () => {
+		if (typeof window !== "undefined") {
+			const browserLang = navigator.language.split("-")[0];
+			return languages.find((lang) => lang.code === browserLang)?.code || "en";
+		}
+		return "en";
+	};
+
 	const {
 		register,
 		handleSubmit,
@@ -65,7 +81,8 @@ function LoginForm() {
 			await loginUser(values).unwrap();
 			dispatch(setAuth());
 			toast.success("Login successful");
-			router.push("/dashboard");
+			const targetLocale = selectedLocale || getPreferredLocale();
+			router.push(`/${targetLocale}/dashboard`);
 			/**
 			 * Resets the form after successful login.
 			 */

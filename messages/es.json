@@ -1,0 +1,29 @@
+{
+  "auth": {
+    "login": "Iniciar sesión",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "signIn": "Iniciar sesión",
+    "welcome": "Bienvenido de nuevo",
+    "loginDescription": "Ingresa tus credenciales para acceder a tu cuenta"
+  },
+  "dashboard": {
+    "title": "Panel de control",
+    "welcome": "Bienvenido a tu panel de control",
+    "overview": "Resumen",
+    "analytics": "Analíticas",
+    "users": "Usuarios",
+    "settings": "Configuración",
+    "logout": "Cerrar sesión"
+  },
+  "navigation": {
+    "home": "Inicio",
+    "about": "Acerca de",
+    "contact": "Contacto"
+  },
+  "notFound": {
+    "title": "Página no encontrada",
+    "description": "La página que buscas no existe.",
+    "goHome": "Volver al inicio"
+  }
+}
