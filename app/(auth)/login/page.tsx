@@ -6,11 +6,11 @@ import OauthButtons from "@/components/shared/OauthButttons";
 import useRedirectIfAuthenticated from "@/hooks/useRedirectIfAuthenticated";
 
 export default function LoginPage() {
-	useRedirectIfAuthenticated();
+	//	useRedirectIfAuthenticated();
 	return (
-<div>
+		<div>
 			<AuthFormHeader
-				title="Login to your account"
+				title=""
 				staticText="Don't have an account?"
 				linkText="Register Here"
 				linkHref="/register"
@@ -18,8 +18,7 @@ export default function LoginPage() {
 			<div className="mt-7 sm:mx-auto sm:w-full sm:max-w-[480px]">
 				<div className="bg-lightGrey dark:bg-deepBlueGrey rounded-xl px-6 py-12 shadow sm:rounded-lg sm:px-12 md:rounded-3xl">
 					<LoginForm />
-					<div className="flex-center mt-5 space-x-2">
-					</div>
+					<div className="flex-center mt-5 space-x-2"></div>
 					<OauthButtons />
 				</div>
 			</div>

@@ -20,10 +20,11 @@ import {
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useAppSelector } from "@/lib/redux/hooks/typedHooks";
+import Spinner from "@/components/shared/Spinner";
 
 export default function DashboardPage() {
 	const t = useTranslations("dashboard");
-	const { isAuthenticated } = useAppSelector((state) => state.auth);
+	const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
 	const router = useRouter();
 
 	// useEffect(() => {
@@ -33,7 +34,11 @@ export default function DashboardPage() {
 	// }, [isAuthenticated, router]);
 	//
 	// if (!isAuthenticated) {
-	// 	return <div>Loading...</div>;
+	// 	return (
+	// 		<div className="flex items-center justify-center min-h-screen">
+	// 			<Spinner size="md" />
+	// 		</div>
+	// 	);
 	// }
 
 	return (

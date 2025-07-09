@@ -18,6 +18,8 @@ import { Button } from "@/components/ui/button";
 import { BarChart3, Home, Settings, Users, LogOut } from "lucide-react";
 import { useAppDispatch } from "@/lib/redux/hooks/typedHooks";
 import { setLogout } from "@/lib/redux/features/auth/authSlice";
+import { useLogoutUserMutation } from "@/lib/redux/features/auth/authApiSlice";
+import { toast } from "react-toastify";
 
 export function DashboardSidebar() {
 	const t = useTranslations("dashboard");
@@ -25,10 +27,18 @@ export function DashboardSidebar() {
 	const router = useRouter();
 	const params = useParams();
 	const locale = params.locale as string;
+	const [logoutUser] = useLogoutUserMutation();
 
-	const handleLogout = () => {
-		dispatch(setLogout());
-		router.push(`/login`);
+	const handleLogout = async () => {
+		try {
+			await logoutUser().unwrap();
+			dispatch(setLogout());
+			router.push(`/login`);
+			toast.success("logout success");
+		} catch (e) {
+			console.log(e);
+			toast.error("something going wrong");
+		}
 	};
 
 	const menuItems = [

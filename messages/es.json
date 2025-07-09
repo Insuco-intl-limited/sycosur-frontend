@@ -2,10 +2,14 @@
   "auth": {
     "login": "Iniciar sesión",
     "email": "Correo electrónico",
+    "emailAddress": "Dirección de correo electrónico",
     "password": "Contraseña",
     "signIn": "Iniciar sesión",
     "welcome": "Bienvenido de nuevo",
-    "loginDescription": "Ingresa tus credenciales para acceder a tu cuenta"
+    "loginDescription": "Ingresa tus credenciales para acceder a tu cuenta",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "dontHaveAccount": "¿No tienes una cuenta?",
+    "registerHere": "Regístrate aquí"
   },
   "dashboard": {
     "title": "Panel de control",

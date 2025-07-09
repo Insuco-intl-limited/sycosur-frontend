@@ -5,7 +5,7 @@ import { useRedirectIfAuthenticated } from "@/hooks";
 import OauthButtons from "@/components/shared/OauthButttons";
 
 export default function RegisterPage() {
-	useRedirectIfAuthenticated();
+	//useRedirectIfAuthenticated(); #TODO revoir l'implémentation de ce custom hook dans login et register
 	return (
 		<div>
 			{/*<AuthFormHeader*/}

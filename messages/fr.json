@@ -2,10 +2,14 @@
   "auth": {
     "login": "Connexion",
     "email": "Email",
+    "emailAddress": "Adresse email",
     "password": "Mot de passe",
     "signIn": "Se connecter",
     "welcome": "Bon retour",
-    "loginDescription": "Entrez vos identifiants pour accéder à votre compte"
+    "loginDescription": "Entrez vos identifiants pour accéder à votre compte",
+    "forgotPassword": "Mot de passe oublié ?",
+    "dontHaveAccount": "Vous n'avez pas de compte ?",
+    "registerHere": "Inscrivez-vous ici"
   },
   "dashboard": {
     "title": "Tableau de bord",

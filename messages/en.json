@@ -2,10 +2,14 @@
   "auth": {
     "login": "Login",
     "email": "Email",
+    "emailAddress": "Email Address",
     "password": "Password",
     "signIn": "Sign In",
     "welcome": "Welcome back",
-    "loginDescription": "Enter your credentials to access your account"
+    "loginDescription": "Enter your credentials to access your account",
+    "forgotPassword": "Forgot Password?",
+    "dontHaveAccount": "Don't have an account?",
+    "registerHere": "Register Here"
   },
   "dashboard": {
     "title": "Dashboard",
