@@ -84,7 +84,7 @@ export default function PasswordResetConfirmForm() {
 				/>
 				<Button
 					type="submit"
-					className="h4-semibold bg-green-800 dark:bg-pumpkin w-full text-white"
+					className="h4-semibold bg-mediumGreen dark:bg-pumpkin w-full text-white"
 					disabled={isLoading}
 				>
 					{isLoading ? <Spinner size="sm" /> : `Confirm New Password`}

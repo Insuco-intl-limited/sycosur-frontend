@@ -12,22 +12,21 @@
     "registerHere": "Regístrate aquí"
   },
   "dashboard": {
-    "title": "Panel de control",
-    "welcome": "Bienvenido a tu panel de control",
-    "overview": "Resumen",
-    "analytics": "Analíticas",
-    "users": "Usuarios",
-    "settings": "Configuración",
-    "logout": "Cerrar sesión"
-  },
-  "navigation": {
-    "home": "Inicio",
-    "about": "Acerca de",
-    "contact": "Contacto"
-  },
-  "notFound": {
-    "title": "Página no encontrada",
-    "description": "La página que buscas no existe.",
-    "goHome": "Volver al inicio"
+    "menu": {
+      "monitoring": "Supervisión",
+      "dashboard": "Tablero",
+      "activities": "Actividades",
+      "reinstallation": "Reinstalación",
+      "gestion-par": "Gestión PAR",
+      "budget-par": "Presupuesto PAR",
+      "data": "Datos",
+      "sandbox": "Sandbox",
+      "analyze": "Analizar",
+      "documentation": "Documentación",
+      "stakeholders": "Partes interesadas",
+      "profiles": "Perfiles individuales",
+      "engagement": "Compromiso",
+      "challenge": "Impugnación"
+    }
   }
 }

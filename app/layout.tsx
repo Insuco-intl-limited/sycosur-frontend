@@ -8,8 +8,8 @@ import ReduxProvider from "@/lib/redux/provider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-	title: "Sycosur2.0 |",
-	description: "Social Data Management Platform",
+	title: "Sycosur2.0 | Social Data Management Platform",
+	description: "Social Data Management Application for Insuco Intl",
 };
 
 export default function RootLayout({

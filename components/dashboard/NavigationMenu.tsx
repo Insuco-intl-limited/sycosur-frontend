@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ChevronDown, ChevronRight } from "lucide-react";
+import Link from "next/link";
 import type { NavigationItem } from "@/app/[locale]/dashboard/types";
 
 interface NavigationMenuProps {
@@ -50,9 +51,15 @@ const NavigationMenuItem = ({ item }: { item: NavigationItem }) => {
 									: "text-white/80 hover:bg-white/10 hover:text-white"
 							}`}
 						>
-							<a href={child.href} className="block font-roboto">
-								{child.label}
-							</a>
+							{child.href ? (
+								<Link href={child.href} className="block font-roboto">
+									{child.label}
+								</Link>
+							) : (
+								<span className="block font-roboto cursor-not-allowed opacity-50">
+									{child.label}
+								</span>
+							)}
 						</div>
 					))}
 				</div>

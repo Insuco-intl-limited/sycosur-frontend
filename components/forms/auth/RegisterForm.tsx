@@ -2,7 +2,13 @@
 
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Contact2Icon, MailIcon, UserCheck2, LockIcon, ShieldCheckIcon } from "lucide-react";
+import {
+	Contact2Icon,
+	MailIcon,
+	UserCheck2,
+	LockIcon,
+	ShieldCheckIcon,
+} from "lucide-react";
 
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -15,7 +21,7 @@ import { toast } from "react-toastify";
 import { FormFieldComponent } from "@/components/forms/FormFieldComponent";
 import { Button } from "@/components/ui/button";
 import Spinner from "@/components/shared/Spinner";
-import {useRegisterUserMutation} from "@/lib/redux/features/auth/authApiSlice";
+import { useRegisterUserMutation } from "@/lib/redux/features/auth/authApiSlice";
 
 export default function RegisterForm() {
 	const [registerUser, { isLoading }] = useRegisterUserMutation();
@@ -58,7 +64,7 @@ export default function RegisterForm() {
 			<div className="w-full max-w-lg">
 				{/* Header avec animation */}
 				<div className="text-center mb-6">
-					<div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-green-500 to-blue-500 dark:from-pumpkin dark:to-orange-500 rounded-full mb-4 shadow-lg">
+					<div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-mediumGreen-accentBlue dark:from-pumpkin dark:to-orange-500 rounded-full mb-4 shadow-lg">
 						<UserCheck2 className="size-8 text-white" />
 					</div>
 					<h1 className="text-2xl font-bold text-gray-800 dark:text-babyPowder mb-2">
@@ -84,7 +90,9 @@ export default function RegisterForm() {
 								register={register}
 								errors={errors}
 								placeholder="First Name"
-								startIcon={<Contact2Icon className="dark:text-babyPowder size-4" />}
+								startIcon={
+									<Contact2Icon className="dark:text-babyPowder size-4" />
+								}
 							/>
 							<FormFieldComponent
 								label="Last Name"
@@ -92,7 +100,9 @@ export default function RegisterForm() {
 								register={register}
 								errors={errors}
 								placeholder="Last Name"
-								startIcon={<Contact2Icon className="dark:text-babyPowder size-4" />}
+								startIcon={
+									<Contact2Icon className="dark:text-babyPowder size-4" />
+								}
 							/>
 						</div>
 
@@ -104,7 +114,9 @@ export default function RegisterForm() {
 								register={register}
 								errors={errors}
 								placeholder="Choose a unique username"
-								startIcon={<UserCheck2 className="dark:text-babyPowder size-4" />}
+								startIcon={
+									<UserCheck2 className="dark:text-babyPowder size-4" />
+								}
 							/>
 						</div>
 
@@ -135,7 +147,9 @@ export default function RegisterForm() {
 								register={register}
 								errors={errors}
 								placeholder="Confirm password"
-								startIcon={<ShieldCheckIcon className="dark:text-babyPowder size-4" />}
+								startIcon={
+									<ShieldCheckIcon className="dark:text-babyPowder size-4" />
+								}
 								isPassword={true}
 							/>
 						</div>
@@ -143,7 +157,7 @@ export default function RegisterForm() {
 						{/* Bouton submit avec design amélioré */}
 						<Button
 							type="submit"
-							className="w-full h-12 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 dark:from-pumpkin dark:to-orange-600 dark:hover:from-orange-600 dark:hover:to-orange-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform transition-all duration-200 hover:scale-[1.02] disabled:transform-none disabled:opacity-70"
+							className="w-full h-12 bg-mediumGreen hover:from-green-700 hover:to-green-800 dark:from-pumpkin dark:to-orange-600 dark:hover:from-orange-600 dark:hover:to-orange-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform transition-all duration-200 hover:scale-[1.02] disabled:transform-none disabled:opacity-70"
 							disabled={isLoading}
 						>
 							{isLoading ? (

@@ -24,7 +24,7 @@ export default async function LocaleLayout({
 	const messages = await getMessages();
 
 	return (
-		<NextIntlClientProvider>
+		<NextIntlClientProvider locale={locale as any} messages={messages}>
 			<ReduxProvider>
 				<PersistAuth />
 				<ThemeProvider

@@ -124,7 +124,7 @@ function LoginForm() {
 				{/* Submit button with loading indicator */}
 				<Button
 					type="submit"
-					className="h4-semibold bg-green-600 dark:bg-pumpkin w-full text-white flex items-center justify-center min-h-[44px]"
+					className="h4-semibold bg-mediumGreen dark:bg-pumpkin w-full text-white flex items-center justify-center min-h-[44px]"
 					disabled={isLoading}
 				>
 					{isLoading ? (

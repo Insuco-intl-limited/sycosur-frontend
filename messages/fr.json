@@ -12,22 +12,22 @@
     "registerHere": "Inscrivez-vous ici"
   },
   "dashboard": {
-    "title": "Tableau de bord",
-    "welcome": "Bienvenue sur votre tableau de bord",
-    "overview": "Aperçu",
-    "analytics": "Analytiques",
-    "users": "Utilisateurs",
-    "settings": "Paramètres",
-    "logout": "Déconnexion"
-  },
-  "navigation": {
-    "home": "Accueil",
-    "about": "À propos",
-    "contact": "Contact"
-  },
-  "notFound": {
-    "title": "Page non trouvée",
-    "description": "La page que vous recherchez n'existe pas.",
-    "goHome": "Retour à l'accueil"
+
+    "menu": {
+      "monitoring": "Suivi",
+      "dashboard": "Tableau de bord",
+      "activities": "Activités",
+      "reinstallation": "Réinstallation",
+      "gestion-par": "Gestion du PAR",
+      "budget-par": "Budget du PAR",
+      "data": "Données",
+      "sandbox": "Sandbox",
+      "analyze": "Analyse",
+      "documentation": "Documentation",
+      "stakeholders": "Parties prenantes",
+      "profiles": "Fiches individuelles",
+      "engagement": "Engagement",
+      "challenge": "Contestation"
+    }
   }
 }

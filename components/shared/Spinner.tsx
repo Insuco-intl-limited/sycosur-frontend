@@ -25,7 +25,7 @@ export default function Spinner({ size = "sm" }: SpinnerProps) {
 
 	/* Construction de la classe CSS avec clsx */
 	const className = clsx(
-		"animate-spin", // Animation de rotation
+		"animate-spin flex items-center justify-center ", // Animation de rotation et centrage
 		sizeClasses[size], // Classe de taille correspondante
 	);
 
