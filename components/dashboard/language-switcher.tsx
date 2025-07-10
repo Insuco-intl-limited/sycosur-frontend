@@ -29,8 +29,8 @@ export function LanguageSwitcher() {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
-				<Button variant="outline" size="sm">
-					<Globe className="h-4 w-4" />
+				<Button variant="ghost" size="lg" className="hover:bg-white/20 p-8">
+					<Globe className="h-8 w-8 text-white" />
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align="end">

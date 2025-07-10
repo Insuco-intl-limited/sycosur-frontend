@@ -8,8 +8,8 @@ import ReduxProvider from "@/lib/redux/provider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-	title: "Next.js RTK Intl App",
-	description: "Next.js application with RTK and internationalization",
+	title: "Sycosur2.0 |",
+	description: "Social Data Management Platform",
 };
 
 export default function RootLayout({

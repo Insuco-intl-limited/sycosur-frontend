@@ -1,0 +1,124 @@
+/* Import de la police Roboto */
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap");
+
+/* Variables CSS pour les couleurs du dashboard */
+:root {
+  --deep-green: #416c78;
+  --medium-green: #3189a1;
+  --accent-blue: #3853a1;
+  --dark-green: #2d4a52;
+  --dashboard-white: #ffffff;
+}
+
+/* Couleurs personnalisées Tailwind */
+.bg-deepGreen {
+  background-color: var(--deep-green);
+}
+.bg-mediumGreen {
+  background-color: var(--medium-green);
+}
+.bg-accentBlue {
+  background-color: var(--accent-blue);
+}
+.bg-darkGreen {
+  background-color: var(--dark-green);
+}
+
+.text-deepGreen {
+  color: var(--deep-green);
+}
+.text-mediumGreen {
+  color: var(--medium-green);
+}
+.text-accentBlue {
+  color: var(--accent-blue);
+}
+.text-darkGreen {
+  color: var(--dark-green);
+}
+
+.border-deepGreen {
+  border-color: var(--deep-green);
+}
+.border-mediumGreen {
+  border-color: var(--medium-green);
+}
+.border-accentBlue {
+  border-color: var(--accent-blue);
+}
+.border-darkGreen {
+  border-color: var(--dark-green);
+}
+
+/* Dégradés personnalisés */
+.bg-gradient-deepGreen-darkGreen {
+  background: linear-gradient(to right, var(--deep-green), var(--dark-green));
+}
+
+.bg-gradient-mediumGreen-accentBlue {
+  background: linear-gradient(to right, var(--medium-green), var(--accent-blue));
+}
+
+/* Styles pour la police Roboto */
+.font-roboto {
+  font-family: "Roboto", sans-serif;
+}
+
+/* Styles pour les transitions fluides */
+.transition-all {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Styles pour les états hover personnalisés */
+.hover-dashboard:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+/* Styles pour les scrollbars personnalisées */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Effet de superposition pour le header */
+.header-overlay {
+  position: relative;
+  z-index: 20;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Sidebar avec z-index inférieur */
+.sidebar-below {
+  position: relative;
+  z-index: 10;
+}
+
+/* Suppression des bordures arrondies globalement */
+* {
+  border-radius: 0 !important;
+}
+
+/* Responsive design pour mobile */
+@media (max-width: 768px) {
+  .dashboard-sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .dashboard-sidebar.open {
+    transform: translateX(0);
+  }
+}

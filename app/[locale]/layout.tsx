@@ -1,9 +1,7 @@
 import type React from "react";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "../globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-import Toast from "@/components/shared/Toast";
 import ReduxProvider from "@/lib/redux/provider";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";

@@ -1,101 +1,59 @@
-"use client";
-
-import { useEffect } from "react";
-import { useTranslations } from "next-intl";
-import { useParams, useRouter } from "next/navigation";
-
-import { DashboardSidebar } from "@/components/dashboard-sidebar";
-import { LanguageSwitcher } from "@/components/language-switcher";
-import {
-	SidebarProvider,
-	SidebarInset,
-	SidebarTrigger,
-} from "@/components/ui/sidebar";
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
-import { useAppSelector } from "@/lib/redux/hooks/typedHooks";
-import Spinner from "@/components/shared/Spinner";
-
 export default function DashboardPage() {
-	const t = useTranslations("dashboard");
-	const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
-	const router = useRouter();
+  return (
+    <div className="space-y-6">
+      {/* En-tête de la page */}
+      <div className="bg-[#3189a1] text-white p-4">
+        <h1 className="text-2xl font-bold">Mes activités - Total : 4</h1>
+      </div>
 
-	// useEffect(() => {
-	// 	if (!isAuthenticated) {
-	// 		router.push("/login");
-	// 	}
-	// }, [isAuthenticated, router]);
-	//
-	// if (!isAuthenticated) {
-	// 	return (
-	// 		<div className="flex items-center justify-center min-h-screen">
-	// 			<Spinner size="md" />
-	// 		</div>
-	// 	);
-	// }
+      {/* Statistiques */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="bg-white p-6 shadow">
+          <h3 className="text-lg font-semibold text-gray-800 mb-2">En cours</h3>
+          <div className="text-3xl font-bold text-[#3189a1]">4</div>
+        </div>
 
-	return (
-		<SidebarProvider>
-			<DashboardSidebar />
-			<SidebarInset>
-				<header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
-					<SidebarTrigger className="-ml-1" />
-					<Separator orientation="vertical" className="mr-2 h-4" />
-					<div className="flex-1">
-						<h1 className="text-lg font-semibold">{t("title")}</h1>
-					</div>
-					<LanguageSwitcher />
-				</header>
-				<div className="flex flex-1 flex-col gap-4 p-4">
-					<div className="grid auto-rows-min gap-4 md:grid-cols-3">
-						<Card>
-							<CardHeader>
-								<CardTitle>Total Users</CardTitle>
-								<CardDescription>Active users this month</CardDescription>
-							</CardHeader>
-							<CardContent>
-								<div className="text-2xl font-bold">1,234</div>
-							</CardContent>
-						</Card>
-						<Card>
-							<CardHeader>
-								<CardTitle>Revenue</CardTitle>
-								<CardDescription>Total revenue this month</CardDescription>
-							</CardHeader>
-							<CardContent>
-								<div className="text-2xl font-bold">$12,345</div>
-							</CardContent>
-						</Card>
-						<Card>
-							<CardHeader>
-								<CardTitle>Orders</CardTitle>
-								<CardDescription>New orders this week</CardDescription>
-							</CardHeader>
-							<CardContent>
-								<div className="text-2xl font-bold">89</div>
-							</CardContent>
-						</Card>
-					</div>
-					<Card className="flex-1">
-						<CardHeader>
-							<CardTitle>{t("welcome")}</CardTitle>
-							<CardDescription>Hello welcome to your dashboard</CardDescription>
-						</CardHeader>
-						<CardContent>
-							<div className="min-h-[200px] flex items-center justify-center text-muted-foreground">
-								Dashboard content goes here
-							</div>
-						</CardContent>
-					</Card>
-				</div>
-			</SidebarInset>
-		</SidebarProvider>
-	);
+        <div className="bg-white p-6 shadow">
+          <h3 className="text-lg font-semibold text-gray-800 mb-2">En retard</h3>
+          <div className="text-3xl font-bold text-[#3853a1]">4</div>
+        </div>
+
+        <div className="bg-white p-6 shadow">
+          <h3 className="text-lg font-semibold text-gray-800 mb-2">Clôture</h3>
+          <div className="text-3xl font-bold text-[#416c78]">4</div>
+        </div>
+      </div>
+
+      {/* Sections principales */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="bg-[#3189a1] text-white p-6">
+          <h2 className="text-xl font-bold mb-4">Activités à venir</h2>
+          <div className="space-y-3">
+            <div className="flex justify-between items-center">
+              <span>2023-02-28</span>
+              <span>formation</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span>2023-02-28</span>
+              <span>mise en place d'un fonds d'appui</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-red-500 text-white p-6">
+          <h2 className="text-xl font-bold mb-4">Activités en retard</h2>
+          <div className="space-y-3">
+            <div className="flex justify-between items-center">
+              <span>2023-04-28</span>
+              <span>formation</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span>2023-04-28</span>
+              <span>mise en place d'un fonds d'appui</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
 }
