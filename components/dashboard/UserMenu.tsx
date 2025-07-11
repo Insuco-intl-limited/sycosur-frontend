@@ -1,8 +1,9 @@
 "use client";
 
-import { User, Globe, HelpCircle, Power, Folder } from "lucide-react";
-import type { User as UserType } from "@/app/[locale]/dashboard/types";
+import { User, HelpCircle, Power, Folder } from "lucide-react";
+import type { UserResponse as UserType } from "@/types";
 import { LanguageSwitcher } from "@/components/dashboard/language-switcher";
+import Link from "next/link";
 
 interface UserMenuProps {
 	user: UserType;
@@ -22,10 +23,15 @@ export const UserMenu = ({ user, className = "" }: UserMenuProps) => {
 			</div>
 
 			{/* Nom utilisateur */}
-			<div className="bg-white/20 p-5 flex items-center sapce-x-2">
+			<Link
+				href="/profile"
+				className="bg-white/20 p-5 flex items-center sapce-x-2 cursor-pointer hover:bg-white/30 transition-colors"
+			>
 				<User className="w-5 h-5 text-white" />
-				<span className="text-white font-roboto font-medium">{user.name}</span>
-			</div>
+				<span className="text-white font-roboto font-medium">
+					{user?.full_name ? user.full_name : user.email}
+				</span>
+			</Link>
 
 			<button className="text-white hover:text-gray-200 transition-colors p-2">
 				<HelpCircle className="w-5 h-5" />

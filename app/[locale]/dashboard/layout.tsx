@@ -1,21 +1,17 @@
 "use client";
 import type React from "react";
 import { Monitor, BarChart3, Database, Users } from "lucide-react";
-import type { NavigationItem, User, BreadcrumbItem } from "./types";
+import type { NavigationItem, BreadcrumbItem } from "./types";
+import { UserResponse } from "@/types";
 import { Header } from "@/components/dashboard/Header";
 import { Sidebar } from "@/components/dashboard/Sidebar";
 import { ContentArea } from "@/components/dashboard/ContentArea";
 import ProtectedRoute from "@/components/shared/ProtectedRoute";
 
-// import for translations
+//import for translations
 import { useTranslations } from "next-intl";
-import { useRouter, useParams } from "next/navigation";
-import { getCookie } from "cookies-next";
-
-// Utilisateur exemple
-const user: User = {
-	name: "JOHN DOE",
-};
+import { useGetUserQuery } from "@/lib/redux/features/auth/authApiSlice";
+import { getCurrentLocale } from "@/utils";
 
 export default function DashboardLayout({
 	children,
@@ -23,11 +19,13 @@ export default function DashboardLayout({
 	children: React.ReactNode;
 }) {
 	const t = useTranslations("dashboard");
-	const router = useRouter();
-	const { params } = useParams();
 
+	const { data: user } = useGetUserQuery();
+	if (!user) {
+		return;
+	}
 	// Récupération de la locale depuis les cookies
-	const locale = getCookie("NEXT_LOCALE") || "en";
+	const locale = getCurrentLocale();
 
 	// Breadcrumbs exemple avec locale
 	const breadcrumbs: BreadcrumbItem[] = [
@@ -117,6 +115,9 @@ export default function DashboardLayout({
 		},
 	];
 
+	console.log("DashboardLayout render:", user, {
+		timestamp: new Date().toISOString(),
+	});
 	return (
 		<div className="h-screen flex flex-col font-roboto">
 			{/* Header fixe */}

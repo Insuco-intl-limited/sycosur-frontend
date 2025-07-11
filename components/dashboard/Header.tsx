@@ -2,11 +2,12 @@
 
 import { Logo } from "./Logo";
 import { UserMenu } from "./UserMenu";
-import type { User, BreadcrumbItem } from "@/app/[locale]/dashboard/types";
+import type { BreadcrumbItem } from "@/app/[locale]/dashboard/types";
 import { ChartBarSquareIcon } from "@heroicons/react/16/solid";
+import { UserResponse } from "@/types";
 
 interface HeaderProps {
-	user: User;
+	user: UserResponse;
 	breadcrumbs?: BreadcrumbItem[];
 	className?: string;
 }
