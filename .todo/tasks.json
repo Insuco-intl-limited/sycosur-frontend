@@ -21,5 +21,28 @@
       }
     },
     "isImported": false
+  },
+  {
+    "id": "TASK_2",
+    "priority": "MEDIUM",
+    "tags": [
+      "Design"
+    ],
+    "description": "Revoir la gestion automatique du fil d\u0027ariane",
+    "status": "TODO",
+    "date": {
+      "date": {
+        "year": 2025,
+        "month": 7,
+        "day": 11
+      },
+      "time": {
+        "hour": 17,
+        "minute": 49,
+        "second": 18,
+        "nano": 640372200
+      }
+    },
+    "isImported": false
   }
 ]

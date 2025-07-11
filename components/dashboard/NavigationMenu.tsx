@@ -26,7 +26,7 @@ const NavigationMenuItem = ({ item }: { item: NavigationItem }) => {
 			>
 				<div className="flex items-center space-x-3">
 					{item.icon}
-					<span className="font-roboto-bold">{item.label}</span>
+					<span className="font-[900]">{item.label}</span>
 				</div>
 
 				{hasChildren && (

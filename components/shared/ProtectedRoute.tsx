@@ -28,7 +28,7 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
 
 	if (!isAuthenticated) {
 		return (
-			<div className="flex-center pt-32">
+			<div className="flex items-center justify-center h-screen">
 				<Spinner size="md" />
 			</div>
 		);
