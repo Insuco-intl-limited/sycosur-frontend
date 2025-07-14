@@ -36,7 +36,7 @@ export default function RegisterForm() {
 		resolver: zodResolver(RegisterUserSchema),
 		mode: "all",
 		defaultValues: {
-			username: "",
+			// username: "",
 			first_name: "",
 			last_name: "",
 			email: "",
@@ -107,18 +107,18 @@ export default function RegisterForm() {
 						</div>
 
 						{/* Username avec style distinct */}
-						<div className="relative">
-							<FormFieldComponent
-								label="Username"
-								name="username"
-								register={register}
-								errors={errors}
-								placeholder="Choose a unique username"
-								startIcon={
-									<UserCheck2 className="dark:text-babyPowder size-4" />
-								}
-							/>
-						</div>
+						{/*<div className="relative">*/}
+						{/*	<FormFieldComponent*/}
+						{/*		label="Username"*/}
+						{/*		name="username"*/}
+						{/*		register={register}*/}
+						{/*		errors={errors}*/}
+						{/*		placeholder="Choose a unique username"*/}
+						{/*		startIcon={*/}
+						{/*			<UserCheck2 className="dark:text-babyPowder size-4" />*/}
+						{/*		}*/}
+						{/*	/>*/}
+						{/*</div>*/}
 
 						{/* Email avec validation visuelle */}
 						<FormFieldComponent

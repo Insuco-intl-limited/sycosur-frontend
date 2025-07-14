@@ -4,10 +4,10 @@ const usernameRegex = /^[a-zA-Z0-9_@+.-]+$/;
 
 export const RegisterUserSchema = z
 	.object({
-		username: z.string().regex(usernameRegex, {
-			message:
-				"Usernames can only contain letters(uppercase and lowercase), digits, _, @, +, ., and -",
-		}),
+		// username: z.string().regex(usernameRegex, {
+		// 	message:
+		// 		"Usernames can only contain letters(uppercase and lowercase), digits, _, @, +, ., and -",
+		// }),
 		first_name: z
 			.string()
 			.trim()
