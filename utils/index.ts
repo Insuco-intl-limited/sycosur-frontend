@@ -7,3 +7,4 @@ export const GoogleLogin = () => initiateSocialAuth("google-oauth2", "google");
 export { capitalizeWord } from "@/utils/capitalizeWord";
 export { formatDate } from "@/utils/formatDate";
 export { getCurrentLocale } from "@/utils/locale";
+export { translateWithMyMemory } from "@/utils/translate";

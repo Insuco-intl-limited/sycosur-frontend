@@ -1,13 +1,13 @@
 import { useTranslations } from "next-intl";
 
 export default function GlobalNotFound() {
-	const t = useTranslations("notFound");
+	const t = useTranslations();
 	return (
 		<div className="min-h-screen flex items-center justify-center bg-gray-50">
 			<div className="text-center">
 				<h1 className="text-6xl font-bold text-gray-900">404</h1>
-				<p className="text-xl text-gray-600 mt-4">{t("title")}</p>
-				<p className="text-gray-500 mt-2">{t("description")}</p>
+				<p className="text-xl text-gray-600 mt-4">{t("notFound.title")}</p>
+				<p className="text-gray-500 mt-2">{t("notFound.description")}</p>
 			</div>
 		</div>
 	);

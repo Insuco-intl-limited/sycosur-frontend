@@ -23,7 +23,7 @@ export default function DashboardLayout({
 }: {
 	children: React.ReactNode;
 }) {
-	const t = useTranslations("dashboard");
+	const t = useTranslations();
 
 	const { data: user } = useGetUserQuery();
 	if (!user) {
@@ -34,86 +34,89 @@ export default function DashboardLayout({
 
 	// Breadcrumbs exemple avec locale
 	const breadcrumbs: BreadcrumbItem[] = [
-		{ label: t("menu.activities"), href: `/${locale}/dashboard/activities` },
+		{
+			label: t("dashboard.menu.activities"),
+			href: `/${locale}/dashboard/activities`,
+		},
 	];
 
 	// Données de navigation avec traductions et locale
 	const navigationItems: NavigationItem[] = [
 		{
 			id: "monitoring",
-			label: t("menu.monitoring"),
+			label: t("dashboard.menu.monitoring"),
 			icon: <ComputerDesktopIcon className="w-5 h-5" />,
 			children: [
 				{
 					id: "dashboard",
-					label: t("menu.dashboard"),
+					label: t("dashboard.menu.dashboard"),
 					href: `/${locale}/dashboard`,
 					isActive: true,
 				},
 				{
 					id: "activities",
-					label: t("menu.activities"),
+					label: t("dashboard.menu.activities"),
 					href: `/${locale}/dashboard/activities`,
 				},
 			],
 		},
 		{
 			id: "reinstallation",
-			label: t("menu.reinstallation"),
+			label: t("dashboard.menu.reinstallation"),
 			icon: <ChartBarIcon className="w-5 h-5" />,
 			children: [
 				{
 					id: "gestion-par",
-					label: t("menu.gestion-par"),
+					label: t("dashboard.menu.gestion-par"),
 					href: `/${locale}/dashboard/gestion-par`,
 				},
 				{
 					id: "budget-par",
-					label: t("menu.budget-par"),
+					label: t("dashboard.menu.budget-par"),
 					href: `/${locale}/dashboard/budget-par`,
 				},
 			],
 		},
 		{
 			id: "donnees",
-			label: t("menu.data"),
+			label: t("dashboard.menu.data"),
 			icon: <CircleStackIcon className="w-5 h-5" />,
 			children: [
 				{
 					id: "sandbox",
-					label: t("menu.sandbox"),
+					label: t("dashboard.menu.sandbox"),
 					href: `/${locale}/dashboard/sandbox`,
 				},
 				{
 					id: "analyse",
-					label: t("menu.analyze"),
+					label: t("dashboard.menu.analyze"),
 					href: `/${locale}/dashboard/analyse`,
 				},
 				{
 					id: "documentation",
-					label: t("menu.documentation"),
+					label: t("dashboard.menu.documentation"),
 					href: `/${locale}/dashboard/documentation`,
 				},
 			],
 		},
 		{
 			id: "parties-prenantes",
-			label: t("menu.stakeholders"),
+			label: t("dashboard.menu.stakeholders"),
 			icon: <UsersIcon className="w-5 h-5" />,
 			children: [
 				{
 					id: "fiches",
-					label: t("menu.profiles"),
+					label: t("dashboard.menu.profiles"),
 					href: `/${locale}/dashboard/fiches`,
 				},
 				{
 					id: "engagement",
-					label: t("menu.engagement"),
+					label: t("dashboard.menu.engagement"),
 					href: `/${locale}/dashboard/engagement`,
 				},
 				{
 					id: "contestation",
-					label: t("menu.challenge"),
+					label: t("dashboard.menu.challenge"),
 					href: `/${locale}/dashboard/contestation`,
 				},
 			],

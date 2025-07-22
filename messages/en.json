@@ -1,38 +1,25 @@
 {
-  "auth": {
-    "login": "Login (temp)",
-    "email": "Email",
-    "emailAddress": "Email Address",
-    "password": "Password",
-    "signIn": "Sign In",
-    "welcome": "Welcome back",
-    "loginDescription": "Enter your credentials to access your account",
-    "forgotPassword": "Forgot Password?",
-    "dontHaveAccount": "Don't have an account?",
-    "registerHere": "Register Here"
-  },
   "dashboard": {
     "menu": {
-      "monitoring": "Monitoring",
-      "dashboard": "Dashboard",
       "activities": "Activities",
-      "reinstallation": "Reinstallation",
-      "gestion-par": "PAR Management",
-      "budget-par": "PAR Budget",
-      "data": "Data",
-      "sandbox": "Sandbox",
       "analyze": "Analyze",
+      "budget-par": "PAR Budget",
+      "challenge": "Challenge",
+      "dashboard": "Dashboard",
+      "data": "Data",
       "documentation": "Documentation",
-      "stakeholders": "Stakeholders",
-      "profiles": "Individual Profiles",
       "engagement": "Engagement",
-      "challenge": "Challenge"
+      "gestion-par": "PAR Management",
+      "monitoring": "Monitoring",
+      "profiles": "Individual Profiles",
+      "reinstallation": "Reinstallation",
+      "sandbox": "Sandbox",
+      "stakeholders": "Stakeholders"
     }
   },
-
   "notFound": {
-    "title": "Page not found",
     "description": "The page you are looking for does not exist.",
-    "goHome": "Go back home"
+    "goHome": "Go back home",
+    "title": "Page not found"
   }
 }

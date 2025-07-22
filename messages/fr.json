@@ -1,38 +1,25 @@
 {
-  "auth": {
-    "login": "Connexion",
-    "email": "Email",
-    "emailAddress": "Adresse email",
-    "password": "Mot de passe",
-    "signIn": "Se connecter",
-    "welcome": "Bon retour",
-    "loginDescription": "Entrez vos identifiants pour accéder à votre compte",
-    "forgotPassword": "Mot de passe oublié ?",
-    "dontHaveAccount": "Vous n'avez pas de compte ?",
-    "registerHere": "Inscrivez-vous ici"
-  },
   "dashboard": {
-
     "menu": {
-      "monitoring": "Suivi",
-      "dashboard": "Tableau de bord",
       "activities": "Activités",
-      "reinstallation": "Réinstallation",
-      "gestion-par": "Gestion du PAR",
-      "budget-par": "Budget du PAR",
-      "data": "Données",
-      "sandbox": "Sandbox",
       "analyze": "Analyse",
+      "budget-par": "Budget du PAR",
+      "challenge": "Contestation",
+      "dashboard": "Tableau de bord",
+      "data": "Données",
       "documentation": "Documentation",
-      "stakeholders": "Parties prenantes",
-      "profiles": "Fiches individuelles",
       "engagement": "Engagement",
-      "challenge": "Contestation"
+      "gestion-par": "Gestion du PAR",
+      "monitoring": "Suivi",
+      "profiles": "Fiches individuelles",
+      "reinstallation": "Réinstallation",
+      "sandbox": "Sandbox",
+      "stakeholders": "Parties prenantes"
     }
   },
   "notFound": {
-    "title": "Page non trouvée",
     "description": "La page que vous recherchez n'existe pas.",
-    "goHome": "Retour à l'accueil"
+    "goHome": "Retour à l'accueil",
+    "title": "Page non trouvée"
   }
 }
