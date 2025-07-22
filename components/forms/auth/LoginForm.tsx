@@ -98,21 +98,20 @@ function LoginForm() {
 			<form
 				noValidate
 				onSubmit={handleSubmit(onSubmit)}
-				className="flex w-full max-w-md flex-col gap-4"
+				className="flex w-full max-w-md flex-col gap-2"
 			>
 				{/* Reusable Form Field Component for Email */}
 				<FormFieldComponent
-					label="Email Address"
 					name="email"
 					register={register}
 					errors={errors}
 					placeholder="Email Address"
 					startIcon={<MailIcon className="dark:text-babyPowder size-4" />}
+					className="border"
 				/>
 
 				{/* Reusable Form Field Component for Password */}
 				<FormFieldComponent
-					label="Password"
 					name="password"
 					register={register}
 					errors={errors}
@@ -132,7 +131,7 @@ function LoginForm() {
 							<Spinner size="sm" />
 						</div>
 					) : (
-						`Sign In`
+						`Login`
 					)}
 				</Button>
 			</form>

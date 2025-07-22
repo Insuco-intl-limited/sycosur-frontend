@@ -11,13 +11,20 @@ interface SidebarProps {
 export const Sidebar = ({ navigationItems, className = "" }: SidebarProps) => {
 	return (
 		<aside
-			className={`w-64 bg-gradient-to-r from-[#416c78] to-[#2d4a52] shadow-lg relative z-10 flex flex-col ${className}`}
+			className={`w-64 bg-gradient-to-r from-[#416c78] to-[#2d4a52] shadow-lg relative z-10 flex flex-col gap-0 ${className}`}
 		>
 			{/* En-tête de la sidebar */}
-			<div className="p-4 border-b border-white/20 pt-6">
-				<select className="w-full bg-white/10 text-white border border-white/20 px-3 py-2 font-roboto">
-					<option>Sycosur</option>
-				</select>
+			{/*<div className="p-4 border-b border-white/20 pt-6">*/}
+			{/*	<select className="w-full bg-white/10 text-white border border-white/20 px-3 py-2 font-roboto">*/}
+			{/*		<option>Sycosur</option>*/}
+			{/*	</select>*/}
+			{/*</div>*/}
+
+			{/* Diamonds divider */}
+			<div className="flex justify-center items-center gap-3 py-4">
+				<div className="w-2 h-2 rotate-45 bg-gradient-to-br from-white/30 to-white/10"></div>
+				<div className="w-2 h-2 rotate-45 bg-gradient-to-br from-white/30 to-white/10"></div>
+				<div className="w-2 h-2 rotate-45 bg-gradient-to-br from-white/30 to-white/10"></div>
 			</div>
 
 			{/* Menu de navigation */}

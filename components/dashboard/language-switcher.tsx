@@ -8,7 +8,7 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Globe } from "lucide-react";
+import { GlobeAltIcon } from "@heroicons/react/24/solid";
 
 const languages = [
 	{ code: "en", name: "English", flag: "🇺🇸" },
@@ -29,9 +29,9 @@ export function LanguageSwitcher() {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
-				<Button variant="ghost" size="lg" className="hover:bg-white/20 p-8">
-					<Globe className="h-8 w-8 text-white" />
-				</Button>
+				<button className="p-4">
+					<GlobeAltIcon className="h-7 w-7 text-white" />
+				</button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align="end">
 				{languages.map((lang) => (

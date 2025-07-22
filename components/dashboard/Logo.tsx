@@ -1,4 +1,6 @@
 "use client";
+import logo from "@/public/assets/images/sycosur_title.png";
+import Image from "next/image";
 
 interface LogoProps {
 	className?: string;
@@ -7,12 +9,7 @@ interface LogoProps {
 export const Logo = ({ className = "" }: LogoProps) => {
 	return (
 		<div className={`flex items-center space-x-2 ${className}`}>
-			<div className="w-8 h-8 bg-white flex items-center justify-center">
-				<span className="text-[#416c78] font-bold text-sm">S-S</span>
-			</div>
-			<span className="text-white font-roboto font-medium text-lg">
-				SYCOSUR
-			</span>
+			<Image className="h-12 w-28" src={logo} alt="Sycosur logo" />
 		</div>
 	);
 };

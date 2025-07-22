@@ -1,6 +1,11 @@
 "use client";
 import type React from "react";
-import { Monitor, BarChart3, Database, Users } from "lucide-react";
+import {
+	ComputerDesktopIcon,
+	ChartBarIcon,
+	CircleStackIcon,
+	UsersIcon,
+} from "@heroicons/react/24/solid";
 import type { NavigationItem, BreadcrumbItem } from "./types";
 import { UserResponse } from "@/types";
 import { Header } from "@/components/dashboard/Header";
@@ -37,7 +42,7 @@ export default function DashboardLayout({
 		{
 			id: "monitoring",
 			label: t("menu.monitoring"),
-			icon: <Monitor className="w-5 h-5" />,
+			icon: <ComputerDesktopIcon className="w-5 h-5" />,
 			children: [
 				{
 					id: "dashboard",
@@ -55,7 +60,7 @@ export default function DashboardLayout({
 		{
 			id: "reinstallation",
 			label: t("menu.reinstallation"),
-			icon: <BarChart3 className="w-5 h-5" />,
+			icon: <ChartBarIcon className="w-5 h-5" />,
 			children: [
 				{
 					id: "gestion-par",
@@ -72,7 +77,7 @@ export default function DashboardLayout({
 		{
 			id: "donnees",
 			label: t("menu.data"),
-			icon: <Database className="w-5 h-5" />,
+			icon: <CircleStackIcon className="w-5 h-5" />,
 			children: [
 				{
 					id: "sandbox",
@@ -94,7 +99,7 @@ export default function DashboardLayout({
 		{
 			id: "parties-prenantes",
 			label: t("menu.stakeholders"),
-			icon: <Users className="w-5 h-5" />,
+			icon: <UsersIcon className="w-5 h-5" />,
 			children: [
 				{
 					id: "fiches",
@@ -115,9 +120,6 @@ export default function DashboardLayout({
 		},
 	];
 
-	console.log("DashboardLayout render:", user, {
-		timestamp: new Date().toISOString(),
-	});
 	return (
 		<div className="h-screen flex flex-col font-roboto">
 			{/* Header fixe */}

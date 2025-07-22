@@ -43,7 +43,7 @@ export default function ProfilePage() {
 						<AvatarFallback>{user.first_name[0].toUpperCase()}</AvatarFallback>
 					</Avatar>
 					<div>
-						<h1 className="text-2xl font-bold">{user.username}</h1>
+						<h1 className="text-2xl font-bold">{user?.username}</h1>
 						<p className="text-gray-500">{user.email}</p>
 						{user.first_name && user.last_name && (
 							<p className="text-gray-700">

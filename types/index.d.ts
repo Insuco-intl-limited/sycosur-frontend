@@ -24,6 +24,7 @@ export interface UserResponse {
 	city: string;
 	avatar?: string;
 	date_joined: string;
+	username?: string;
 }
 
 export interface RegisterUserData extends UserCommonData {

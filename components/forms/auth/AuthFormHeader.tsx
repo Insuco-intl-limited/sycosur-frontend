@@ -35,8 +35,8 @@ function AuthFormHeader({
 								<Image
 									src={logo}
 									alt="SYCOSUR 2.0"
-									width={350}
-									height={60}
+									width={300}
+									height={120}
 									priority
 									className="mx-auto"
 								/>

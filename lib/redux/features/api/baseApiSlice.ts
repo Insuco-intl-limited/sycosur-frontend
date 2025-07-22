@@ -42,6 +42,7 @@ const baseQueryWithReauth: BaseQueryFn<
 					response = await baseQuery(args, api, extraOptions);
 				} else {
 					api.dispatch(setLogout());
+
 				}
 			} finally {
 				release();
