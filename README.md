@@ -56,7 +56,7 @@ export default function MyComponent() {
 ## Configuration
 
 - Update the target languages in `scripts/generate-translations.ts`
-- Configure scanning options in `i18n-scanner.config.js`
+- Configure scanning options in `i18n-scanner.config.cjs`
 - For higher translation limits, add your email in `scripts/generate-translations.ts`
 
 ## Tips

@@ -41,7 +41,7 @@ export default function useSocialAuth(authenticate: any, provider: string) {
 					// Update Redux state to reflect authentication
 					dispatch(setAuth());
 					// Notify user of successful login
-					toast.success("Logged in successfully");
+					toast.success("welcome");
 					// Redirect to dashboard upon successful authentication
 					router.push("/en/dashboard");
 				})

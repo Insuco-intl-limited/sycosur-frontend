@@ -4,6 +4,7 @@ import { Roboto } from "next/font/google";
 import "./globals.css";
 import Toast from "@/components/shared/Toast";
 import ReduxProvider from "@/lib/redux/provider";
+import { NextIntlClientProvider } from "next-intl";
 
 const roboto = Roboto({
 	subsets: ["latin"],
@@ -25,7 +26,9 @@ export default function RootLayout({
 		<html lang="en" suppressHydrationWarning>
 			<body className={roboto.className} suppressHydrationWarning>
 				<Toast />
-				<ReduxProvider>{children}</ReduxProvider>
+				<NextIntlClientProvider>
+					<ReduxProvider>{children}</ReduxProvider>
+				</NextIntlClientProvider>
 			</body>
 		</html>
 	);

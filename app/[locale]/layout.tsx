@@ -26,17 +26,15 @@ export default async function LocaleLayout({
 
 	return (
 		<NextIntlClientProvider locale={locale as any} messages={messages}>
-			<ReduxProvider>
-				<PersistAuth />
-				<ThemeProvider
-					attribute="class"
-					defaultTheme="system"
-					enableSystem
-					disableTransitionOnChange
-				>
-					{children}
-				</ThemeProvider>
-			</ReduxProvider>
+			<PersistAuth />
+			<ThemeProvider
+				attribute="class"
+				defaultTheme="system"
+				enableSystem
+				disableTransitionOnChange
+			>
+				{children}
+			</ThemeProvider>
 		</NextIntlClientProvider>
 	);
 }

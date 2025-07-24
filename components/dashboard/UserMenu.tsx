@@ -33,7 +33,7 @@ export const UserMenu = ({ user, className = "" }: UserMenuProps) => {
 			await logoutUser().unwrap();
 			dispatch(setLogout());
 			toast.dismiss(toastId);
-			toast.success("You have been successfully logged out.");
+			toast.success("Bye bye !");
 
 			router.push("/login");
 		} catch (error) {

@@ -19,7 +19,6 @@
   },
   "notFound": {
     "description": "La page que vous recherchez n'existe pas.",
-    "goHome": "Retour à l'accueil",
     "title": "Page non trouvée"
   }
 }

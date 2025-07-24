@@ -28,13 +28,27 @@ module.exports = {
 	options: {
 		debug: true,
 		func: {
-			list: ["t"],
+			list: ["t", "_t"],
 			extensions: SUPPORTED_EXTENSIONS,
 		},
 		trans: {
 			component: "Trans",
 			extensions: SUPPORTED_EXTENSIONS,
+			i18nkey: ":i18nKey",
+			defaultsKey: "defaults",
+			fallbackKey: (ns, value) => {
+				return value || ns;
+			},
+			acorn: {
+				ecmaVersion: 12,
+				sourceType: "module",
+			},
 		},
+		attr: {
+			list: ["i18nKey", "data-i18n"],
+			extensions: SUPPORTED_EXTENSIONS,
+		},
+
 		lngs: SUPPORTED_LANGUAGES,
 		defaultLng: DEFAULT_LANGUAGE,
 		resource: {
@@ -55,11 +69,11 @@ module.exports = {
 		removeUnusedKeys: false,
 		sort: true,
 		skipDefaultValues: true,
-		defaultValue: function (lng, ns, key) {
-			if (lng === DEFAULT_LANGUAGE) {
-				return key;
+		defaultValue: function (lng, ns, key, options) {
+			if (options && options.defaultValue) {
+				return options.defaultValue;
 			}
-			return UNTRANSLATED_PLACEHOLDER;
+			return key;
 		},
 		resetDefaultValueLocale: null,
 		useKeysAsDefaultValue: false,

@@ -44,5 +44,47 @@
       }
     },
     "isImported": false
+  },
+  {
+    "id": "TASK_3",
+    "priority": "HIGH",
+    "tags": [],
+    "description": "Revoir la configuration des layouts",
+    "status": "TODO",
+    "date": {
+      "date": {
+        "year": 2025,
+        "month": 7,
+        "day": 24
+      },
+      "time": {
+        "hour": 9,
+        "minute": 9,
+        "second": 35,
+        "nano": 411308600
+      }
+    },
+    "isImported": false
+  },
+  {
+    "id": "TASK_4",
+    "priority": "LOW",
+    "tags": [],
+    "description": "Revoir le scanner de traduction i18n",
+    "status": "TODO",
+    "date": {
+      "date": {
+        "year": 2025,
+        "month": 7,
+        "day": 24
+      },
+      "time": {
+        "hour": 9,
+        "minute": 10,
+        "second": 34,
+        "nano": 641865600
+      }
+    },
+    "isImported": false
   }
 ]
