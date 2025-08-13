@@ -3,18 +3,23 @@
     "menu": {
       "activities": "Activités",
       "analyze": "Analyse",
+      "assignments": "Assignments",
       "budget-par": "Budget du PAR",
       "challenge": "Contestation",
       "dashboard": "Tableau de bord",
       "data": "Données",
       "documentation": "Documentation",
       "engagement": "Engagement",
+      "forms": "Forms",
       "gestion-par": "Gestion du PAR",
       "monitoring": "Suivi",
+      "odk": "ODK",
       "profiles": "Fiches individuelles",
+      "projects": "Projects",
       "reinstallation": "Réinstallation",
       "sandbox": "Sandbox",
-      "stakeholders": "Parties prenantes"
+      "stakeholders": "Parties prenantes",
+      "submissions": "Submissions"
     }
   },
   "notFound": {

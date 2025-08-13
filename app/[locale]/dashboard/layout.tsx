@@ -61,6 +61,34 @@ export default function DashboardLayout({
 			],
 		},
 		{
+			id: "ODK",
+			label: t("dashboard.menu.odk"),
+			icon: <ComputerDesktopIcon className="w-5 h-5" />,
+			children: [
+				{
+					id: "projects",
+					label: t("dashboard.menu.projects"),
+					href: `/${locale}/odk/projects`,
+					isActive: true,
+				},
+				{
+					id: "forms",
+					label: t("dashboard.menu.forms"),
+					href: `/${locale}/odk/forms`,
+				},
+				{
+					id: "submissions",
+					label: t("dashboard.menu.submissions"),
+					href: `/${locale}/odk/submissions`,
+				},
+				{
+					id: "assignments",
+					label: t("dashboard.menu.assignments"),
+					href: `/${locale}/odk/assignments`,
+				},
+			],
+		},
+		{
 			id: "reinstallation",
 			label: t("dashboard.menu.reinstallation"),
 			icon: <ChartBarIcon className="w-5 h-5" />,

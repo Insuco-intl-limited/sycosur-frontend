@@ -3,18 +3,23 @@
     "menu": {
       "activities": "Activities",
       "analyze": "Analyze",
+      "assignments": "assignments",
       "budget-par": "PAR Budget",
       "challenge": "Challenge",
       "dashboard": "Dashboard",
       "data": "Data",
       "documentation": "Documentation",
       "engagement": "Engagement",
+      "forms": "Forms",
       "gestion-par": "PAR Management",
       "monitoring": "Monitoring",
+      "odk": "ODK",
       "profiles": "Individual Profiles",
+      "projects": "Projects",
       "reinstallation": "Reinstallation",
       "sandbox": "Sandbox",
-      "stakeholders": "Stakeholders"
+      "stakeholders": "Stakeholders",
+      "submissions": "Submissions"
     }
   },
   "notFound": {

@@ -3,18 +3,23 @@
     "menu": {
       "activities": "Actividades",
       "analyze": "Analizar",
+      "assignments": "assignments",
       "budget-par": "Presupuesto PAR",
       "challenge": "Impugnación",
       "dashboard": "Tablero",
       "data": "Datos",
       "documentation": "Documentación",
       "engagement": "Compromiso",
+      "forms": "Forms",
       "gestion-par": "Gestión PAR",
       "monitoring": "Supervisión",
+      "odk": "ODK",
       "profiles": "Perfiles individuales",
+      "projects": "Projects",
       "reinstallation": "Reinstalación",
       "sandbox": "Sandbox",
-      "stakeholders": "Partes interesadas"
+      "stakeholders": "Partes interesadas",
+      "submissions": "Submissions"
     }
   },
   "notFound": {
