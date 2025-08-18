@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/popover";
 import { Filter, X } from "lucide-react";
 import type { Column, FilterOption } from "@/types/datatable";
+import { useTranslations } from "next-intl";
 
 interface DataTableFiltersProps<T> {
 	columns: Column<T>[];
@@ -32,6 +33,7 @@ export function DataTableFilters<T>({
 	onAddFilter,
 	onRemoveFilter,
 }: DataTableFiltersProps<T>) {
+	const t = useTranslations("datatable.filters");
 	const [selectedColumn, setSelectedColumn] = useState("");
 	const [filterValue, setFilterValue] = useState("");
 	const [operator, setOperator] =
@@ -57,16 +59,16 @@ export function DataTableFilters<T>({
 				<PopoverTrigger asChild>
 					<Button variant="outline" size="sm">
 						<Filter className="h-4 w-4 mr-2" />
-						Filtrer
+						{t("filterButton")}
 					</Button>
 				</PopoverTrigger>
 				<PopoverContent className="w-80">
 					<div className="space-y-4">
 						<div>
-							<label className="text-sm font-medium">Colonne</label>
+							<label className="text-sm font-medium">{t("columnLabel")}</label>
 							<Select value={selectedColumn} onValueChange={setSelectedColumn}>
 								<SelectTrigger>
-									<SelectValue placeholder="Sélectionner une colonne" />
+									<SelectValue placeholder={t("selectColumnPlaceholder")} />
 								</SelectTrigger>
 								<SelectContent>
 									{filterableColumns.map((column) => (
@@ -78,7 +80,7 @@ export function DataTableFilters<T>({
 							</Select>
 						</div>
 						<div>
-							<label className="text-sm font-medium">Opérateur</label>
+							<label className="text-sm font-medium">{t("operatorLabel")}</label>
 							<Select
 								value={operator}
 								onValueChange={(value: FilterOption["operator"]) =>
@@ -89,23 +91,23 @@ export function DataTableFilters<T>({
 									<SelectValue />
 								</SelectTrigger>
 								<SelectContent>
-									<SelectItem value="contains">Contient</SelectItem>
-									<SelectItem value="equals">Égal à</SelectItem>
-									<SelectItem value="startsWith">Commence par</SelectItem>
-									<SelectItem value="endsWith">Finit par</SelectItem>
+									<SelectItem value="contains">{t("operators.contains")}</SelectItem>
+									<SelectItem value="equals">{t("operators.equals")}</SelectItem>
+									<SelectItem value="startsWith">{t("operators.startsWith")}</SelectItem>
+									<SelectItem value="endsWith">{t("operators.endsWith")}</SelectItem>
 								</SelectContent>
 							</Select>
 						</div>
 						<div>
-							<label className="text-sm font-medium">Valeur</label>
+							<label className="text-sm font-medium">{t("valueLabel")}</label>
 							<Input
 								value={filterValue}
 								onChange={(e) => setFilterValue(e.target.value)}
-								placeholder="Valeur du filtre"
+								placeholder={t("filterValuePlaceholder")}
 							/>
 						</div>
 						<Button onClick={handleAddFilter} className="w-full">
-							Ajouter le filtre
+							{t("addFilterButton")}
 						</Button>
 					</div>
 				</PopoverContent>

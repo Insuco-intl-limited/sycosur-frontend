@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { MoreVertical } from "lucide-react";
 import type { ActionItem } from "@/types/datatable";
+import { useTranslations } from "next-intl";
 
 interface DataTableActionsProps<T> {
 	item: T;
@@ -20,6 +21,7 @@ export function DataTableActions<T>({
 	item,
 	actions,
 }: DataTableActionsProps<T>) {
+	const t = useTranslations("datatable.actions");
 	if (!actions || actions.length === 0) {
 		return null;
 	}
@@ -28,7 +30,7 @@ export function DataTableActions<T>({
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
 				<Button variant="ghost" className="h-8 w-8 p-0">
-					<span className="sr-only">Ouvrir le menu</span>
+					<span className="sr-only">{t("openMenu")}</span>
 					<MoreVertical className="h-4 w-4" />
 				</Button>
 			</DropdownMenuTrigger>

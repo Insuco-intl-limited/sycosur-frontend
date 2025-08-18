@@ -9,7 +9,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Download } from "lucide-react";
 import { ExportFormat } from "@/types/datatable";
-import { exportToCSV, exportToExcel, exportToJSON } from "@/utils/export";
+import { exportToCSV, exportToJSON } from "@/utils/export";
+import { useTranslations } from "next-intl";
 
 interface DataTableExportProps {
 	data: any[];
@@ -23,11 +24,14 @@ const defaultFormats: ExportFormat[] = [
 	{ type: "excel", label: "Excel" },
 ];
 
+// We'll use the translated labels when the component is rendered
+
 export function DataTableExport({
 	data,
 	formats = defaultFormats,
 	filename = "export",
 }: DataTableExportProps) {
+	const t = useTranslations("datatable.export");
 	const handleExport = (format: ExportFormat["type"]) => {
 		switch (format) {
 			case "csv":
@@ -36,9 +40,9 @@ export function DataTableExport({
 			case "json":
 				exportToJSON(data, `${filename}.json`);
 				break;
-			case "excel":
-				exportToExcel(data, `${filename}.xlsx`);
-				break;
+			// case "excel":
+			// 	exportToExcel(data, `${filename}.xlsx`);
+			// 	break;
 		}
 	};
 
@@ -47,7 +51,7 @@ export function DataTableExport({
 			<DropdownMenuTrigger asChild>
 				<Button variant="outline" size="sm">
 					<Download className="h-4 w-4 mr-2" />
-					Exporter
+					{t("exportButton")}
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent>
@@ -56,7 +60,7 @@ export function DataTableExport({
 						key={format.type}
 						onClick={() => handleExport(format.type)}
 					>
-						{format.label}
+						{t(`format.${format.type}`)}
 					</DropdownMenuItem>
 				))}
 			</DropdownMenuContent>
