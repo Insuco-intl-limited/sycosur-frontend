@@ -17,6 +17,7 @@ import ProtectedRoute from "@/components/shared/ProtectedRoute";
 import { useTranslations } from "next-intl";
 import { useGetUserQuery } from "@/lib/redux/features/auth/authApiSlice";
 import { getCurrentLocale } from "@/utils";
+import { BugAntIcon } from "@heroicons/react/24/solid";
 
 export default function DashboardLayout({
 	children,
@@ -63,28 +64,28 @@ export default function DashboardLayout({
 		{
 			id: "ODK",
 			label: t("dashboard.menu.odk"),
-			icon: <ComputerDesktopIcon className="w-5 h-5" />,
+			icon: <BugAntIcon className="w-5 h-5" />,
 			children: [
 				{
 					id: "projects",
 					label: t("dashboard.menu.projects"),
-					href: `/${locale}/odk/projects`,
+					href: `/${locale}/dashboard/odk/projects`,
 					isActive: true,
 				},
 				{
 					id: "forms",
 					label: t("dashboard.menu.forms"),
-					href: `/${locale}/odk/forms`,
+					href: `/${locale}/dashboard/odk/forms`,
 				},
 				{
 					id: "submissions",
 					label: t("dashboard.menu.submissions"),
-					href: `/${locale}/odk/submissions`,
+					href: `/${locale}/dashboard/odk/submissions`,
 				},
 				{
 					id: "assignments",
 					label: t("dashboard.menu.assignments"),
-					href: `/${locale}/odk/assignments`,
+					href: `/${locale}/dashboard/odk/assignments`,
 				},
 			],
 		},

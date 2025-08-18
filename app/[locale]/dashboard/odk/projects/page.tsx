@@ -10,6 +10,7 @@ import { PlusCircle } from "lucide-react";
 import { DataTable } from "@/components/datatable/datatable";
 import { ProjectFormModal } from "@/components/forms/odk/ProjectFormModal";
 import { toast } from "react-toastify";
+import { useRouter, usePathname } from "next/navigation";
 
 // Sample project data
 const sampleProjects: Project[] = [
@@ -73,6 +74,8 @@ const sampleProjects: Project[] = [
 
 export default function ProjectsPage() {
 	const t = useTranslations();
+	const router = useRouter();
+	const pathname = usePathname();
 
 	// Column definitions for the DataTable
 	const columns: Column<Project>[] = [
@@ -109,9 +112,9 @@ export default function ProjectsPage() {
 			label: "View",
 			icon: <Eye className="h-4 w-4" />,
 			onClick: (project) => {
-				alert(
-					`View project details: ${project.name}\nDescription: ${project.description}\nCreated At: ${new Date(project.createdAt).toLocaleDateString("en-US")}\nID: ${project.ID}`,
-				);
+				// Extract the locale from the pathname
+				const locale = pathname.split('/')[1];
+				router.push(`/${locale}/dashboard/odk/projects/${project.ID}`);
 			},
 		},
 		{
