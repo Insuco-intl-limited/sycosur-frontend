@@ -3,27 +3,69 @@
     "menu": {
       "activities": "Activités",
       "analyze": "Analyse",
-      "assignments": "Assignments",
+      "assignments": "Assignations",
       "budget-par": "Budget du PAR",
       "challenge": "Contestation",
       "dashboard": "Tableau de bord",
       "data": "Données",
       "documentation": "Documentation",
       "engagement": "Engagement",
-      "forms": "Forms",
+      "forms": "Formulaires",
       "gestion-par": "Gestion du PAR",
       "monitoring": "Suivi",
       "odk": "ODK",
       "profiles": "Fiches individuelles",
-      "projects": "Projects",
+      "projects": "Projets",
       "reinstallation": "Réinstallation",
       "sandbox": "Sandbox",
       "stakeholders": "Parties prenantes",
-      "submissions": "Submissions"
+      "submissions": "Soumissions"
     }
   },
   "notFound": {
     "description": "La page que vous recherchez n'existe pas.",
     "title": "Page non trouvée"
+  },
+  "datatable": {
+    "actionsColumn": "Actions",
+    "noResults": "Aucun résultat trouvé.",
+    "pagination": {
+      "rowsPerPage": "Lignes par page",
+      "pageInfo": "Page {currentPage} sur {totalPages}",
+      "itemsInfo": "{startItem}-{endItem} sur {totalItems}",
+      "goToFirstPage": "Aller à la première page",
+      "goToPreviousPage": "Aller à la page précédente",
+      "goToNextPage": "Aller à la page suivante",
+      "goToLastPage": "Aller à la dernière page"
+    },
+    "export": {
+      "exportButton": "Exporter",
+      "format": {
+        "csv": "CSV",
+        "json": "JSON",
+        "excel": "Excel"
+      }
+    },
+    "filters": {
+      "filterButton": "Filtrer",
+      "columnLabel": "Colonne",
+      "selectColumnPlaceholder": "Sélectionner une colonne",
+      "operatorLabel": "Opérateur",
+      "operators": {
+        "contains": "Contient",
+        "equals": "Égal à",
+        "startsWith": "Commence par",
+        "endsWith": "Finit par"
+      },
+      "valueLabel": "Valeur",
+      "filterValuePlaceholder": "Valeur du filtre",
+      "addFilterButton": "Ajouter le filtre"
+    },
+    "search": {
+      "searchPlaceholder": "Rechercher..."
+    },
+    "actions": {
+      "openMenu": "Ouvrir le menu"
+    }
   }
 }

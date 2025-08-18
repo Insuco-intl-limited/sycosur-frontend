@@ -25,5 +25,47 @@
   "notFound": {
     "description": "La página que busca no existe.",
     "title": "Página no encontrada"
+  },
+  "datatable": {
+    "actionsColumn": "Acciones",
+    "noResults": "No se encontraron resultados.",
+    "pagination": {
+      "rowsPerPage": "Filas por página",
+      "pageInfo": "Página {currentPage} de {totalPages}",
+      "itemsInfo": "{startItem}-{endItem} de {totalItems}",
+      "goToFirstPage": "Ir a la primera página",
+      "goToPreviousPage": "Ir a la página anterior",
+      "goToNextPage": "Ir a la página siguiente",
+      "goToLastPage": "Ir a la última página"
+    },
+    "export": {
+      "exportButton": "Exportar",
+      "format": {
+        "csv": "CSV",
+        "json": "JSON",
+        "excel": "Excel"
+      }
+    },
+    "filters": {
+      "filterButton": "Filtrar",
+      "columnLabel": "Columna",
+      "selectColumnPlaceholder": "Seleccionar una columna",
+      "operatorLabel": "Operador",
+      "operators": {
+        "contains": "Contiene",
+        "equals": "Igual a",
+        "startsWith": "Comienza con",
+        "endsWith": "Termina con"
+      },
+      "valueLabel": "Valor",
+      "filterValuePlaceholder": "Valor del filtro",
+      "addFilterButton": "Añadir filtro"
+    },
+    "search": {
+      "searchPlaceholder": "Buscar..."
+    },
+    "actions": {
+      "openMenu": "Abrir menú"
+    }
   }
 }
