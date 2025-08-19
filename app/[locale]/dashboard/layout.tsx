@@ -1,23 +1,16 @@
 "use client";
 import type React from "react";
-import {
-	ComputerDesktopIcon,
-	ChartBarIcon,
-	CircleStackIcon,
-	UsersIcon,
-} from "@heroicons/react/24/solid";
-import type { NavigationItem, BreadcrumbItem } from "./types";
-import { UserResponse } from "@/types";
+import type { BreadcrumbItem } from "./types";
 import { Header } from "@/components/dashboard/Header";
 import { Sidebar } from "@/components/dashboard/Sidebar";
 import { ContentArea } from "@/components/dashboard/ContentArea";
 import ProtectedRoute from "@/components/shared/ProtectedRoute";
-
-//import for translations
 import { useTranslations } from "next-intl";
 import { useGetUserQuery } from "@/lib/redux/features/auth/authApiSlice";
 import { getCurrentLocale } from "@/utils";
-import { BugAntIcon } from "@heroicons/react/24/solid";
+import { getNavigationItems } from "@/components/shared/Navigation";
+import { usePathname } from "next/navigation";
+import { generateBreadcrumbs } from "@/utils/generateBreadcrumbs";
 
 export default function DashboardLayout({
 	children,
@@ -25,6 +18,7 @@ export default function DashboardLayout({
 	children: React.ReactNode;
 }) {
 	const t = useTranslations();
+	const pathname = usePathname();
 
 	const { data: user } = useGetUserQuery();
 	if (!user) {
@@ -33,124 +27,11 @@ export default function DashboardLayout({
 	// Récupération de la locale depuis les cookies
 	const locale = getCurrentLocale();
 
-	// Breadcrumbs exemple avec locale
-	const breadcrumbs: BreadcrumbItem[] = [
-		{
-			label: t("dashboard.menu.activities"),
-			href: `/${locale}/dashboard/activities`,
-		},
-	];
+	// Generate breadcrumbs dynamically based on the current path
+	const breadcrumbs: BreadcrumbItem[] = generateBreadcrumbs(pathname, t, locale);
 
-	// Données de navigation avec traductions et locale
-	const navigationItems: NavigationItem[] = [
-		{
-			id: "monitoring",
-			label: t("dashboard.menu.monitoring"),
-			icon: <ComputerDesktopIcon className="w-5 h-5" />,
-			children: [
-				{
-					id: "dashboard",
-					label: t("dashboard.menu.dashboard"),
-					href: `/${locale}/dashboard`,
-					isActive: true,
-				},
-				{
-					id: "activities",
-					label: t("dashboard.menu.activities"),
-					href: `/${locale}/dashboard/activities`,
-				},
-			],
-		},
-		{
-			id: "ODK",
-			label: t("dashboard.menu.odk"),
-			icon: <BugAntIcon className="w-5 h-5" />,
-			children: [
-				{
-					id: "projects",
-					label: t("dashboard.menu.projects"),
-					href: `/${locale}/dashboard/odk/projects`,
-					isActive: true,
-				},
-				{
-					id: "forms",
-					label: t("dashboard.menu.forms"),
-					href: `/${locale}/dashboard/odk/forms`,
-				},
-				{
-					id: "submissions",
-					label: t("dashboard.menu.submissions"),
-					href: `/${locale}/dashboard/odk/submissions`,
-				},
-				{
-					id: "assignments",
-					label: t("dashboard.menu.assignments"),
-					href: `/${locale}/dashboard/odk/assignments`,
-				},
-			],
-		},
-		{
-			id: "reinstallation",
-			label: t("dashboard.menu.reinstallation"),
-			icon: <ChartBarIcon className="w-5 h-5" />,
-			children: [
-				{
-					id: "gestion-par",
-					label: t("dashboard.menu.gestion-par"),
-					href: `/${locale}/dashboard/gestion-par`,
-				},
-				{
-					id: "budget-par",
-					label: t("dashboard.menu.budget-par"),
-					href: `/${locale}/dashboard/budget-par`,
-				},
-			],
-		},
-		{
-			id: "donnees",
-			label: t("dashboard.menu.data"),
-			icon: <CircleStackIcon className="w-5 h-5" />,
-			children: [
-				{
-					id: "sandbox",
-					label: t("dashboard.menu.sandbox"),
-					href: `/${locale}/dashboard/sandbox`,
-				},
-				{
-					id: "analyse",
-					label: t("dashboard.menu.analyze"),
-					href: `/${locale}/dashboard/analyse`,
-				},
-				{
-					id: "documentation",
-					label: t("dashboard.menu.documentation"),
-					href: `/${locale}/dashboard/documentation`,
-				},
-			],
-		},
-		{
-			id: "parties-prenantes",
-			label: t("dashboard.menu.stakeholders"),
-			icon: <UsersIcon className="w-5 h-5" />,
-			children: [
-				{
-					id: "fiches",
-					label: t("dashboard.menu.profiles"),
-					href: `/${locale}/dashboard/fiches`,
-				},
-				{
-					id: "engagement",
-					label: t("dashboard.menu.engagement"),
-					href: `/${locale}/dashboard/engagement`,
-				},
-				{
-					id: "contestation",
-					label: t("dashboard.menu.challenge"),
-					href: `/${locale}/dashboard/contestation`,
-				},
-			],
-		},
-	];
+	// Données de navigation avec traductions
+	const navigationItems = getNavigationItems(t, locale);
 
 	return (
 		<div className="h-screen flex flex-col font-roboto">
@@ -158,7 +39,7 @@ export default function DashboardLayout({
 			<ProtectedRoute>
 				<Header user={user} breadcrumbs={breadcrumbs} />
 
-				{/* Container principal */}
+				{/* Container main */}
 				<div className="flex flex-1 overflow-hidden">
 					{/* Sidebar */}
 					<Sidebar navigationItems={navigationItems} />
