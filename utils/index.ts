@@ -8,3 +8,4 @@ export { capitalizeWord } from "@/utils/capitalizeWord";
 export { formatDate } from "@/utils/formatDate";
 export { getCurrentLocale } from "@/utils/locale";
 export { translateWithMyMemory } from "@/utils/translate";
+export { generateBreadcrumbs } from "@/utils/generateBreadcrumbs";

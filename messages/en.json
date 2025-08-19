@@ -1,4 +1,26 @@
 {
+  "breadcrumbs": {
+    "dashboard": {
+      "profile": "Profile",
+      "_self": "Dashboard",
+      "odk": {
+        "_self": "ODK",
+        "projects": "Projects",
+        "forms": "Forms",
+        "submissions": "Submissions",
+        "assignments": "Assignments"
+      },
+      "activities": "Activities",
+      "gestion-par": "PAR Management",
+      "budget-par": "PAR Budget",
+      "sandbox": "Sandbox",
+      "analyse": "Analysis",
+      "documentation": "Documentation",
+      "fiches": "Profiles",
+      "engagement": "Engagement",
+      "contestation": "Challenge"
+    }
+  },
   "dashboard": {
     "menu": {
       "activities": "Activities",
