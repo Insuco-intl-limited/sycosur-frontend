@@ -11,6 +11,11 @@
     "scan": "i18next-scanner --config i18n-scanner.config.cjs",
     "translate": "tsx scripts/generate-translations.ts"
   },
+    "pnpm": {
+    "overrides": {
+      "napi-postinstall": "npm:napi@latest"
+    }
+  },
   "dependencies": {
     "@radix-ui/react-accordion": "1.2.2",
     "@radix-ui/react-alert-dialog": "1.1.4",

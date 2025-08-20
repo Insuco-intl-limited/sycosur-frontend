@@ -5,6 +5,7 @@ import {
 	CircleStackIcon,
 	UsersIcon,
 	BugAntIcon,
+	WrenchScrewdriverIcon,
 } from "@heroicons/react/24/solid";
 // @ts-ignore
 import type { TFunction } from "next-intl"; //TFunction is the type returned by the useTranslation method from next-intl
@@ -84,7 +85,7 @@ export const getNavigationItems = (
 			],
 		},
 		{
-			id: "donnees",
+			id: "data",
 			label: t("dashboard.menu.data"),
 			icon: <CircleStackIcon className="w-5 h-5" />,
 			children: [
@@ -94,9 +95,9 @@ export const getNavigationItems = (
 					href: `/${locale}/dashboard/sandbox`,
 				},
 				{
-					id: "analyse",
-					label: t("dashboard.menu.analyze"),
-					href: `/${locale}/dashboard/analyse`,
+					id: "analysis",
+					label: t("dashboard.menu.analysis"),
+					href: `/${locale}/dashboard/analysis`,
 				},
 				{
 					id: "documentation",
@@ -106,14 +107,14 @@ export const getNavigationItems = (
 			],
 		},
 		{
-			id: "parties-prenantes",
+			id: "stakeholders",
 			label: t("dashboard.menu.stakeholders"),
 			icon: <UsersIcon className="w-5 h-5" />,
 			children: [
 				{
-					id: "fiches",
+					id: "individual-profile",
 					label: t("dashboard.menu.profiles"),
-					href: `/${locale}/dashboard/fiches`,
+					href: `/${locale}/dashboard/individual-profile`,
 				},
 				{
 					id: "engagement",
@@ -121,9 +122,31 @@ export const getNavigationItems = (
 					href: `/${locale}/dashboard/engagement`,
 				},
 				{
-					id: "contestation",
+					id: "challenge",
 					label: t("dashboard.menu.challenge"),
-					href: `/${locale}/dashboard/contestation`,
+					href: `/${locale}/dashboard/challenge`,
+				},
+			],
+		},
+		{
+			id: "Parameters",
+			label: t("dashboard.menu.parameters"),
+			icon: <WrenchScrewdriverIcon className="w-5 h-5" />,
+			children: [
+				{
+					id: "users",
+					label: t("dashboard.menu.users"),
+					href: `/${locale}/dashboard/users`,
+				},
+				{
+					id: "audits",
+					label: t("dashboard.menu.audits"),
+					href: `/${locale}/dashboard/audits`,
+				},
+				{
+					id: "system",
+					label: t("dashboard.menu.system"),
+					href: `/${locale}/dashboard/system`,
 				},
 			],
 		},

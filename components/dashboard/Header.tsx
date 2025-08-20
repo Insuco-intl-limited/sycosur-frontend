@@ -34,12 +34,12 @@ export const Header = ({
 								{item.href ? (
 									<a
 										href={item.href}
-										className=" text-white hover:text-gray-200 -tracking-2 font-roboto font-extrabold text-[1.40rem] transition-colors duration-300 tracking-wide  hover:scale-105 transform"
+										className="text-white hover:text-gray-200 -tracking-2 font-roboto font-extrabold text-[1.40rem] transition-colors duration-300 tracking-wide hover:scale-105 transform"
 									>
 										{item.label}
 									</a>
 								) : (
-									<span className="text-white font-roboto font-bold">
+									<span className="text-white -tracking-2 font-roboto font-extrabold text-[1.40rem] tracking-wide">
 										{item.label}
 									</span>
 								)}

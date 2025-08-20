@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Download } from "lucide-react";
 import { ExportFormat } from "@/types/datatable";
-import { exportToCSV, exportToJSON } from "@/utils/export";
+import { exportToCSV, exportToJSON, /*exportToExcel */} from "@/utils/export";
 import { useTranslations } from "next-intl";
 
 interface DataTableExportProps {

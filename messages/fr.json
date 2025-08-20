@@ -24,7 +24,7 @@
   "dashboard": {
     "menu": {
       "activities": "Activités",
-      "analyze": "Analyse",
+      "analysis": "Analyse",
       "assignments": "Assignations",
       "budget-par": "Budget du PAR",
       "challenge": "Contestation",
@@ -41,7 +41,11 @@
       "reinstallation": "Réinstallation",
       "sandbox": "Sandbox",
       "stakeholders": "Parties prenantes",
-      "submissions": "Soumissions"
+      "submissions": "Soumissions",
+      "parameters": "Paramètres",
+      "audits": "Audits",
+      "users": "Utilisateurs",
+      "system": "Système"
     }
   },
   "notFound": {

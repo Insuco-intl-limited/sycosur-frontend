@@ -40,8 +40,28 @@ export const exportToJSON = (data: any[], filename = "export.json") => {
 	document.body.removeChild(link);
 };
 
-// export const exportToExcel = (data: any[], filename = "export.xlsx") => {
-//   // Simulation d'export Excel (dans un vrai projet, utilisez une librairie comme xlsx)
-//   console.log("Export Excel simulé pour:", filename, data)
-//   alert("Export Excel simulé - Dans un vrai projet, utilisez une librairie comme xlsx")
-// }
+// export const exportToExcel = async (data: any[], filename = "export.xlsx") => {
+// 	const ExcelJS = await import("exceljs");
+// 	const workbook = new ExcelJS.Workbook();
+// 	const worksheet = workbook.addWorksheet("Sheet1");
+//
+// 	// Add headers
+// 	if (data.length > 0) {
+// 		worksheet.columns = Object.keys(data[0]).map(key => ({ header: key, key }));
+// 	}
+// 	// Add data rows
+// 	worksheet.addRows(data);
+//
+// 	const buffer = await workbook.xlsx.writeBuffer();
+// 	const blob = new Blob([buffer], {
+// 		type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+// 	});
+// 	const link = document.createElement("a");
+// 	const url = URL.createObjectURL(blob);
+// 	link.setAttribute("href", url);
+// 	link.setAttribute("download", filename);
+// 	link.style.visibility = "hidden";
+// 	document.body.appendChild(link);
+// 	link.click();
+// 	document.body.removeChild(link);
+// };

@@ -15,3 +15,6 @@ export {type TUserProfileSchema} from "@/lib/validationSchemas/ProfileSchema"
 
 export {ProjectSchema} from "@/lib/validationSchemas/ProjectSchema"
 export {type TProjectSchema} from "@/lib/validationSchemas/ProjectSchema"
+
+export {AppUsersSchema} from "@/lib/validationSchemas/AppUsersSchema"
+export {type TAppUsersSchema} from "@/lib/validationSchemas/AppUsersSchema"

@@ -18,29 +18,34 @@
       "fiches": "Perfiles",
       "engagement": "Compromiso",
       "contestation": "Impugnación"
+      
     }
   },
   "dashboard": {
     "menu": {
       "activities": "Actividades",
-      "analyze": "Analizar",
-      "assignments": "assignments",
+      "analysis": "Analizar",
+      "assignments": "Asignaciones",
       "budget-par": "Presupuesto PAR",
       "challenge": "Impugnación",
       "dashboard": "Tablero",
       "data": "Datos",
       "documentation": "Documentación",
       "engagement": "Compromiso",
-      "forms": "Forms",
+      "forms": "Formularios",
       "gestion-par": "Gestión PAR",
       "monitoring": "Supervisión",
       "odk": "ODK",
       "profiles": "Perfiles individuales",
-      "projects": "Projects",
+      "projects": "Proyectos",
       "reinstallation": "Reinstalación",
       "sandbox": "Sandbox",
       "stakeholders": "Partes interesadas",
-      "submissions": "Submissions"
+      "submissions": "Envíos",
+      "parameters": "Parámetros",
+      "audits": "Auditorías",
+      "users": "Usuarios",
+      "system": "Sistema"
     }
   },
   "notFound": {

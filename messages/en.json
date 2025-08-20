@@ -24,7 +24,7 @@
   "dashboard": {
     "menu": {
       "activities": "Activities",
-      "analyze": "Analyze",
+      "analysis": "Analyze",
       "assignments": "assignments",
       "budget-par": "PAR Budget",
       "challenge": "Challenge",
@@ -41,7 +41,11 @@
       "reinstallation": "Reinstallation",
       "sandbox": "Sandbox",
       "stakeholders": "Stakeholders",
-      "submissions": "Submissions"
+      "submissions": "Submissions",
+      "parameters": "Parameters",
+      "audits": "Audits",
+      "users": "Users",
+      "system": "System"
     }
   },
   "notFound": {

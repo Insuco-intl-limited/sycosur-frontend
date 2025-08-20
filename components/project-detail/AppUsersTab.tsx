@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { AppUsersFormModal } from "@/components/forms/odk/AppUsersFormModal";
 
 interface AppUsersTabProps {
   projectId: string | number;
@@ -17,9 +18,10 @@ export function AppUsersTab({ projectId }: AppUsersTabProps) {
       {/* This would be replaced with actual users management UI */}
       <div className="rounded-md border p-4 text-center">
         <p>No app users assigned to this project.</p>
-        <button className="mt-4 rounded-md bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90">
-          Add User
-        </button>
+        <AppUsersFormModal 
+          projectId={projectId}
+          title="Add User"
+        />
       </div>
     </div>
   );
