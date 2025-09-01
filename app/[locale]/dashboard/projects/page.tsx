@@ -114,7 +114,7 @@ export default function ProjectsPage() {
 			onClick: (project) => {
 				// Extract the locale from the pathname
 				const locale = pathname.split('/')[1];
-				router.push(`/${locale}/dashboard/odk/projects/${project.ID}`);
+				router.push(`/${locale}/dashboard/projects/${project.ID}`);
 			},
 		},
 		{

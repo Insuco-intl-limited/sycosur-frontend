@@ -2,8 +2,37 @@ import { BreadcrumbItem } from "@/app/[locale]/dashboard/types";
 // @ts-ignore
 import { TFunction } from "next-intl"; // TFunction is the type returned by useTranslation function from next-intl
 
+// Import the getProjectById function from the shared utility
+import { getProjectById } from "@/utils/projectUtils";
+
+/**
+ * Creates a slug from a project name, limited to 10 characters
+ * @param name The project name to convert to a slug
+ * @returns A slug of maximum 10 characters
+ */
+function createSlug(name: string): string {
+  // Convert to lowercase, replace spaces and special chars with hyphens
+  const slug = name
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, '')
+    .replace(/[\s_-]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+  
+  // Limit to 10 characters
+  return slug.substring(0, 10);
+}
+
 /**
  * Generates breadcrumb items based on the current path
+ * 
+ * Special handling for numeric IDs in paths:
+ * - When a numeric ID is detected in the path (e.g., /dashboard/projects/1),
+ *   the function attempts to retrieve the corresponding entity (e.g., project)
+ *   and uses its name as the breadcrumb label instead of the ID.
+ * - For project IDs, it fetches the project name and displays it in the breadcrumb.
+ * - The URL path still uses the numeric ID to maintain proper routing.
+ * - If the entity cannot be found, it falls back to the default behavior.
+ * 
  * @param pathname The current path from usePathname()
  * @param t Translation function from useTranslations()
  * @param locale Current locale
@@ -35,6 +64,32 @@ export function generateBreadcrumbs(
 		// Skip dynamic segments (those in [brackets])
 		if (segment.startsWith("[") && segment.endsWith("]")) continue;
 
+		// Check if the segment is a numeric ID (for projects, etc.)
+		const isNumericId = /^\d+$/.test(segment);
+		
+		// Handle numeric IDs (like project IDs)
+		if (isNumericId && pathSegments[i-1] === "projects") {
+			try {
+				// Try to get the project data
+				const project = getProjectById(segment);
+				if (project && project.name) {
+					// Create a slug from the project name
+					const slug = createSlug(project.name);
+					
+					// For the URL, we still need to use the numeric ID to maintain proper routing
+					// but we'll display the project name as the label
+					breadcrumbs.push({
+						label: project.name,
+						href: i < pathSegments.length - 1 ? currentPath : undefined, // Last item has no href
+					});
+					continue; // Skip the rest of the loop for this segment
+				}
+			} catch (error) {
+				console.error("Error getting project data:", error);
+				// Continue with normal breadcrumb generation if there's an error
+			}
+		}
+		
 		// Try to get translation for the segment
 		// With the new nested structure, we need to handle the "_self" key for self-references
 		// Build the key path for accessing the nested structure

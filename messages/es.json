@@ -1,14 +1,16 @@
 {
+  "common": {
+    "loading": "Cargando"
+  },
   "breadcrumbs": {
     "dashboard": {
       "_self": "Tablero",
-      "odk": {
-        "_self": "ODK",
+
         "projects": "Proyectos",
         "forms": "Formularios",
         "submissions": "Envíos",
-        "assignments": "Asignaciones"
-      },
+        "assignments": "Asignaciones",
+
       "activities": "Actividades",
       "gestion-par": "Gestión PAR",
       "budget-par": "Presupuesto PAR",
@@ -22,6 +24,15 @@
     }
   },
   "dashboard": {
+    "totalForms": "Total de Formularios",
+    "activeUsers": "Usuarios Activos",
+    "completionRate": "Tasa de Finalización",
+    "fromLastMonth": "desde el mes pasado",
+    "monthlyActivity": "Actividad Mensual",
+    "forms": "Formularios",
+    "surveys": "Encuestas",
+    "userDistribution": "Distribución de Usuarios",
+    "completionRateTrend": "Tendencia de Tasa de Finalización",
     "menu": {
       "activities": "Actividades",
       "analysis": "Analizar",
@@ -45,8 +56,27 @@
       "parameters": "Parámetros",
       "audits": "Auditorías",
       "users": "Usuarios",
-      "system": "Sistema"
+      "system": "Sistema",
+      "view_selection": "Selección de Vista",
+      "general_view": "Vista General",
+      "no_projects": "No hay proyectos disponibles",
+      "project_dashboard": "Tablero",
+      "surveys": "Encuestas",
+      "settings": "Configuración"
     }
+  },
+  "project": {
+    "notFound": "Proyecto No Encontrado",
+    "notFoundDescription": "El proyecto que está buscando no existe o ha sido eliminado.",
+    "createdOn": "Creado el",
+    "description": "Descripción",
+    "sections": "Secciones del Proyecto",
+    "surveys": "Encuestas",
+    "surveysDescription": "Gestionar formularios y encuestas para la recolección de datos",
+    "users": "Usuarios",
+    "usersDescription": "Gestionar usuarios y sus roles en el proyecto",
+    "settings": "Configuración",
+    "settingsDescription": "Configurar ajustes y preferencias del proyecto"
   },
   "notFound": {
     "description": "La página que busca no existe.",

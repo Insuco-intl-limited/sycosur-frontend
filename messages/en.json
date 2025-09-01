@@ -1,15 +1,13 @@
 {
+  "common": {
+    "loading": "Loading"
+  },
   "breadcrumbs": {
     "dashboard": {
       "profile": "Profile",
       "_self": "Dashboard",
-      "odk": {
-        "_self": "ODK",
-        "projects": "Projects",
-        "forms": "Forms",
-        "submissions": "Submissions",
-        "assignments": "Assignments"
-      },
+
+      "projects": "Projects",
       "activities": "Activities",
       "gestion-par": "PAR Management",
       "budget-par": "PAR Budget",
@@ -22,6 +20,15 @@
     }
   },
   "dashboard": {
+    "totalForms": "Total Forms",
+    "activeUsers": "Active Users",
+    "completionRate": "Completion Rate",
+    "fromLastMonth": "from last month",
+    "monthlyActivity": "Monthly Activity",
+    "forms": "Forms",
+    "surveys": "Surveys",
+    "userDistribution": "User Distribution",
+    "completionRateTrend": "Completion Rate Trend",
     "menu": {
       "activities": "Activities",
       "analysis": "Analyze",
@@ -45,8 +52,27 @@
       "parameters": "Parameters",
       "audits": "Audits",
       "users": "Users",
-      "system": "System"
+      "system": "System",
+      "view_selection": "View Selection",
+      "general_view": "General View",
+      "no_projects": "No projects available",
+      "project_dashboard": "Project Dashboard",
+      "surveys": "Surveys",
+      "settings": "Settings"
     }
+  },
+  "project": {
+    "notFound": "Project Not Found",
+    "notFoundDescription": "The project you are looking for does not exist or has been removed.",
+    "createdOn": "Created on",
+    "description": "Description",
+    "sections": "Project Sections",
+    "surveys": "Surveys",
+    "surveysDescription": "Manage forms and surveys for data collection",
+    "users": "Users",
+    "usersDescription": "Manage users and their roles in the project",
+    "settings": "Settings",
+    "settingsDescription": "Configure project settings and preferences"
   },
   "notFound": {
     "description": "The page you are looking for does not exist.",

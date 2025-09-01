@@ -8,30 +8,30 @@ import ProtectedRoute from "@/components/shared/ProtectedRoute";
 import { useTranslations } from "next-intl";
 import { useGetUserQuery } from "@/lib/redux/features/auth/authApiSlice";
 import { getCurrentLocale } from "@/utils";
-import { getNavigationItems } from "@/components/shared/Navigation";
 import { usePathname } from "next/navigation";
 import { generateBreadcrumbs } from "@/utils/generateBreadcrumbs";
+import { useViewNavigation } from "@/hooks/useViewNavigation";
+import { getDynamicNavigationItems } from "@/components/shared/DynamicNavigation";
 
-export default function DashboardLayout({
-	children,
-}: {
-	children: React.ReactNode;
-}) {
+// Inner layout component that uses Redux for view state
+function DashboardLayoutInner({ children }: { children: React.ReactNode }) {
 	const t = useTranslations();
 	const pathname = usePathname();
+	const { viewType, selectedProject } = useViewNavigation();
 
 	const { data: user } = useGetUserQuery();
 	if (!user) {
-		return;
+		return null;
 	}
+	
 	// Récupération de la locale depuis les cookies
 	const locale = getCurrentLocale();
 
 	// Generate breadcrumbs dynamically based on the current path
 	const breadcrumbs: BreadcrumbItem[] = generateBreadcrumbs(pathname, t, locale);
 
-	// Données de navigation avec traductions
-	const navigationItems = getNavigationItems(t, locale);
+	// Get dynamic navigation items based on the current view and pathname
+	const navigationItems = getDynamicNavigationItems(t, locale, viewType, selectedProject, pathname);
 
 	return (
 		<div className="h-screen flex flex-col font-roboto">
@@ -50,4 +50,13 @@ export default function DashboardLayout({
 			</ProtectedRoute>
 		</div>
 	);
+}
+
+// Main layout component
+export default function DashboardLayout({
+	children,
+}: {
+	children: React.ReactNode;
+}) {
+	return <DashboardLayoutInner>{children}</DashboardLayoutInner>;
 }

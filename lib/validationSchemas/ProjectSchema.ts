@@ -9,8 +9,9 @@ export const ProjectSchema = z.object({
   description: z
     .string()
     .trim()
-    .min(10, { message: "Description must be at least 10 characters long" })
-    .max(500, { message: "Description must be less than 500 characters long" }),
+    // .min(10, { message: "Description must be at least 10 characters long" })
+    // .max(500, { message: "Description must be less than 500 characters long" })
+  ,
 });
 
 export type TProjectSchema = z.infer<typeof ProjectSchema>;

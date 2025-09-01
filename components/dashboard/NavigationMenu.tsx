@@ -14,31 +14,73 @@ const NavigationMenuItem = ({ item }: { item: NavigationItem }) => {
 	const [isExpanded, setIsExpanded] = useState(false);
 	const hasChildren = item.children && item.children.length > 0;
 
+	// Function to handle click on menu item
+	const handleItemClick = (e: React.MouseEvent) => {
+		if (hasChildren) {
+			// If item has children, toggle expanded state
+			setIsExpanded(!isExpanded);
+			
+			// If the item also has an href, don't prevent default navigation
+			// This allows both expanding and navigation
+		}
+	};
+
+	// Determine the content of the menu item
+	const menuItemContent = (
+		<>
+			<div className="flex items-center space-x-3">
+				{item.icon}
+				<span className="font-[900] text-[1.15rem]">{item.label}</span>
+			</div>
+
+			{hasChildren && (
+				<button 
+					className="p-1"
+					onClick={(e) => {
+						// Stop propagation to prevent the parent link from navigating
+						// when clicking specifically on the expand/collapse button
+						e.stopPropagation();
+						setIsExpanded(!isExpanded);
+					}}
+				>
+					{isExpanded ? (
+						<ChevronDown className="w-4 h-4" />
+					) : (
+						<ChevronRight className="w-4 h-4" />
+					)}
+				</button>
+			)}
+		</>
+	);
+
 	return (
 		<div className="w-full">
-			<div
-				className={`flex items-center justify-between w-full px-4 py-3 text-left transition-all duration-200 ${
-					item.isActive
-						? "bg-[#3189a1] text-white"
-						: "text-white/90 hover:bg-white/10 hover:text-white"
-				}`}
-				onClick={() => hasChildren && setIsExpanded(!isExpanded)}
-			>
-				<div className="flex items-center space-x-3">
-					{item.icon}
-					<span className="font-[900] text-[1.15rem]">{item.label}</span>
+			{item.href ? (
+				// If the item has an href, wrap it in a Link
+				<Link 
+					href={item.href}
+					className={`flex items-center justify-between w-full px-4 py-3 text-left transition-all duration-200 ${
+						item.isActive
+							? "bg-[#3189a1] text-white"
+							: "text-white/90 hover:bg-white/10 hover:text-white"
+					}`}
+					onClick={handleItemClick}
+				>
+					{menuItemContent}
+				</Link>
+			) : (
+				// If no href, just use a div (not clickable for navigation)
+				<div
+					className={`flex items-center justify-between w-full px-4 py-3 text-left transition-all duration-200 ${
+						item.isActive
+							? "bg-[#3189a1] text-white"
+							: "text-white/90 hover:bg-white/10 hover:text-white"
+					}`}
+					onClick={handleItemClick}
+				>
+					{menuItemContent}
 				</div>
-
-				{hasChildren && (
-					<button className="p-1">
-						{isExpanded ? (
-							<ChevronDown className="w-4 h-4" />
-						) : (
-							<ChevronRight className="w-4 h-4" />
-						)}
-					</button>
-				)}
-			</div>
+			)}
 
 			{hasChildren && isExpanded && (
 				<div className="bg-[#3853a1]/30">

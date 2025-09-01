@@ -1,0 +1,153 @@
+"use client";
+
+import type { NavigationItem } from "@/app/[locale]/dashboard/types";
+import type { Project, ViewType } from "@/lib/redux/features/view/viewSlice";
+import {
+  ComputerDesktopIcon,
+  CircleStackIcon,
+  UsersIcon,
+  Cog6ToothIcon,
+  FolderIcon,
+  BugAntIcon
+} from "@heroicons/react/24/solid";
+// @ts-ignore
+import type { TFunction } from "next-intl";
+
+/**
+ * Get navigation items for the General View
+ * @param t Translation function
+ * @param locale Current locale
+ * @param pathname Current pathname for determining active item
+ * @returns Array of navigation items for General View
+ */
+export const getGeneralNavigationItems = (
+  t: TFunction,
+  locale: string,
+  pathname: string
+): NavigationItem[] => {
+  return [
+    {
+      id: "dashboard",
+      label: t("dashboard.menu.dashboard"),
+      icon: <ComputerDesktopIcon className="w-5 h-5" />,
+      href: `/${locale}/dashboard`,
+      isActive: pathname === `/${locale}/dashboard` || pathname === `/${locale}/dashboard/`,
+    },
+    {
+      id: "projects",
+      label: t("dashboard.menu.projects"),
+      icon: <FolderIcon className="w-5 h-5" />,
+      href: `/${locale}/dashboard/projects`,
+      isActive: pathname.startsWith(`/${locale}/dashboard/projects`),
+    },
+    {
+      id: "users",
+      label: t("dashboard.menu.users"),
+      icon: <UsersIcon className="w-5 h-5" />,
+      href: `/${locale}/dashboard/users`,
+      isActive: pathname.startsWith(`/${locale}/dashboard/users`),
+    },
+    {
+      id: "settings",
+      label: t("dashboard.menu.settings"),
+      icon: <Cog6ToothIcon className="w-5 h-5" />,
+      href: `/${locale}/dashboard/settings`,
+      isActive: pathname.startsWith(`/${locale}/dashboard/settings`),
+    },
+  ];
+};
+
+/**
+ * Get navigation items for the Project View
+ * @param t Translation function
+ * @param locale Current locale
+ * @param project The selected project
+ * @param pathname Current pathname for determining active item
+ * @returns Array of navigation items for Project View
+ */
+export const getProjectNavigationItems = (
+  t: TFunction,
+  locale: string,
+  project: Project,
+  pathname: string
+): NavigationItem[] => {
+  const projectBasePath = `/${locale}/dashboard/projects/${project.ID}`;
+  
+  return [
+    {
+      id: "dashboard",
+      label: t("dashboard.menu.dashboard"),
+      icon: <ComputerDesktopIcon className="w-5 h-5" />,
+      href: projectBasePath,
+      isActive: pathname === projectBasePath || pathname === `${projectBasePath}/`,
+    },
+    {
+      id: "survey",
+      label: t("dashboard.menu.surveys"),
+      icon: <BugAntIcon className="w-5 h-5" />,
+      href: `${projectBasePath}/surveys`,
+      isActive: pathname.startsWith(`${projectBasePath}/surveys`),
+    },
+    {
+      id: "data",
+      label: t("dashboard.menu.data"),
+      icon: <CircleStackIcon className="w-5 h-5" />,
+      ///href: `${projectBasePath}/data`,
+      isActive: pathname.startsWith(`${projectBasePath}/data`),
+      children: [
+				{
+					id: "sandbox",
+					label: t("dashboard.menu.sandbox"),
+					href: `/${locale}/dashboard/sandbox`,
+				},
+				{
+					id: "analysis",
+					label: t("dashboard.menu.analysis"),
+					href: `/${locale}/dashboard/analysis`,
+				},
+				{
+					id: "documentation",
+					label: t("dashboard.menu.documentation"),
+					href: `/${locale}/dashboard/documentation`,
+				},
+			],
+    },
+    {
+      id: "project-users",
+      label: t("dashboard.menu.users"),
+      icon: <UsersIcon className="w-5 h-5" />,
+      href: `${projectBasePath}/users`,
+      isActive: pathname.startsWith(`${projectBasePath}/users`),
+    },
+    {
+      id: "project-settings",
+      label: t("dashboard.menu.settings"),
+      icon: <Cog6ToothIcon className="w-5 h-5" />,
+      href: `${projectBasePath}/settings`,
+      isActive: pathname.startsWith(`${projectBasePath}/settings`),
+    },
+  ];
+};
+
+/**
+ * Get dynamic navigation items based on the current view type and selected project
+ * @param t Translation function
+ * @param locale Current locale
+ * @param viewType Current view type (general or project)
+ * @param selectedProject Currently selected project (if any)
+ * @param pathname Current pathname for determining active item
+ * @returns Array of navigation items based on the current view
+ */
+export const getDynamicNavigationItems = (
+  t: TFunction,
+  locale: string,
+  viewType: ViewType,
+  selectedProject: Project | null,
+  pathname: string
+): NavigationItem[] => {
+  if (viewType === "project" && selectedProject) {
+    return getProjectNavigationItems(t, locale, selectedProject, pathname);
+  }
+  
+  return getGeneralNavigationItems(t, locale, pathname);
+};

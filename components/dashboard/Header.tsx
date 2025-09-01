@@ -3,8 +3,11 @@
 import { Logo } from "./Logo";
 import { UserMenu } from "./UserMenu";
 import type { BreadcrumbItem } from "@/app/[locale]/dashboard/types";
-import { BookOpenIcon } from "@heroicons/react/24/solid";
+import { BookOpenIcon, MapIcon } from "@heroicons/react/24/solid";
 import { UserResponse } from "@/types";
+import Link from "next/link";
+import {getCurrentLocale} from "@/utils";
+
 
 interface HeaderProps {
 	user: UserResponse;
@@ -12,6 +15,7 @@ interface HeaderProps {
 	className?: string;
 }
 
+const locale = getCurrentLocale();
 export const Header = ({
 	user,
 	breadcrumbs = [],
@@ -23,11 +27,11 @@ export const Header = ({
 		>
 			{/* Section gauche : Logo + Breadcrumb */}
 			<div className="flex items-center space-x-8">
-				<Logo />
+				<Link href={`/${locale}/dashboard`}><Logo/></Link>
 
 				{breadcrumbs.length > 0 && (
 					<nav className="flex items-center space-x-2">
-						<BookOpenIcon className="w-8 h-8 text-white" />
+						<MapIcon className="w-8 h-8 text-white" />
 						{breadcrumbs.map((item, index) => (
 							<div key={index} className="flex items-center space-x-2">
 								{index > 0 && <span className="text-white/60">/</span>}

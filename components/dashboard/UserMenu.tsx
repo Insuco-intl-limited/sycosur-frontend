@@ -3,7 +3,7 @@
 import type { UserResponse as UserType } from "@/types";
 import { LanguageSwitcher } from "@/components/dashboard/language-switcher";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useLogoutUserMutation } from "@/lib/redux/features/auth/authApiSlice";
 import { useAppDispatch } from "@/lib/redux/hooks/typedHooks";
 import { setLogout } from "@/lib/redux/features/auth/authSlice";
@@ -11,11 +11,11 @@ import { toast } from "react-toastify";
 import { useCallback } from "react";
 import { extractErrorMessage } from "@/utils";
 import {
-	FolderIcon,
 	UserIcon,
 	QuestionMarkCircleIcon,
 	PowerIcon,
 } from "@heroicons/react/24/solid";
+import { ViewSelector } from "@/components/dashboard/ViewSelector";
 
 interface UserMenuProps {
 	user: UserType;
@@ -24,6 +24,7 @@ interface UserMenuProps {
 
 export const UserMenu = ({ user, className = "" }: UserMenuProps) => {
 	const router = useRouter();
+	const pathname = usePathname();
 	const [logoutUser, { isLoading, isSuccess }] = useLogoutUserMutation();
 	const dispatch = useAppDispatch();
 
@@ -50,10 +51,8 @@ export const UserMenu = ({ user, className = "" }: UserMenuProps) => {
 
 	return (
 		<div className={`flex items-center space-x-4 ${className}`}>
-			{/* Icônes du menu utilisateur */}
-			<button className="text-white hover:text-gray-200 transition-colors p-2">
-				<FolderIcon className="w-7 h-7" strokeWidth={1} />
-			</button>
+			{/* View selector dropdown */}
+			{/*<ViewSelector />*/}
 
 			<div className="">
 				<LanguageSwitcher />

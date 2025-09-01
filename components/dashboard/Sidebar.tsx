@@ -2,6 +2,9 @@
 
 import { NavigationMenu } from "./NavigationMenu";
 import type { NavigationItem } from "@/app/[locale]/dashboard/types";
+import { useViewNavigation } from "@/hooks/useViewNavigation";
+import { useTranslations } from "next-intl";
+import { Badge } from "@/components/ui/badge";
 
 interface SidebarProps {
 	navigationItems: NavigationItem[];
@@ -9,22 +12,28 @@ interface SidebarProps {
 }
 
 export const Sidebar = ({ navigationItems, className = "" }: SidebarProps) => {
+	const { viewType, selectedProject } = useViewNavigation();
+	const t = useTranslations();
+
 	return (
 		<aside
 			className={`w-64 bg-gradient-to-r from-[#416c78] to-[#2d4a52] shadow-lg relative z-10 flex flex-col gap-0 ${className}`}
 		>
 			{/* En-tête de la sidebar */}
-			{/*<div className="p-4 border-b border-white/20 pt-6">*/}
-			{/*	<select className="w-full bg-white/10 text-white border border-white/20 px-3 py-2 font-roboto">*/}
-			{/*		<option>Sycosur</option>*/}
-			{/*	</select>*/}
-			{/*</div>*/}
+			{viewType === "project" && selectedProject && (
+				<div className="p-4 border-b border-white/20 pt-6 flex justify-center ">
+					<Badge 
+						variant="destructive"
+						className="bg-gradient-mediumGreen-accentBlue text-white px-3 py-1 text-sm max-w-[90%] truncate rounded-none"
+					>
+						{selectedProject.name}
+					</Badge>
+				</div>
+			)}
 
 			{/* Diamonds divider */}
 			<div className="flex justify-center items-center gap-3 py-4">
-				<div className="w-2 h-2 rotate-45 bg-gradient-to-br from-white/30 to-white/10"></div>
-				<div className="w-2 h-2 rotate-45 bg-gradient-to-br from-white/30 to-white/10"></div>
-				<div className="w-2 h-2 rotate-45 bg-gradient-to-br from-white/30 to-white/10"></div>
+
 			</div>
 
 			{/* Menu de navigation */}

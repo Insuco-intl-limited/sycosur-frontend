@@ -1,15 +1,15 @@
 {
+  "common": {
+    "loading": "Chargement"
+  },
   "breadcrumbs": {
     "dashboard": {
       "profile": "Profil",
       "_self": "Tableau de bord",
-      "odk": {
-        "_self": "ODK",
-        "projects": "Projets",
-        "forms": "Formulaires",
-        "submissions": "Soumissions",
-        "assignments": "Assignations"
-      },
+      "projects": "Projets",
+      "forms": "Formulaires",
+      "submissions": "Soumissions",
+      "assignments": "Assignations",
       "activities": "Activités",
       "gestion-par": "Gestion du PAR",
       "budget-par": "Budget du PAR",
@@ -45,7 +45,13 @@
       "parameters": "Paramètres",
       "audits": "Audits",
       "users": "Utilisateurs",
-      "system": "Système"
+      "system": "Système",
+      "view_selection": "Sélection de Vue",
+      "general_view": "Vue Générale",
+      "no_projects": "Aucun projet disponible",
+      "project_dashboard": "Tableau de Bord",
+      "surveys": "Enquêtes",
+      "settings": "Paramètres"
     }
   },
   "notFound": {
