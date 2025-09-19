@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -21,6 +21,7 @@ import {
   LineChart,
   Line
 } from "recharts";
+import { useGetProjectByIdQuery } from "@/lib/redux/features/projects/projectApiSlice";
 
 // Mock data for charts
 const activityData = [
@@ -50,36 +51,18 @@ const completionRateData = [
   { name: 'Week 6', rate: 90 },
 ];
 
-// Import the getProjectById function from the shared utility
-import { getProjectById } from "@/utils/projectUtils";
-
 export default function ProjectDashboardPage() {
   const t = useTranslations();
   const params = useParams();
   const projectId = params.id as string;
-  const [project, setProject] = useState<Project | null>(null);
-  const [loading, setLoading] = useState(true);
+  const numericId = Number(projectId);
 
-  useEffect(() => {
-    // In a real application, this would be an API call
-    const fetchProject = async () => {
-      setLoading(true);
-      try {
-        // Simulate API call delay
-        await new Promise((resolve) => setTimeout(resolve, 500));
-        const projectData = getProjectById(projectId);
-        setProject(projectData);
-      } catch (error) {
-        console.error("Error fetching project:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const { data, isLoading, isError } = useGetProjectByIdQuery(numericId, {
+    skip: Number.isNaN(numericId),
+  });
+  const project = data?.project;
 
-    fetchProject();
-  }, [projectId]);
-
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
@@ -87,7 +70,7 @@ export default function ProjectDashboardPage() {
     );
   }
 
-  if (!project) {
+  if (isError || !project) {
     return (
       <div className="flex flex-col items-center justify-center h-64">
         <h1 className="text-2xl font-bold mb-2">{t('project.notFound')}</h1>
@@ -107,7 +90,7 @@ export default function ProjectDashboardPage() {
           <CalendarIcon className="h-4 w-4 mr-1" />
           <span>
             {t('project.createdOn')}{" "}
-            {new Date(project.createdAt).toLocaleDateString("en-US", {
+            {new Date(project.created_at).toLocaleDateString("en-US", {
               year: "numeric",
               month: "long",
               day: "numeric",

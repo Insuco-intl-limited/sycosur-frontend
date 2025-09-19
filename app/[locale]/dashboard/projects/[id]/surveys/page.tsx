@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useParams } from "next/navigation";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import {
@@ -11,36 +11,19 @@ import {
 	SettingsTab,
 } from "@/components/survey-detail";
 import { CalendarIcon } from "lucide-react";
-
-// Import the getProjectById function from the shared utility
-import { getProjectById } from "@/utils/projectUtils";
+import { useGetProjectByIdQuery } from "@/lib/redux/features/projects/projectApiSlice";
 
 export default function ProjectDetailPage() {
 	const params = useParams();
 	const projectId = params.id as string;
-	const [project, setProject] = useState<Project | null>(null);
-	const [loading, setLoading] = useState(true);
+	const numericId = Number(projectId);
 
-	useEffect(() => {
-		// In a real application, this would be an API call
-		const fetchProject = async () => {
-			setLoading(true);
-			try {
-				// Simulate API call delay
-				await new Promise((resolve) => setTimeout(resolve, 500));
-				const projectData = getProjectById(projectId);
-				setProject(projectData);
-			} catch (error) {
-				console.error("Error fetching project:", error);
-			} finally {
-				setLoading(false);
-			}
-		};
+	const { data, isLoading, isError } = useGetProjectByIdQuery(numericId, {
+		skip: Number.isNaN(numericId),
+	});
+	const project = data?.project;
 
-		fetchProject();
-	}, [projectId]);
-
-	if (loading) {
+	if (isLoading) {
 		return (
 			<div className="flex items-center justify-center h-64">
 				<div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
@@ -48,7 +31,7 @@ export default function ProjectDetailPage() {
 		);
 	}
 
-	if (!project) {
+	if (isError || !project) {
 		return (
 			<div className="flex flex-col items-center justify-center h-64">
 				<h1 className="text-2xl font-bold mb-2">Project Not Found</h1>
@@ -68,7 +51,7 @@ export default function ProjectDetailPage() {
 					<CalendarIcon className="h-4 w-4 mr-1" />
 					<span>
 						Created on{" "}
-						{new Date(project.createdAt).toLocaleDateString("en-US", {
+						{new Date(project.created_at).toLocaleDateString("en-US", {
 							year: "numeric",
 							month: "long",
 							day: "numeric",
@@ -79,8 +62,8 @@ export default function ProjectDetailPage() {
 
 			{/* Project description */}
 			<div className="p-4 bg-muted/50 rounded-lg">
-				<h2 className="text-xl font-semibold mb-2">Description</h2>
-				<p>{project.description}</p>
+				{/*<h2 className="text-xl font-semibold mb-2">Description</h2>*/}
+				{/*<p>{project.description}</p>*/}
 			</div>
 
 			{/* Tabs for different sections */}
@@ -94,23 +77,23 @@ export default function ProjectDetailPage() {
 				</TabsList>
 
 				<TabsContent value="forms" className="mt-6">
-					<FormsTab projectId={project.ID} />
+					<FormsTab projectId={project.pkid} />
 				</TabsContent>
 
 				<TabsContent value="entity-lists" className="mt-6">
-					<EntityListsTab projectId={project.ID} />
+					<EntityListsTab projectId={project.pkid} />
 				</TabsContent>
 
 				<TabsContent value="project-roles" className="mt-6">
-					<ProjectRolesTab projectId={project.ID} />
+					<ProjectRolesTab projectId={project.pkid} />
 				</TabsContent>
 
 				<TabsContent value="app-users" className="mt-6">
-					<AppUsersTab projectId={project.ID} />
+					<AppUsersTab projectId={project.pkid} />
 				</TabsContent>
 
 				<TabsContent value="settings" className="mt-6">
-					<SettingsTab projectId={project.ID} />
+					<SettingsTab projectId={project.pkid} />
 				</TabsContent>
 			</Tabs>
 		</div>

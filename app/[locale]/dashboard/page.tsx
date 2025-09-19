@@ -1,6 +1,9 @@
 "use client";
 
 import { useViewNavigation } from "@/hooks/useViewNavigation";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CalendarIcon, Users, FileText, BarChart, TrendingUp, AlertTriangle, Clock } from "lucide-react";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 
 export default function DashboardPage() {
   const { projects } = useViewNavigation();
@@ -13,134 +16,271 @@ export default function DashboardPage() {
   // Format date to a more readable format
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('fr-FR', { 
-      year: 'numeric', 
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
       month: 'short', 
       day: 'numeric' 
     });
   };
 
+  // Mock data for line chart
+  const monthlyProgress = [
+    { month: 'Jan', completed: 65, ongoing: 35 },
+    { month: 'Feb', completed: 75, ongoing: 25 },
+    { month: 'Mar', completed: 85, ongoing: 15 },
+    { month: 'Apr', completed: 70, ongoing: 30 },
+    { month: 'May', completed: 90, ongoing: 10 },
+    { month: 'Jun', completed: 95, ongoing: 5 }
+  ];
+
+  const projectsByStatus = {
+    completed: 12,
+    ongoing: 8,
+    pending: 3,
+    overdue: 2
+  };
+
+  const completionRate = Math.round((projectsByStatus.completed / (projectsByStatus.completed + projectsByStatus.ongoing + projectsByStatus.pending + projectsByStatus.overdue)) * 100);
+
   return (
-    <div className="space-y-8 p-2">
-      {/* En-tête de la page avec gradient */}
-      <div className="bg-gradient-to-r from-[#3189a1] to-[#41a1b8] text-white p-6 rounded-lg shadow-md">
-        <h1 className="text-3xl font-bold">Tableau de bord</h1>
-        <p className="mt-2 text-white/80">Bienvenue sur votre espace de gestion de projets</p>
-      </div>
-
-      {/* Statistiques avec icônes */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-[#3189a1] hover:shadow-lg transition-shadow">
-          <div className="flex items-center mb-2">
-            <div className="w-10 h-10 rounded-full bg-[#3189a1]/10 flex items-center justify-center mr-3">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-[#3189a1]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-              </svg>
-            </div>
-            <h3 className="text-lg font-semibold text-gray-800">Projets en cours</h3>
-          </div>
-          <div className="text-3xl font-bold text-[#3189a1]">4</div>
-          <p className="text-sm text-gray-500 mt-1">Dernière mise à jour: aujourd'hui</p>
-        </div>
-
-        <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-[#e74c3c] hover:shadow-lg transition-shadow">
-          <div className="flex items-center mb-2">
-            <div className="w-10 h-10 rounded-full bg-[#e74c3c]/10 flex items-center justify-center mr-3">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-[#e74c3c]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-            <h3 className="text-lg font-semibold text-gray-800">Échéances proches</h3>
-          </div>
-          <div className="text-3xl font-bold text-[#e74c3c]">2</div>
-          <p className="text-sm text-gray-500 mt-1">Dans les 7 prochains jours</p>
-        </div>
-
-        <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-[#27ae60] hover:shadow-lg transition-shadow">
-          <div className="flex items-center mb-2">
-            <div className="w-10 h-10 rounded-full bg-[#27ae60]/10 flex items-center justify-center mr-3">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-[#27ae60]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-            <h3 className="text-lg font-semibold text-gray-800">Projets complétés</h3>
-          </div>
-          <div className="text-3xl font-bold text-[#27ae60]">3</div>
-          <p className="text-sm text-gray-500 mt-1">Ce trimestre</p>
+    <div className="space-y-6">
+      {/* Header Section */}
+      <div className="space-y-2">
+        <h1 className="text-3xl font-bold">Dashboard</h1>
+        <div className="flex items-center text-muted-foreground">
+          <CalendarIcon className="h-4 w-4 mr-1" />
+          <span>Overview of your projects and activities</span>
         </div>
       </div>
 
-      {/* Projets récents */}
-      <div className="bg-white p-6 rounded-lg shadow-md">
-        <h2 className="text-xl font-bold mb-4 text-gray-800 flex items-center">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2 text-[#3189a1]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
-          </svg>
-          Projets récents
-        </h2>
-        <div className="space-y-4">
-          {latestProjects.map(project => (
-            <div key={project.ID} className="border-b border-gray-100 pb-4 last:border-0">
-              <div className="flex justify-between items-start">
-                <div>
-                  <h3 className="font-medium text-[#3189a1]">{project.name}</h3>
-                  <p className="text-sm text-gray-600 mt-1">{project.description}</p>
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* Total Projects */}
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Total Projects</CardTitle>
+            <FileText className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div
+                className="text-2xl font-bold">{Object.values(projectsByStatus).reduce((acc, curr) => acc + curr, 0)}</div>
+            <p className="text-xs text-muted-foreground">
+              +12% from last month
+            </p>
+          </CardContent>
+        </Card>
+
+        {/* Completed Projects */}
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Completed</CardTitle>
+            <TrendingUp className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{projectsByStatus.completed}</div>
+            <div className="w-full bg-muted rounded-full h-2 mt-2">
+              <div
+                className="bg-chart-2 h-2 rounded-full transition-all duration-500"
+                style={{ width: `${completionRate}%` }}
+              ></div>
+            </div>
+            <p className="text-xs text-muted-foreground mt-1">
+              {completionRate}% completion rate
+            </p>
+          </CardContent>
+        </Card>
+
+        {/* Ongoing Projects */}
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">In Progress</CardTitle>
+            <Clock className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{projectsByStatus.ongoing}</div>
+            <p className="text-xs text-muted-foreground">
+              Currently active
+            </p>
+          </CardContent>
+        </Card>
+
+        {/* Overdue Projects */}
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Overdue</CardTitle>
+            <AlertTriangle className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{projectsByStatus.overdue}</div>
+            <p className="text-xs text-muted-foreground">
+              Requires attention
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Charts and Recent Projects */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        {/* Progress Chart */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Monthly Progress</CardTitle>
+          </CardHeader>
+          <CardContent className="h-80">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart
+                data={monthlyProgress}
+                margin={{
+                  top: 20,
+                  right: 30,
+                  left: 20,
+                  bottom: 5,
+                }}
+              >
+                <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                <XAxis
+                  dataKey="month"
+                  className="fill-muted-foreground text-xs"
+                />
+                <YAxis
+                  className="fill-muted-foreground text-xs"
+                />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: 'hsl(var(--card))',
+                    border: '1px solid hsl(var(--border))',
+                    borderRadius: '6px'
+                  }}
+                />
+                <Legend />
+                <Line
+                  type="monotone"
+                  dataKey="completed"
+                  stroke="hsl(var(--chart-2))"
+                  strokeWidth={3}
+                  dot={{ fill: "hsl(var(--chart-2))", strokeWidth: 2, r: 4 }}
+                  name="Completed"
+                />
+                <Line
+                  type="monotone"
+                  dataKey="ongoing"
+                  stroke="hsl(var(--chart-1))"
+                  strokeWidth={3}
+                  dot={{ fill: "hsl(var(--chart-1))", strokeWidth: 2, r: 4 }}
+                  name="Ongoing"
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+
+        {/* Recent Projects */}
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between">
+            <CardTitle>Recent Projects</CardTitle>
+            <button className="text-sm font-medium text-blue-600 hover:text-blue-700">
+              View all
+            </button>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {latestProjects.map((project, index) => (
+              <div key={project.ID} className="flex items-start space-x-4 p-3 rounded-lg hover:bg-muted/50 transition-colors">
+                <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${
+                  index === 0 ? 'bg-chart-2' : 
+                  index === 1 ? 'bg-chart-1' : 'bg-chart-4'
+                }`}></div>
+                <div className="flex-1 min-w-0">
+                  <h4 className="font-medium text-sm truncate">
+                    {project.name}
+                  </h4>
+                  <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
+                    {project.description}
+                  </p>
+                  <div className="flex items-center justify-between mt-2">
+                    <span className="text-xs text-muted-foreground">
+                      {formatDate(project.createdAt)}
+                    </span>
+                    <div className="w-6 h-6 bg-muted rounded-full flex items-center justify-center">
+                      <span className="text-xs font-medium text-muted-foreground">
+                        {Math.floor(Math.random() * 100)}%
+                      </span>
+                    </div>
+                  </div>
                 </div>
-                <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">
-                  {formatDate(project.createdAt)}
-                </span>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Activity Overview */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Activity Overview</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+            {/* Upcoming Activities */}
+            <div>
+              <h4 className="text-sm font-medium text-muted-foreground mb-4 flex items-center">
+                <div className="w-2 h-2 bg-chart-1 rounded-full mr-2"></div>
+                Upcoming Activities (3)
+              </h4>
+              <div className="space-y-3">
+                <div className="flex items-center p-3 bg-blue-50 dark:bg-blue-950/20 rounded-lg border-l-4 border-blue-500">
+                  <div className="flex-1">
+                    <p className="text-sm font-medium">Field Training Session</p>
+                    <p className="text-xs text-muted-foreground">February 28, 2026</p>
+                  </div>
+                  <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
+                    <CalendarIcon className="w-4 h-4 text-blue-600" />
+                  </div>
+                </div>
+                <div className="flex items-center p-3 bg-blue-50 dark:bg-blue-950/20 rounded-lg border-l-4 border-blue-500">
+                  <div className="flex-1">
+                    <p className="text-sm font-medium">Support Fund Setup</p>
+                    <p className="text-xs text-muted-foreground">March 15, 2026</p>
+                  </div>
+                  <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
+                    <Users className="w-4 h-4 text-blue-600" />
+                  </div>
+                </div>
               </div>
             </div>
-          ))}
-        </div>
-        <button className="mt-4 text-[#3189a1] hover:text-[#41a1b8] text-sm font-medium flex items-center">
-          Voir tous les projets
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
-        </button>
-      </div>
 
-      {/* Sections principales */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-gradient-to-br from-[#3189a1] to-[#41a1b8] text-white p-6 rounded-lg shadow-md">
-          <h2 className="text-xl font-bold mb-4 flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
-            Activités à venir
-          </h2>
-          <div className="space-y-3">
-            <div className="flex justify-between items-center bg-white/10 p-3 rounded">
-              <span className="font-medium">28 fév 2023</span>
-              <span>Formation sur le terrain</span>
-            </div>
-            <div className="flex justify-between items-center bg-white/10 p-3 rounded">
-              <span className="font-medium">28 fév 2023</span>
-              <span>Mise en place d'un fonds d'appui</span>
+            {/* Overdue Activities */}
+            <div>
+              <h4 className="text-sm font-medium text-muted-foreground mb-4 flex items-center">
+                <div className="w-2 h-2 bg-red-500 rounded-full mr-2"></div>
+                Overdue Activities (2)
+              </h4>
+              <div className="space-y-3">
+                <div className="flex items-center p-3 bg-red-50 dark:bg-red-950/20 rounded-lg border-l-4 border-red-500">
+                  <div className="flex-1">
+                    <p className="text-sm font-medium">Beneficiary Training</p>
+                    <p className="text-xs text-red-600 dark:text-red-400">5 days overdue</p>
+                  </div>
+                  <div className="w-8 h-8 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center">
+                    <AlertTriangle className="w-4 h-4 text-red-600" />
+                  </div>
+                </div>
+                <div className="flex items-center p-3 bg-red-50 dark:bg-red-950/20 rounded-lg border-l-4 border-red-500">
+                  <div className="flex-1">
+                    <p className="text-sm font-medium">Quarterly Assessment</p>
+                    <p className="text-xs text-red-600 dark:text-red-400">12 days overdue</p>
+                  </div>
+                  <div className="w-8 h-8 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center">
+                    <BarChart className="w-4 h-4 text-red-600" />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        </CardContent>
+      </Card>
 
-        <div className="bg-gradient-to-br from-[#e74c3c] to-[#f39c12] text-white p-6 rounded-lg shadow-md">
-          <h2 className="text-xl font-bold mb-4 flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            Activités en retard
-          </h2>
-          <div className="space-y-3">
-            <div className="flex justify-between items-center bg-white/10 p-3 rounded">
-              <span className="font-medium">28 avr 2023</span>
-              <span>Formation des bénéficiaires</span>
-            </div>
-            <div className="flex justify-between items-center bg-white/10 p-3 rounded">
-              <span className="font-medium">28 avr 2023</span>
-              <span>Mise en place d'un fonds d'appui</span>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   )
 }

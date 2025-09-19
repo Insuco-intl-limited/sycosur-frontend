@@ -145,7 +145,12 @@ export const getDynamicNavigationItems = (
   selectedProject: Project | null,
   pathname: string
 ): NavigationItem[] => {
-  if (viewType === "project" && selectedProject) {
+  // Consider we are on a project route when the path includes an ID segment
+  const onProjectPath = /\/dashboard\/projects\/\d+/.test(pathname);
+
+  // Show project navigation whenever we're on a project route and we have a project context
+  // Also keep backward compatibility if viewType is explicitly set to "project"
+  if ((onProjectPath && selectedProject) || (viewType === "project" && selectedProject)) {
     return getProjectNavigationItems(t, locale, selectedProject, pathname);
   }
   

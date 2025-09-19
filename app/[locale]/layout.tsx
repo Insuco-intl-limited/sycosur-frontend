@@ -8,6 +8,7 @@ import { getLocale, getMessages } from "next-intl/server";
 import { PersistAuth } from "@/utils";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
+import ProtectedRoute from "@/components/shared/ProtectedRoute";
 
 export default async function LocaleLayout({
 	children,
@@ -25,8 +26,8 @@ export default async function LocaleLayout({
 	const messages = await getMessages();
 
 	return (
-		<NextIntlClientProvider locale={locale as any} messages={messages}>
-			<PersistAuth />
+		<ProtectedRoute><NextIntlClientProvider locale={locale as any} messages={messages}>
+			<PersistAuth/>
 			<ThemeProvider
 				attribute="class"
 				defaultTheme="system"
@@ -35,6 +36,6 @@ export default async function LocaleLayout({
 			>
 				{children}
 			</ThemeProvider>
-		</NextIntlClientProvider>
+		</NextIntlClientProvider></ProtectedRoute>
 	);
 }

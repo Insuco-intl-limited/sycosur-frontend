@@ -118,3 +118,34 @@ export type ODKRole =
 	| "supervisor"
 	| "manager"
 	| "administrator";
+
+
+// PROJECT-RELATED INTERFACES
+export interface Project {
+	id: string;
+	pkid: number
+	odk_id?: number;
+	name: string;
+	description?: string;
+	created_at: string;
+	updated_at?: string;
+	created_by?: string;
+	created_by_name?: string;
+}
+export interface ProjectCreateData {
+	name: string;
+	description?: string;
+}
+export interface ProjectResponse {
+	status_code: number;
+	project: Project;
+}
+export interface ProjectsResponse {
+	status_code: number;
+	projects: {
+		count: number;
+		next?: string;
+		previous?: string;
+		results: Project[];
+	};
+}

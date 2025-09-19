@@ -13,6 +13,7 @@ interface FileUploadFormProps {
     file: File | null;
     ignoreWarnings: boolean;
     publish: boolean;
+    formId?: string;
   }) => Promise<void>;
   onCancel?: () => void;
   isLoading?: boolean;
@@ -24,6 +25,7 @@ export function FileUploadForm({
   isLoading = false,
 }: FileUploadFormProps) {
   const [file, setFile] = useState<File | null>(null);
+  const [formId, setFormId] = useState<string>("");
   const [ignoreWarnings, setIgnoreWarnings] = useState(false);
   const [publish, setPublish] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -48,10 +50,12 @@ export function FileUploadForm({
         file,
         ignoreWarnings,
         publish,
+        formId: formId.trim() || undefined,
       });
       
       // Reset form after successful submission
       setFile(null);
+      setFormId("");
       setIgnoreWarnings(false);
       setPublish(false);
       setError(null);
@@ -63,21 +67,38 @@ export function FileUploadForm({
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="space-y-2">
-        <Label htmlFor="file-upload">Form File</Label>
-        <Input
-          id="file-upload"
-          type="file"
-          onChange={handleFileChange}
-          disabled={isLoading}
-          accept=".xml,.xls,.xlsx"
-        />
-        {file && (
-          <p className="text-sm text-muted-foreground">
-            Selected file: {file.name}
+      <div className="space-y-4">
+        <div className="space-y-2">
+          <Label htmlFor="form-id">Form ID (optional)</Label>
+          <Input
+            id="form-id"
+            type="text"
+            value={formId}
+            onChange={(e) => setFormId(e.target.value)}
+            disabled={isLoading}
+            placeholder="Custom form ID (leave empty to use default)"
+          />
+          <p className="text-xs text-muted-foreground">
+            Provide a custom xmlFormId or leave empty to use the ID from the form file
           </p>
-        )}
-        {error && <p className="text-sm text-red-500">{error}</p>}
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="file-upload">Form File</Label>
+          <Input
+            id="file-upload"
+            type="file"
+            onChange={handleFileChange}
+            disabled={isLoading}
+            accept=".xml,.xls,.xlsx"
+          />
+          {file && (
+            <p className="text-sm text-muted-foreground">
+              Selected file: {file.name}
+            </p>
+          )}
+          {error && <p className="text-sm text-red-500">{error}</p>}
+        </div>
       </div>
 
       <div className="space-y-3">

@@ -12,6 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Upload } from "lucide-react";
 import { toast } from "react-toastify";
+import { useUploadProjectFormMutation } from "@/lib/redux/features/surveys/surveyApiSlice";
 
 interface FileUploadFormModalProps {
 	projectId: string | number;
@@ -26,31 +27,42 @@ export function FileUploadFormModal({
 }: FileUploadFormModalProps) {
 	const [open, setOpen] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
+	const [uploadProjectForm] = useUploadProjectFormMutation();
 
 	const handleSubmit = async (data: {
 		file: File | null;
 		ignoreWarnings: boolean;
 		publish: boolean;
+		formId?: string;
 	}) => {
 		if (!data.file) return;
 
 		setIsLoading(true);
 		try {
-			// In a real application, this would be an API call to upload the form
-			console.log("Uploading form for project:", projectId, data);
+			const response = await uploadProjectForm({
+				projectId,
+				file: data.file,
+				ignoreWarnings: data.ignoreWarnings,
+				publish: data.publish,
+				formId: data.formId,
+			}).unwrap();
 
-			// Simulate API call delay
-			await new Promise((resolve) => setTimeout(resolve, 1500));
-
-			// Show success message
+			// Use the form name from the response if available
+			const formName = response?.form?.name || data.file.name;
+			
 			toast.success(
-				`Form "${data.file.name}" uploaded successfully${data.publish ? " and published" : ""}`,
+				`Form "${formName}" uploaded successfully${data.publish ? " and published" : ""}`,
 			);
 
 			setOpen(false);
-		} catch (error) {
+		} catch (error: any) {
 			console.error("Error uploading form:", error);
-			toast.error("Failed to upload form");
+			// Extract error message from API response if available
+			const errorMessage = error?.data?.message || 
+				(error?.data?.error && typeof error.data.error === 'string' ? error.data.error : null) ||
+				"Failed to upload form";
+			
+			toast.error(errorMessage);
 		} finally {
 			setIsLoading(false);
 		}

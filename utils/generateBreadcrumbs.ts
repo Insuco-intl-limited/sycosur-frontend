@@ -2,9 +2,6 @@ import { BreadcrumbItem } from "@/app/[locale]/dashboard/types";
 // @ts-ignore
 import { TFunction } from "next-intl"; // TFunction is the type returned by useTranslation function from next-intl
 
-// Import the getProjectById function from the shared utility
-import { getProjectById } from "@/utils/projectUtils";
-
 /**
  * Creates a slug from a project name, limited to 10 characters
  * @param name The project name to convert to a slug
@@ -38,10 +35,13 @@ function createSlug(name: string): string {
  * @param locale Current locale
  * @returns Array of breadcrumb items
  */
+type CurrentProject = { id?: string | number; pkid?: number; name: string } | null | undefined;
+
 export function generateBreadcrumbs(
-	pathname: string,
-	t: TFunction,
-	locale: string,
+  pathname: string,
+  t: TFunction,
+  locale: string,
+  options?: { currentProject?: CurrentProject }
 ): BreadcrumbItem[] {
 	// Skip empty string and locale from path segments
 	const segments = pathname.split("/").filter(Boolean);
@@ -67,27 +67,30 @@ export function generateBreadcrumbs(
 		// Check if the segment is a numeric ID (for projects, etc.)
 		const isNumericId = /^\d+$/.test(segment);
 		
-		// Handle numeric IDs (like project IDs)
-		if (isNumericId && pathSegments[i-1] === "projects") {
-			try {
-				// Try to get the project data
-				const project = getProjectById(segment);
-				if (project && project.name) {
-					// Create a slug from the project name
-					const slug = createSlug(project.name);
-					
-					// For the URL, we still need to use the numeric ID to maintain proper routing
-					// but we'll display the project name as the label
+		// Handle numeric segments (IDs like project IDs) — never translate IDs
+		if (isNumericId) {
+			if (pathSegments[i - 1] === "projects") {
+				const proj = options?.currentProject;
+				const segStr = String(segment);
+				const match = proj && (
+					(proj.pkid !== undefined && String(proj.pkid) === segStr) ||
+					(proj.id !== undefined && String(proj.id) === segStr)
+				);
+				if (match && proj?.name) {
+					// Use the project name without translation
 					breadcrumbs.push({
-						label: project.name,
-						href: i < pathSegments.length - 1 ? currentPath : undefined, // Last item has no href
+						label: proj.name,
+						href: i < pathSegments.length - 1 ? currentPath : undefined,
 					});
-					continue; // Skip the rest of the loop for this segment
+					continue;
 				}
-			} catch (error) {
-				console.error("Error getting project data:", error);
-				// Continue with normal breadcrumb generation if there's an error
 			}
+			// Fallback for any numeric segment: show the raw ID as label without translation
+			breadcrumbs.push({
+				label: String(segment),
+				href: i < pathSegments.length - 1 ? currentPath : undefined,
+			});
+			continue;
 		}
 		
 		// Try to get translation for the segment

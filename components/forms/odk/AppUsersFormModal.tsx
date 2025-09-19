@@ -13,6 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { UserPlus } from "lucide-react";
 import { toast } from "react-toastify";
+import { useAddAppUserMutation } from "@/lib/redux/features/surveys/surveyApiSlice";
 
 interface AppUsersFormModalProps {
 	projectId: string | number;
@@ -29,33 +30,39 @@ export function AppUsersFormModal({
 }: AppUsersFormModalProps) {
 	const [open, setOpen] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
+	const [addAppUser] = useAddAppUserMutation();
 
 	const handleSubmit = async (data: TAppUsersSchema) => {
 		setIsLoading(true);
 		try {
-			// If an onSubmit prop is provided, use it; otherwise use the default implementation
+			// If an onSubmit prop is provided, use it; otherwise use the addAppUser mutation
 			if (onSubmit) {
 				await onSubmit(data);
 			} else {
-				// Default implementation - in a real app, this would call an API
-				console.log(
-					"Adding user with display name:",
-					data.displayName,
-					"to project:",
-					projectId,
-				);
-
-				// Simulate API call delay
-				await new Promise((resolve) => setTimeout(resolve, 1000));
-
+				// Convert projectId to number if it's a string
+				const numericProjectId = typeof projectId === 'string' ? parseInt(projectId, 10) : projectId;
+				
+				// Call the addAppUser mutation
+				const response = await addAppUser({
+					projectId: numericProjectId,
+					displayName: data.displayName,
+				}).unwrap();
+				
+				// Get user data from response
+				const userData = response.app_user;
+				
 				// Show success message
-				toast.success(`User "${data.displayName}" added successfully`);
+				toast.success(`User  added successfully`);
 			}
 
 			setOpen(false);
-		} catch (error) {
-			console.error("Error adding user:", error);
-			toast.error("Failed to add user");
+		} catch (error: any) {
+			// Extract error message from API response if available
+			const errorMessage = error?.data?.message || 
+				(error?.data?.error && typeof error.data.error === 'string' ? error.data.error : null) ||
+				"Failed to add user";
+			
+			toast.error(errorMessage);
 		} finally {
 			setIsLoading(false);
 		}

@@ -1,199 +1,163 @@
 "use client";
-
-import { Badge } from "@/components/ui/badge";
-import { Edit, Trash2, Eye } from "lucide-react";
-import type { Column, ActionItem } from "@/types/datatable";
-
-import { Button } from "@/components/ui/button";
-import { useTranslations } from "next-intl";
-import { PlusCircle } from "lucide-react";
-import { DataTable } from "@/components/datatable/datatable";
-import { ProjectFormModal } from "@/components/forms/odk/ProjectFormModal";
-import { toast } from "react-toastify";
-import { useRouter, usePathname } from "next/navigation";
-
-// Sample project data
-const sampleProjects: Project[] = [
-	{
-		ID: 1,
-		name: "Rural Development Project",
-		description:
-			"A project focused on developing rural areas through sustainable agriculture and infrastructure.",
-		createdAt: "2024-01-15T09:00:00Z",
-	},
-	{
-		ID: 2,
-		name: "Water Access Program",
-		description:
-			"Program to improve access to clean water in underserved communities.",
-		createdAt: "2024-02-10T10:30:00Z",
-	},
-	{
-		ID: 3,
-		name: "Community Health Initiative",
-		description:
-			"Initiative to improve healthcare services and education in local communities.",
-		createdAt: "2024-03-01T08:15:00Z",
-	},
-	{
-		ID: 4,
-		name: "Digital Education Project",
-		description:
-			"Project to enhance digital literacy and provide technology resources to schools.",
-		createdAt: "2024-02-15T14:45:00Z",
-	},
-	{
-		ID: 5,
-		name: "Food Security Program",
-		description:
-			"Program to address food insecurity through sustainable farming practices.",
-		createdAt: "2024-04-01T11:20:00Z",
-	},
-	{
-		ID: 6,
-		name: "Microfinance Initiative",
-		description:
-			"Initiative to provide small loans to entrepreneurs in developing regions.",
-		createdAt: "2024-05-15T13:10:00Z",
-	},
-	{
-		ID: 7,
-		name: "Reforestation Project",
-		description:
-			"Project to restore forest ecosystems in areas affected by deforestation.",
-		createdAt: "2024-06-01T09:45:00Z",
-	},
-	{
-		ID: 8,
-		name: "Renewable Energy Program",
-		description:
-			"Program to implement renewable energy solutions in rural communities.",
-		createdAt: "2024-07-01T10:00:00Z",
-	},
-];
+import {Badge} from "@/components/ui/badge";
+import {Edit, Trash2, Eye} from "lucide-react";
+import type {Column, ActionItem} from "@/types/datatable";
+import {useTranslations} from "next-intl";
+import {DataTable} from "@/components/datatable/datatable";
+import {ProjectFormModal} from "@/components/forms/odk/ProjectFormModal";
+import {toast} from "react-toastify";
+import {useRouter, usePathname} from "next/navigation";
+import {
+    useCreateProjectMutation,
+    useGetProjectsQuery,
+    useDeleteProjectMutation
+} from "@/lib/redux/features/projects/projectApiSlice";
+import type {Project} from "@/types";
 
 export default function ProjectsPage() {
-	const t = useTranslations();
-	const router = useRouter();
-	const pathname = usePathname();
+    const t = useTranslations();
+    const router = useRouter();
+    const pathname = usePathname();
 
-	// Column definitions for the DataTable
-	const columns: Column<Project>[] = [
-		{
-			key: "ID",
-			header: "ID",
-			width: "80px",
-			sortable: true,
-		},
-		{
-			key: "name",
-			header: "Project Name",
-			sortable: true,
-			filterable: true,
-		},
-		{
-			key: "description",
-			header: "Description",
-			sortable: true,
-			filterable: true,
-		},
-		{
-			key: "createdAt",
-			header: "Created At",
-			sortable: true,
-			accessor: (project) =>
-				new Date(project.createdAt).toLocaleDateString("en-US"),
-		},
-	];
+    // Fetch projects from API
+    const {data, isLoading, isError, refetch} = useGetProjectsQuery();
+    const projects: Project[] = data?.projects?.results ?? [];
+    const totalCount = data?.projects?.count ?? 0;
+    const [createProject, {isLoading: isCreating}] = useCreateProjectMutation();
+    const [deleteProject, {isLoading: isDeleting}] = useDeleteProjectMutation();
 
-	// Action definitions for the DataTable
-	const actions: ActionItem<Project>[] = [
-		{
-			label: "View",
-			icon: <Eye className="h-4 w-4" />,
-			onClick: (project) => {
-				// Extract the locale from the pathname
-				const locale = pathname.split('/')[1];
-				router.push(`/${locale}/dashboard/projects/${project.ID}`);
-			},
-		},
-		{
-			label: "Update",
-			icon: <Edit className="h-4 w-4" />,
-			onClick: (project) => {
-				alert(`Update project: ${project.name}`);
-			},
-		},
-		{
-			label: "Delete",
-			icon: <Trash2 className="h-4 w-4" />,
-			variant: "destructive" as const,
-			onClick: (project) => {
-				if (
-					confirm(
-						`Are you sure you want to delete the project: ${project.name}?`,
-					)
-				) {
-					alert(
-						`Project ${project.name} with ID ${project.ID} has been deleted`,
-					);
-				}
-			},
-		},
-	];
+    // Helper function to format date
+    const formatDate = (dateString: string): string => {
+        return new Date(dateString).toLocaleDateString("en-US");
+    };
 
-	// Handler for creating a new project
-	const handleCreateProject = async (data: {
-		name: string;
-		description: string;
-	}) => {
-		try {
-			// In a real application, this would be an API call to create the project
-			console.log("Creating project:", data);
+    // Helper function to extract locale from pathname
+    const getLocaleFromPathname = (): string => {
+        return pathname.split('/')[1];
+    };
 
-			// Simulate API call delay
-			await new Promise((resolve) => setTimeout(resolve, 1000));
+    // Navigation handlers
+    const handleViewProject = (project: Project): void => {
+        const locale = getLocaleFromPathname();
+        router.push(`/${locale}/dashboard/projects/${project.pkid}`);
+    };
 
-			// Show success message
-			toast.success(`Project "${data.name}" created successfully`);
+    const handleUpdateProject = (project: Project): void => {
+        // TODO: implement update flow
+        toast.info(`Update project: ${project.name}`);
+    };
 
-			// In a real application, you would refresh the projects list here
-		} catch (error) {
-			console.error("Error creating project:", error);
-			toast.error("Failed to create project");
-			throw error; // Re-throw to let the form component handle it
-		}
-	};
 
-	return (
-		<div className="space-y-6">
-			{/* Header with title, total items count as badge, and add button */}
-			<div className="flex justify-between items-center">
-				<div className="flex items-center gap-2">
-					<h1 className="text-2xl font-bold">Projects</h1>
-					<Badge variant="default" className="text-sm bg-accentBlue">
-						{sampleProjects.length}
-					</Badge>
-				</div>
-				<ProjectFormModal
-					onSubmit={handleCreateProject}
-					title="Create New Project"
-				/>
-			</div>
+    // API operation handlers with consistent error handling
+    const showApiError = (operation: string, error: unknown): void => {
+        console.error(`Error ${operation} project:`, error);
+        toast.error(`Failed to ${operation} project`);
+    };
 
-			{/* DataTable component */}
+    const handleCreateProject = async (form: { name: string; description?: string }): Promise<void> => {
+        try {
+            await createProject({name: form.name, description: form.description}).unwrap();
+            toast.success(`Project "${form.name}" created successfully`);
+            refetch();
+        } catch (error) {
+            showApiError("creating", error);
+            throw error as Error;
+        }
+    };
 
-			<DataTable
-				data={sampleProjects}
-				columns={columns}
-				actions={actions}
-				searchable={true}
-				paginated={true}
-				pageSize={5}
-				exportable={true}
-				filterable={true}
-				sortable={true}
-			/>
-		</div>
-	);
+    const handleDeleteProject = async (project: Project): Promise<void> => {
+        if (confirm(`Are you sure you want to delete the project "${project.name}"?`)) {
+            try {
+                await deleteProject(project.pkid).unwrap();
+                toast.success(`Project "${project.name}" deleted successfully`);
+                refetch();
+            } catch (error) {
+                showApiError("deleting", error);
+            }
+        }
+    };
+    
+    const buildColumns = (): Column<Project>[] => [
+        {
+            key: "pkid",
+            header: "ID",
+            width: "80px",
+            sortable: true,
+        },
+        {
+            key: "name",
+            header: "Project Name",
+            sortable: true,
+            filterable: true,
+        },
+        {
+            key: "description",
+            header: "Description",
+            sortable: true,
+            filterable: true,
+        },
+        {
+            key: "created_at",
+            header: "Created On",
+            sortable: true,
+            accessor: (project) => formatDate(project.created_at),
+        },
+    ];
+
+    const buildActions = (): ActionItem<Project>[] => [
+        {
+            label: "View",
+            icon: <Eye className="h-4 w-4"/>,
+            onClick: handleViewProject,
+        },
+        {
+            label: "Update",
+            icon: <Edit className="h-4 w-4"/>,
+            onClick: handleUpdateProject,
+        },
+        {
+            label: "Delete",
+            icon: <Trash2 className="h-4 w-4"/>,
+            variant: "destructive" as const,
+            onClick: handleDeleteProject,
+        },
+    ];
+
+    const columns = buildColumns();
+    const actions = buildActions();
+
+    return (
+        <div className="space-y-6">
+            {/* Header with title, total items count as badge, and add button */}
+            <div className="flex justify-between items-center">
+                <div className="flex items-center gap-2">
+                    <h1 className="text-2xl font-bold">Projects</h1>
+                    <Badge variant="default" className="text-sm bg-accentBlue">
+                        {isLoading ? "..." : totalCount}
+                    </Badge>
+                </div>
+                <ProjectFormModal
+                    onSubmit={handleCreateProject}
+                    title="Create New Project"
+                />
+            </div>
+
+            {/* DataTable component */}
+            {isError ? (
+                <div className="text-red-500">Failed to load projects</div>
+            ) : (
+                <DataTable
+                    data={projects}
+                    columns={columns}
+                    actions={actions}
+                    searchable={true}
+                    paginated={true}
+                    pageSize={5}
+                    exportable={true}
+                    filterable={true}
+                    sortable={true}
+                />
+            )}
+        </div>
+    );
 }

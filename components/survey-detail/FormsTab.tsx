@@ -1,28 +1,113 @@
 "use client";
 
 import React from "react";
+import { useRouter, useParams } from "next/navigation";
 import { FileUploadFormModal } from "@/components/forms/odk/FileUploadFormModal";
+import { useGetProjectFormsQuery } from "@/lib/redux/features/surveys/surveyApiSlice";
+import { Form } from "@/types/odk";
+import { EyeIcon } from "@heroicons/react/24/solid";
 
 interface FormsTabProps {
   projectId: string | number;
 }
 
 export function FormsTab({ projectId }: FormsTabProps) {
+  const { data, isLoading, isError, error } = useGetProjectFormsQuery(projectId);
+  const forms = data?.project_forms?.forms || [];
+
   return (
     <div className="space-y-4">
-      <h2 className="text-xl font-semibold">Forms</h2>
-      <p className="text-muted-foreground">
-        Manage forms for project ID: {projectId}
-      </p>
-      
-      {/* This would be replaced with actual forms list and management UI */}
-      <div className="rounded-md border p-4 text-center">
-        <p>No forms available for this project.</p>
-        <FileUploadFormModal 
+      <div className="flex items-center justify-between mb-2">
+        <h2 className="text-xl font-semibold">Forms</h2>
+        <FileUploadFormModal
           projectId={projectId}
           title="Upload Form"
         />
       </div>
+
+      <div className="rounded-md border p-4">
+        <FormsList 
+          forms={forms} 
+          isLoading={isLoading}
+          isError={isError}
+          error={error}
+          projectId={projectId}
+        />
+      </div>
     </div>
+  );
+}
+
+interface FormsListProps {
+  forms: Form[];
+  isLoading: boolean;
+  isError: boolean;
+  error: any;
+  projectId: string | number;
+}
+
+function FormsList({forms, isLoading, isError, error, projectId}: FormsListProps) {
+  if (isLoading) {
+    return <div className="text-center text-muted-foreground">Loading forms...</div>;
+  }
+  
+  if (isError) {
+    return <div
+        className="text-center text-red-500">{error?.data?.message || 'An error occurred while loading forms, this project may not be related to ODK'}</div>;
+  }
+  
+  if (forms.length === 0) {
+    return <div className="text-center text-muted-foreground">No forms available for this project.</div>;
+  }
+  
+  return (
+    <ul className="space-y-2">
+      {forms.map((form) => (
+        <FormItem key={form.xmlFormId} form={form} projectId={projectId} />
+      ))}
+    </ul>
+  );
+}
+
+interface FormItemProps {
+  form: Form;
+  projectId: string | number;
+}
+
+function FormItem({ form, projectId }: FormItemProps) {
+  const router = useRouter();
+  const params = useParams();
+  const formName = form.name || form.xmlFormId || "Untitled form";
+  const formVersion = String(form.version ?? "-");
+  const isPublished = form.publish === true;
+  
+  return (
+    <li className="flex items-center justify-between rounded border px-3 py-2">
+      <div>
+        <div className="font-medium text-accentBlue hover:text-mediumGreen">{formName}</div>
+        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+          <span>Version: {formVersion}</span>
+          <div className={`px-2 py-1 rounded-md ${
+            isPublished 
+              ? 'bg-mediumGreen text-white' 
+              : 'bg-yellow-400 text-black'
+          }`}>
+            {isPublished ? 'published' : 'draft'}
+          </div>
+        </div>
+      </div>
+      <div>
+        <button
+          onClick={() => {
+            const locale = params.locale || 'en';
+            router.push(`/${locale}/dashboard/projects/${projectId}/surveys/forms/${form.xmlFormId}`);
+          }}
+          className="flex items-center justify-center w-8 h-8 rounded-md bg-gray-100 hover:bg-gray-200 transition-colors"
+          title="View form details"
+        >
+          <EyeIcon className="w-4 h-4 text-gray-600" />
+        </button>
+      </div>
+    </li>
   );
 }

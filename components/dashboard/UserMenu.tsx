@@ -15,7 +15,7 @@ import {
 	QuestionMarkCircleIcon,
 	PowerIcon,
 } from "@heroicons/react/24/solid";
-import { ViewSelector } from "@/components/dashboard/ViewSelector";
+// import { ViewSelector } from "@/components/dashboard/ViewSelector";
 
 interface UserMenuProps {
 	user: UserType;
