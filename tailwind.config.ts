@@ -61,6 +61,7 @@ module.exports = {
 			fontFamily: {
 				roboto: ["Roboto", "sans-serif"],
 				sans: ["Roboto", "sans-serif"],
+				robotoCondensed: ["'Roboto Condensed'", "Arial", "Helvetica", "sans-serif"],
 			},
 			borderRadius: {
 				lg: "var(--radius)",

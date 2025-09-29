@@ -13,6 +13,7 @@ import {
     useDeleteProjectMutation
 } from "@/lib/redux/features/projects/projectApiSlice";
 import type {Project} from "@/types";
+import { formatLocalizedDate } from "@/utils/localizedDate";
 
 export default function ProjectsPage() {
     const t = useTranslations();
@@ -21,14 +22,15 @@ export default function ProjectsPage() {
 
     // Fetch projects from API
     const {data, isLoading, isError, refetch} = useGetProjectsQuery();
-    const projects: Project[] = data?.projects?.results ?? [];
+    // Sort projects by created_at descending
+    const projects: Project[] = (data?.projects?.results ?? []).slice().sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
     const totalCount = data?.projects?.count ?? 0;
     const [createProject, {isLoading: isCreating}] = useCreateProjectMutation();
     const [deleteProject, {isLoading: isDeleting}] = useDeleteProjectMutation();
 
     // Helper function to format date
     const formatDate = (dateString: string): string => {
-        return new Date(dateString).toLocaleDateString("en-US");
+        return formatLocalizedDate(dateString, getLocaleFromPathname());
     };
 
     // Helper function to extract locale from pathname
