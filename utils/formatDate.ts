@@ -1,27 +1,20 @@
-export function formatDate(dateString: string | undefined): string {
-	if (!dateString) return "Date not provided";
-	const date: Date = new Date(dateString);
+export function formatDate(dateString: string | undefined, locale: string = 'en'): string {
+    if (!dateString) return "Date not provided";
+    const date: Date = new Date(dateString);
 
-	const monthNames: string[] =["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-	const day:number = date.getDate();
-	const monthIndex:number = date.getMonth();
-	const year:number = date.getFullYear();
+    // Supported locales: 'en', 'fr', 'es'. Fallback to 'en'.
+    let resolvedLocale = 'en-US';
+    if (locale.startsWith('fr')) resolvedLocale = 'fr-FR';
+    else if (locale.startsWith('es')) resolvedLocale = 'es-ES';
 
-	const getOrdinalSuffix = (day:number):string =>{
-		if (day >3 && day < 21) return "th";
-
-		switch(day % 10){
-      case 1:
-        return "st";
-      case 2:
-        return "nd";
-      case 3:
-        return "rd";
-      default:
-        return "th";
-    }
-
-	};
-
-	return `${day}${getOrdinalSuffix(day)} ${monthNames[monthIndex]} ${year}`;
+    // Recommended formats:
+    // en: September 24, 2025
+    // fr: 24 septembre 2025
+    // es: 24 de septiembre de 2025
+    const options: Intl.DateTimeFormatOptions = {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+    };
+    return date.toLocaleDateString(resolvedLocale, options);
 }
