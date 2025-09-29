@@ -7,21 +7,18 @@ import {
 
 export const usersApiSlice = baseApiSlice.injectEndpoints({
 	endpoints: (builder) => ({
-		// getAllUsers: builder.query<ProfilesResponse, ProfileData>({
-		// 	query: (params = {}) => {
-		// 		const queryString = new URLSearchParams();
-		//
-		// 		if (params.page) {
-		// 			queryString.append("page", params.page.toString());
-		// 		}
-		// 		if (params.searchTerm) {
-		// 			queryString.append("search", params.searchTerm);
-		// 		}
-		// 		return `/profiles/all/?${queryString.toString()}`;
-		// 	},
-		// 	providesTags: ["User"],
-		// }),
-		//
+		getAllUsers: builder.query<ProfilesResponse, ProfileData>({
+			query: (params) => {
+				const queryString = new URLSearchParams();
+
+				if (params?.page) {
+					queryString.append("page", params?.page.toString());
+				}
+
+				return `/profiles/all/?${queryString.toString()}`;
+			},
+			providesTags: ["User"],
+		}),
 		getUserProfile: builder.query<ProfileResponse, void>({
 			query: () => "/profiles/user/me/",
 			providesTags: ["User"],
@@ -34,12 +31,28 @@ export const usersApiSlice = baseApiSlice.injectEndpoints({
 			}),
 			invalidatesTags: ["User"],
 		}),
+		assignUserToProject: builder.mutation<void, { userId: number; projectId: number; role: string }>({
+			query: ({ userId, projectId, role }) => ({
+				url: `/projects/${projectId}/users/${userId}/assign/`,
+				method: "POST",
+				body: { role },
+			}),
+			invalidatesTags: ["User", "Project"],
+		}),
+		removeUserFromProject: builder.mutation<void, { userId: number; projectId: number }>({
+			query: ({ userId, projectId }) => ({
+				url: `/projects/${projectId}/users/${userId}/remove/`,
+				method: "DELETE",
+			}),
+			invalidatesTags: ["User", "Project"],
+		}),
 	}),
 });
 
 export const {
-	// useGetAllUsersQuery,wq<
+	useGetAllUsersQuery,
 	useGetUserProfileQuery,
 	useUpdateUserProfileMutation,
-
+	useAssignUserToProjectMutation,
+	useRemoveUserFromProjectMutation,
 } = usersApiSlice;
