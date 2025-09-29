@@ -56,7 +56,6 @@ export function FileUploadFormModal({
 
 			setOpen(false);
 		} catch (error: any) {
-			console.error("Error uploading form:", error);
 			// Extract error message from API response if available
 			const errorMessage = error?.data?.message || 
 				(error?.data?.error && typeof error.data.error === 'string' ? error.data.error : null) ||

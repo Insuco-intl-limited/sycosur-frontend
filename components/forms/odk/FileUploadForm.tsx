@@ -60,7 +60,6 @@ export function FileUploadForm({
       setPublish(false);
       setError(null);
     } catch (error) {
-      console.error("Error uploading file:", error);
       setError("An error occurred while uploading the file");
     }
   };
