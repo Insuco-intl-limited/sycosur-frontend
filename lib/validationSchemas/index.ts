@@ -18,3 +18,7 @@ export {type TProjectSchema} from "@/lib/validationSchemas/ProjectSchema"
 
 export {AppUsersSchema} from "@/lib/validationSchemas/AppUsersSchema"
 export {type TAppUsersSchema} from "@/lib/validationSchemas/AppUsersSchema"
+
+
+export {PublicLinkSchema} from "@/lib/validationSchemas/PublicLinkSchema"
+export {type TPublicLinkSchema} from "@/lib/validationSchemas/PublicLinkSchema"

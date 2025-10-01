@@ -1,11 +1,22 @@
 import {baseApiSlice} from "@/lib/redux/features/api/baseApiSlice";
-import {AppUsersResponse, CreateAppUserResponse, CreateFormResponse, ProjectFormsResponse} from "@/types/odk";
+import {
+    AppUsersResponse,
+    CreateAppUserResponse,
+    CreateFormResponse,
+    CreatePublicLinkData,
+    CreatePublicLinkResponse,
+    FormDetailResponse, FormVersionsResponse, GenFormParams,
+    ProjectFormsResponse, PublicLinksResponse, SubmissionsListResponse, SubmissionDetailResponse
+} from "@/types/odk";
 
 const ODK_ENDPOINTS = {
     ADD_FORMS: (projectId: number | string) => `/odk/projects/${projectId}/forms/`,
     LIST_FORMS: (projectId: number | string) => `/odk/projects/${projectId}/forms`,
+    VIEW_FORM: (projectId: number | string, formId: string) => `/odk/projects/${projectId}/forms/${formId}`,
+    VERSION_XML: (projectId: number | string, formId: string, versionId:string) => `/odk/projects/${projectId}/forms/${formId}/versions/${versionId}.xml`,
     ADD_APP_USER: (projectId: number) => `odk/projects/${projectId}/app-users/`,
     LIST_APP_USERS: (projectId: number | string) => `/odk/projects/${projectId}/app-users`,
+    ADD_SUBMISSION: (projectId: number | string, formId: string) => `/odk/projects/${projectId}/forms/${formId}/submissions/`,
 } as const;
 
 interface UploadFormParams {
@@ -14,6 +25,9 @@ interface UploadFormParams {
     ignoreWarnings?: boolean;
     publish?: boolean;
     formId?: string;
+}
+interface XMLVersionParams extends GenFormParams{
+    versionId:string;
 }
 
 const buildFormUploadQuery = ({projectId, file, ignoreWarnings = false, publish = false, formId}: UploadFormParams) => {
@@ -42,6 +56,11 @@ const buildFormQueryParams = (formId: string | undefined, ignoreWarnings: boolea
     return params;
 };
 
+interface CreateSubmissionData {
+    instanceName: string;
+    submitterId: number;
+}
+
 export const surveyApiSlice = baseApiSlice.injectEndpoints({
     endpoints: (builder) => ({
         uploadProjectForm: builder.mutation<CreateFormResponse, UploadFormParams>({
@@ -54,6 +73,21 @@ export const surveyApiSlice = baseApiSlice.injectEndpoints({
                 method: "GET",
             }),
             providesTags: ["Project"],
+        }),
+        getFormDetails: builder.query<FormDetailResponse, GenFormParams >({
+            query: ({projectId, formId}) => ({
+                url: `${ODK_ENDPOINTS.VIEW_FORM(projectId, formId)}`,
+                method: "GET",
+            }),
+            providesTags: ["Project"],
+        }),
+        deleteForm:builder.mutation<void, GenFormParams>({
+            query: ({projectId, formId}) => ({
+                url: `${ODK_ENDPOINTS.VIEW_FORM(projectId, formId)}/delete/`,
+                method: "DELETE",
+            }),
+            invalidatesTags: ["Project"],
+
         }),
         addAppUser: builder.mutation<CreateAppUserResponse, { projectId: number; displayName: string }>({
             query: ({projectId, displayName}) => ({
@@ -70,6 +104,101 @@ export const surveyApiSlice = baseApiSlice.injectEndpoints({
             }),
             providesTags: ["Project"],
         }),
+        getFormSubmissions: builder.query<SubmissionsListResponse, GenFormParams>({
+            query: ({projectId, formId}) => ({
+                url: `${ODK_ENDPOINTS.VIEW_FORM(projectId, formId)}/submissions/`,
+                method: "GET",
+            }),
+            providesTags: ["Project"],
+        }),
+        getSubmissionDetails: builder.query<SubmissionsListResponse, GenFormParams>({
+            query: ({projectId, formId}) => ({
+                url: `${ODK_ENDPOINTS.VIEW_FORM(projectId, formId)}/submissions/`,
+                method: "GET",
+            }),
+            providesTags: ["Project"],
+        }),
+        exportSubmissionsData: builder.query<string, GenFormParams>({
+            query: ({projectId, formId}) => ({
+                url: `${ODK_ENDPOINTS.VIEW_FORM(projectId, formId)}/submissions.csv`,
+                method: "GET",
+                headers: {
+                    'Accept': 'text/csv, text/plain, */*',
+                },
+                responseHandler: 'text',
+            }),
+            providesTags: ["Project"],
+        }),
+        getPublicLinks:builder.query<PublicLinksResponse, GenFormParams>({
+            query: ({projectId, formId}) => ({
+                url: `${ODK_ENDPOINTS.VIEW_FORM(projectId, formId)}/public-links/`,
+                method: "GET",
+            }),
+            providesTags: ["Project"],
+        }),
+        addPublicLink:builder.mutation<CreatePublicLinkResponse, GenFormParams & CreatePublicLinkData>({
+            query: ({projectId, formId, displayName, once}) => ({
+                url: `${ODK_ENDPOINTS.VIEW_FORM(projectId, formId)}/public-links/`,
+                method: "POST",
+                body: { display_name:displayName, once }
+            }),
+            invalidatesTags: ["Project"],
+        }),
+        getFormVersions: builder.query<FormVersionsResponse, GenFormParams>({
+            query: ({projectId, formId}) => ({
+                url: `${ODK_ENDPOINTS.VIEW_FORM(projectId, formId)}/versions/`,
+                method: "GET",
+            }),
+            providesTags: ["Project"],
+        }),
+        getXMLVersion: builder.query<string, XMLVersionParams>({
+            query: ({projectId, formId, versionId}) => ({
+                url: `${ODK_ENDPOINTS.VERSION_XML(projectId, formId, versionId)}`,
+                method: "GET",
+                headers: {
+                    'Accept': 'application/xml, text/xml, text/plain, */*',
+                },
+                responseHandler: 'text',
+            }),
+            providesTags: ["Project"],
+        }),
+        getFormDraft: builder.query<FormDetailResponse, GenFormParams>({
+            query: ({projectId, formId}) => ({
+                url: `${ODK_ENDPOINTS.VIEW_FORM(projectId, formId)}/draft/`,
+                method: "GET",
+            }),
+            providesTags: ["Project"],
+        }),
+        // addFormDraft: builder.mutation<CreateFormResponse, UploadFormParams>({
+        //     query: ({projectId, formId, ...rest}) => ({
+        //         url: `${ODK_ENDPOINTS.VIEW_FORM(projectId, formId)}/draft/`,
+        //         method: "POST",
+        //         body: buildFormUploadQuery({projectId, formId, ...rest}).body,
+        //     }),
+        //     invalidatesTags: ["Project"],
+        // }),
+        publishFormDraft: builder.mutation<void, GenFormParams>({
+            query: ({projectId, formId}) => ({
+                url: `${ODK_ENDPOINTS.VIEW_FORM(projectId, formId)}/draft/publish/`,
+                method: "POST",
+            }),
+            invalidatesTags: ["Project"],
+        }),
+        deleteFormDraft: builder.mutation<void, GenFormParams>({
+            query: ({projectId, formId}) => ({
+                url: `${ODK_ENDPOINTS.VIEW_FORM(projectId, formId)}/draft/`,
+                method: "DELETE",
+            }),
+            invalidatesTags: ["Project"],
+        }),
+        addSubmission: builder.mutation<SubmissionDetailResponse, GenFormParams & CreateSubmissionData>({
+            query: ({projectId, formId, instanceName, submitterId}) => ({
+                url: ODK_ENDPOINTS.ADD_SUBMISSION(projectId, formId),
+                method: "POST",
+                body: { instanceName, submitterId }
+            }),
+            invalidatesTags: ["Project"],
+        }),
     }),
 });
 
@@ -78,4 +207,19 @@ export const {
     useGetProjectFormsQuery,
     useAddAppUserMutation,
     useGetAppUsersQuery,
+    useGetFormDetailsQuery,
+    useDeleteFormMutation,
+    useGetFormSubmissionsQuery,
+    useGetSubmissionDetailsQuery,
+    useGetPublicLinksQuery,
+    useAddPublicLinkMutation,
+    useGetFormVersionsQuery,
+    useGetXMLVersionQuery,
+    useGetFormDraftQuery,
+    usePublishFormDraftMutation,
+    useDeleteFormDraftMutation,
+    useAddSubmissionMutation,
+    useExportSubmissionsDataQuery,
+    useLazyExportSubmissionsDataQuery,
+    // useAddFormDraftMutation,
 } = surveyApiSlice;

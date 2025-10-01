@@ -7,16 +7,11 @@ import {
 
 export const usersApiSlice = baseApiSlice.injectEndpoints({
 	endpoints: (builder) => ({
-		getAllUsers: builder.query<ProfilesResponse, ProfileData>({
-			query: (params) => {
-				const queryString = new URLSearchParams();
-
-				if (params?.page) {
-					queryString.append("page", params?.page.toString());
-				}
-
-				return `/profiles/all/?${queryString.toString()}`;
-			},
+		getAllUsers: builder.query<ProfilesResponse, void>({
+			query: () => ({
+				url: `/profiles/`,
+				method: "GET",
+			}),
 			providesTags: ["User"],
 		}),
 		getUserProfile: builder.query<ProfileResponse, void>({

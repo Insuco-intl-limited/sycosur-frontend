@@ -7,6 +7,7 @@ import { Trash2, UserX } from "lucide-react";
 import type { Column, ActionItem } from "@/types/datatable";
 import { formatDate } from "@/utils/formatDate";
 import Spinner from "@/components/shared/Spinner";
+import React from "react";
 
 interface AppUser {
   projectId: number;
@@ -78,9 +79,9 @@ export function AppUsersList({ projectId }: AppUsersListProps) {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center p-8">
-        <Spinner />
-      </div>
+			<div className="flex items-center justify-center h-64">
+				<div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+			</div>
     );
   }
 

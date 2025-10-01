@@ -22,6 +22,9 @@
     }
   },
   "dashboard": {
+    "monthlyActivity": "Activité mensuelle",
+    "forms": "Formulaires",
+    "surveys": "Enquêtes",
     "menu": {
       "activities": "Activités",
       "analysis": "Analyse",

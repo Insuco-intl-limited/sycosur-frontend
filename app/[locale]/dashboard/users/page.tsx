@@ -98,16 +98,7 @@ export default function UsersPage() {
 
         <TabsContent value="permissions" className="space-y-4">
           <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Settings className="h-5 w-5" />
-                Project Permission Management
-              </CardTitle>
-              <CardDescription>
-                Assign users to projects and manage their access levels
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
+            <CardContent className="mt-4">
               <UsersList showPermissionManagement={true} />
             </CardContent>
           </Card>

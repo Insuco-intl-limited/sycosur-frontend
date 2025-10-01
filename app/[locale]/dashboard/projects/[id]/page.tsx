@@ -3,7 +3,6 @@
 import React from "react";
 import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CalendarIcon, Users, FileText, Settings, BarChart } from "lucide-react";
 import { 
@@ -14,12 +13,7 @@ import {
   CartesianGrid, 
   Tooltip, 
   Legend, 
-  ResponsiveContainer,
-  PieChart,
-  Pie,
-  Cell,
-  LineChart,
-  Line
+  ResponsiveContainer
 } from "recharts";
 import { useGetProjectByIdQuery } from "@/lib/redux/features/projects/projectApiSlice";
 
@@ -33,22 +27,11 @@ const activityData = [
   { name: 'Jun', forms: 6, surveys: 3 },
 ];
 
-const userDistributionData = [
-  { name: 'Admins', value: 4 },
-  { name: 'Field Workers', value: 12 },
-  { name: 'Analysts', value: 6 },
-  { name: 'Guests', value: 2 },
-];
-
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
-
-const completionRateData = [
-  { name: 'Week 1', rate: 65 },
-  { name: 'Week 2', rate: 72 },
-  { name: 'Week 3', rate: 78 },
-  { name: 'Week 4', rate: 85 },
-  { name: 'Week 5', rate: 82 },
-  { name: 'Week 6', rate: 90 },
+const projectInfoData = [
+  { name: 'Total Forms', value: 42 },
+  { name: 'Data Analysis Reports', value: 8 },
+  { name: 'Complaints Received', value: 15 },
+  { name: 'Social Impact Score', value: 87 },
 ];
 
 export default function ProjectDashboardPage() {
@@ -105,144 +88,43 @@ export default function ProjectDashboardPage() {
         <p>{project.description}</p>
       </div>
 
-      {/* Dashboard Overview */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              {t('dashboard.totalForms')}
-            </CardTitle>
-            <FileText className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">24</div>
-            <p className="text-xs text-muted-foreground">
-              +12% {t('dashboard.fromLastMonth')}
-            </p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              {t('dashboard.activeUsers')}
-            </CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">24</div>
-            <p className="text-xs text-muted-foreground">
-              +5% {t('dashboard.fromLastMonth')}
-            </p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              {t('dashboard.completionRate')}
-            </CardTitle>
-            <BarChart className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">85%</div>
-            <p className="text-xs text-muted-foreground">
-              +2% {t('dashboard.fromLastMonth')}
-            </p>
-          </CardContent>
-        </Card>
+      {/* Project Information */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
+        {projectInfoData.map((info, index) => (
+          <Card key={index}>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">{info.name}</CardTitle>
+              <BarChart className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{info.value}</div>
+            </CardContent>
+          </Card>
+        ))}
       </div>
 
-      {/* Charts */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Activity Chart */}
-        <Card>
-          <CardHeader>
-            <CardTitle>{t('dashboard.monthlyActivity')}</CardTitle>
-          </CardHeader>
-          <CardContent className="h-80">
-            <ResponsiveContainer width="100%" height="100%">
-              <RechartsBarChart
-                data={activityData}
-                margin={{
-                  top: 20,
-                  right: 30,
-                  left: 20,
-                  bottom: 5,
-                }}
-              >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Bar dataKey="forms" fill="#8884d8" name={t('dashboard.forms')} />
-                <Bar dataKey="surveys" fill="#82ca9d" name={t('dashboard.surveys')} />
-              </RechartsBarChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-
-        {/* User Distribution Chart */}
-        <Card>
-          <CardHeader>
-            <CardTitle>{t('dashboard.userDistribution')}</CardTitle>
-          </CardHeader>
-          <CardContent className="h-80">
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
-                <Pie
-                  data={userDistributionData}
-                  cx="50%"
-                  cy="50%"
-                  labelLine={true}
-                  label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                  outerRadius={80}
-                  fill="#8884d8"
-                  dataKey="value"
-                >
-                  {userDistributionData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                  ))}
-                </Pie>
-                <Tooltip />
-                <Legend />
-              </PieChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-
-        {/* Completion Rate Chart */}
-        <Card className="md:col-span-2">
-          <CardHeader>
-            <CardTitle>{t('dashboard.completionRateTrend')}</CardTitle>
-          </CardHeader>
-          <CardContent className="h-80">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart
-                data={completionRateData}
-                margin={{
-                  top: 20,
-                  right: 30,
-                  left: 20,
-                  bottom: 5,
-                }}
-              >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Line 
-                  type="monotone" 
-                  dataKey="rate" 
-                  stroke="#8884d8" 
-                  name={t('dashboard.completionRate')}
-                  activeDot={{ r: 8 }} 
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-      </div>
+      {/* Monthly Activity (Bar chart) */}
+      <Card>
+        <CardHeader>
+          <CardTitle>{t('dashboard.monthlyActivity')}</CardTitle>
+        </CardHeader>
+        <CardContent className="h-80">
+          <ResponsiveContainer width="100%" height="100%">
+            <RechartsBarChart
+              data={activityData}
+              margin={{ top: 20, right: 30, left: 10, bottom: 20 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis allowDecimals={false} domain={[0, 8]} />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="forms" fill="#8884d8" name={t('dashboard.forms')} />
+              <Bar dataKey="surveys" fill="#82ca9d" name={t('dashboard.surveys')} />
+            </RechartsBarChart>
+          </ResponsiveContainer>
+        </CardContent>
+      </Card>
 
       {/* Navigation to other project sections */}
       <div className="mt-8">

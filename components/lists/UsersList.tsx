@@ -7,24 +7,13 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { UserPlus, Settings, Trash2, Eye } from "lucide-react";
 import type { Column, ActionItem } from "@/types/datatable";
+import type { Profile } from "@/types";
 import { formatDate } from "@/utils/formatDate";
 import Spinner from "@/components/shared/Spinner";
 import { toast } from "sonner";
-
-interface User {
-  id: number;
-  email: string;
-  firstName: string;
-  lastName: string;
-  isActive: boolean;
-  createdAt: string;
-  lastLogin?: string;
-  role?: string;
-  projects?: Array<{ id: number; name: string; role: string }>;
-}
 
 interface UsersListProps {
   showPermissionManagement?: boolean;
@@ -39,10 +28,9 @@ const USER_ROLES = [
 ];
 
 export function UsersList({ showPermissionManagement = false, projectId }: UsersListProps) {
-  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [selectedUser, setSelectedUser] = useState<Profile | null>(null);
   const [selectedRole, setSelectedRole] = useState<string>("");
   const [isPermissionDialogOpen, setIsPermissionDialogOpen] = useState(false);
-  const [searchParams, setSearchParams] = useState({ page: 1, searchTerm: "" });
 
   const { data: usersData, isLoading, error } = useGetAllUsersQuery();
   const [assignUser] = useAssignUserToProjectMutation();
@@ -53,12 +41,12 @@ export function UsersList({ showPermissionManagement = false, projectId }: Users
 
     try {
       await assignUser({
-        userId: selectedUser.id,
+        userId: Number(selectedUser.id),
         projectId,
         role: selectedRole,
       }).unwrap();
 
-      toast.success(`User ${selectedUser.firstName} ${selectedUser.lastName} assigned to project with ${selectedRole} role`);
+      toast.success(`User ${selectedUser.first_name} ${selectedUser.last_name} assigned to project with ${selectedRole} role`);
       setIsPermissionDialogOpen(false);
       setSelectedUser(null);
       setSelectedRole("");
@@ -67,76 +55,72 @@ export function UsersList({ showPermissionManagement = false, projectId }: Users
     }
   };
 
-  const handleRemovePermission = async (user: User) => {
+  const handleRemovePermission = async (user: Profile) => {
     if (!projectId) return;
 
     try {
       await removeUser({
-        userId: user.id,
+        userId: Number(user.id),
         projectId,
       }).unwrap();
 
-      toast.success(`User ${user.firstName} ${user.lastName} removed from project`);
+      toast.success(`User ${user.first_name} ${user.last_name} removed from project`);
     } catch (error) {
       toast.error("Failed to remove user from project");
     }
   };
 
-  const handleViewUser = (user: User) => {
+  const handleViewUser = (user: Profile) => {
     // TODO: Navigate to user detail page
     console.log("Viewing user:", user);
   };
 
-  const columns: Column<User>[] = [
+  const columns: Column<Profile>[] = [
     {
-      key: "firstName",
+      key: "full_name",
       header: "Name",
       sortable: true,
       width: "25%",
       render: (_, user) => (
         <div className="flex flex-col">
-          <span className="font-medium">{user.firstName} {user.lastName}</span>
-          <span className="text-sm text-muted-foreground">{user.email}</span>
+          <span className="font-medium">{user.full_name}</span>
         </div>
       ),
     },
     {
-      key: "isActive",
-      header: "Status",
+      key: "odk_role",
+      header: "ODK Role",
       sortable: true,
       width: "15%",
-      render: (value: boolean) => (
-        <Badge variant={value ? "default" : "secondary"}>
-          {value ? "Active" : "Inactive"}
-        </Badge>
+      render: (value: string) => (
+        <Badge variant="outline">{value}</Badge>
       ),
     },
     {
-      key: "role",
-      header: "Role",
+      key: "country_of_origin",
+      header: "Country",
       sortable: true,
       width: "15%",
-      render: (value: string) => value ? (
-        <Badge variant="outline">{value}</Badge>
-      ) : "-",
+      render: (value: string) => value || "-",
     },
     {
-      key: "createdAt",
+      key: "date_joined",
       header: "Joined",
       sortable: true,
       width: "20%",
       render: (value: string) => formatDate(value),
     },
+
     {
-      key: "lastLogin",
-      header: "Last Login",
+      key: "city_of_origin",
+      header: "City",
       sortable: true,
-      width: "25%",
-      render: (value: string) => value ? formatDate(value) : "Never",
+      width: "10%",
+      render: (value: string) => value || "-",
     },
   ];
 
-  const actions: ActionItem<User>[] = [
+  const actions: ActionItem<Profile>[] = [
     {
       label: "View Details",
       icon: <Eye className="h-4 w-4" />,
@@ -147,7 +131,7 @@ export function UsersList({ showPermissionManagement = false, projectId }: Users
       {
         label: "Assign to Project",
         icon: <UserPlus className="h-4 w-4" />,
-        onClick: (user: User) => {
+        onClick: (user: Profile) => {
           setSelectedUser(user);
           setIsPermissionDialogOpen(true);
         },
@@ -158,7 +142,6 @@ export function UsersList({ showPermissionManagement = false, projectId }: Users
         icon: <Trash2 className="h-4 w-4" />,
         onClick: handleRemovePermission,
         variant: "destructive" as const,
-        disabled: (user: User) => !user.projects?.some(p => p.id === projectId),
       },
     ] : []),
   ];
@@ -179,7 +162,7 @@ export function UsersList({ showPermissionManagement = false, projectId }: Users
     );
   }
 
-  const users = usersData?.results || [];
+  const users = usersData?.profiles?.results || [];
 
   return (
     <div className="space-y-6">
@@ -210,7 +193,7 @@ export function UsersList({ showPermissionManagement = false, projectId }: Users
             columns={columns}
             actions={actions}
             searchable={true}
-            searchPlaceholder="Search users by name or email..."
+            searchPlaceholder="Search users by name..."
             paginated={true}
             pageSize={10}
             exportable={true}
@@ -230,7 +213,7 @@ export function UsersList({ showPermissionManagement = false, projectId }: Users
           <DialogHeader>
             <DialogTitle>Assign User to Project</DialogTitle>
             <DialogDescription>
-              Assign {selectedUser?.firstName} {selectedUser?.lastName} to this project with a specific role.
+              Assign {selectedUser?.first_name} {selectedUser?.last_name} to this project with a specific role.
             </DialogDescription>
           </DialogHeader>
 

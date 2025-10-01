@@ -13,7 +13,7 @@ import {
     useDeleteProjectMutation
 } from "@/lib/redux/features/projects/projectApiSlice";
 import type {Project} from "@/types";
-import { formatLocalizedDate } from "@/utils/localizedDate";
+import { formatDate as formatDateUtil } from "@/utils/formatDate";
 
 export default function ProjectsPage() {
     const t = useTranslations();
@@ -30,7 +30,7 @@ export default function ProjectsPage() {
 
     // Helper function to format date
     const formatDate = (dateString: string): string => {
-        return formatLocalizedDate(dateString, getLocaleFromPathname());
+        return formatDateUtil(dateString, getLocaleFromPathname());
     };
 
     // Helper function to extract locale from pathname

@@ -48,7 +48,11 @@ interface FormsListProps {
 
 function FormsList({forms, isLoading, isError, error, projectId}: FormsListProps) {
   if (isLoading) {
-    return <div className="text-center text-muted-foreground">Loading forms...</div>;
+    return (
+        <div className="flex items-center justify-center h-64">
+           <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+        </div>
+    );
   }
   
   if (isError) {
