@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { DataTable } from "@/components/datatable/datatable";
 import { useGetAllUsersQuery, useAssignUserToProjectMutation, useRemoveUserFromProjectMutation } from "@/lib/redux/features/users/usersApiSlice";
+import { useGetProjectsQuery } from "@/lib/redux/features/projects/projectApiSlice";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -10,7 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { UserPlus, Settings, Trash2, Eye } from "lucide-react";
 import type { Column, ActionItem } from "@/types/datatable";
-import type { Profile } from "@/types";
+import type { Profile, Project } from "@/types";
 import { formatDate } from "@/utils/formatDate";
 import Spinner from "@/components/shared/Spinner";
 import { toast } from "sonner";
@@ -30,19 +31,22 @@ const USER_ROLES = [
 export function UsersList({ showPermissionManagement = false, projectId }: UsersListProps) {
   const [selectedUser, setSelectedUser] = useState<Profile | null>(null);
   const [selectedRole, setSelectedRole] = useState<string>("");
+  const [selectedProject, setSelectedProject] = useState<string>("");
   const [isPermissionDialogOpen, setIsPermissionDialogOpen] = useState(false);
 
   const { data: usersData, isLoading, error } = useGetAllUsersQuery();
+  const { data: projectsData } = useGetProjectsQuery();
   const [assignUser] = useAssignUserToProjectMutation();
   const [removeUser] = useRemoveUserFromProjectMutation();
 
   const handleAssignPermission = async () => {
-    if (!selectedUser || !projectId || !selectedRole) return;
+    const targetProjectId = projectId || Number(selectedProject);
+    if (!selectedUser || !targetProjectId || !selectedRole) return;
 
     try {
       await assignUser({
         userId: Number(selectedUser.id),
-        projectId,
+        projectId: targetProjectId,
         role: selectedRole,
       }).unwrap();
 
@@ -50,6 +54,7 @@ export function UsersList({ showPermissionManagement = false, projectId }: Users
       setIsPermissionDialogOpen(false);
       setSelectedUser(null);
       setSelectedRole("");
+      setSelectedProject("");
     } catch (error) {
       toast.error("Failed to assign user to project");
     }
@@ -174,7 +179,7 @@ export function UsersList({ showPermissionManagement = false, projectId }: Users
               Permission Management
             </CardTitle>
             <CardDescription>
-              Manage user permissions for this project. Assign roles and control access levels.
+              Manage user permissions. Assign roles and control access levels.
             </CardDescription>
           </CardHeader>
         </Card>
@@ -213,11 +218,28 @@ export function UsersList({ showPermissionManagement = false, projectId }: Users
           <DialogHeader>
             <DialogTitle>Assign User to Project</DialogTitle>
             <DialogDescription>
-              Assign {selectedUser?.first_name} {selectedUser?.last_name} to this project with a specific role.
+              Assign {selectedUser?.first_name} {selectedUser?.last_name} to a project with a specific role.
             </DialogDescription>
           </DialogHeader>
 
           <div className="space-y-4">
+            {!projectId && (
+              <div>
+                <label className="text-sm font-medium">Select Project</label>
+                <Select value={selectedProject} onValueChange={setSelectedProject}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Choose a project" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {projectsData?.projects?.results?.map((project) => (
+                      <SelectItem key={project.pkid} value={project.pkid.toString()}>
+                        {project.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
             <div>
               <label className="text-sm font-medium">Select Role</label>
               <Select value={selectedRole} onValueChange={setSelectedRole}>
@@ -244,7 +266,7 @@ export function UsersList({ showPermissionManagement = false, projectId }: Users
             </Button>
             <Button
               onClick={handleAssignPermission}
-              disabled={!selectedRole}
+              disabled={!selectedRole || (!projectId && !selectedProject)}
             >
               Assign User
             </Button>

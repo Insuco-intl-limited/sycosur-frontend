@@ -68,33 +68,43 @@ export default function ProjectDetailPage() {
 
 			{/* Tabs for different sections */}
 			<Tabs defaultValue="forms" className="w-full ">
-				<TabsList className="grid grid-cols-5 w-full bg-mediumGreen text-light">
-					<TabsTrigger value="forms">Forms</TabsTrigger>
-					<TabsTrigger value="entity-lists">Entity Lists</TabsTrigger>
-					<TabsTrigger value="project-roles">Project Roles</TabsTrigger>
-					<TabsTrigger value="app-users">App Users</TabsTrigger>
-					<TabsTrigger value="settings">Settings</TabsTrigger>
-				</TabsList>
+				{project.odk_id ? (
+					<TabsList className="grid grid-cols-5 w-full bg-mediumGreen text-light">
+						<TabsTrigger value="forms">Forms</TabsTrigger>
+						<TabsTrigger value="entity-lists">Entity Lists</TabsTrigger>
+						<TabsTrigger value="project-roles">Project Roles</TabsTrigger>
+						<TabsTrigger value="app-users">App Users</TabsTrigger>
+						<TabsTrigger value="settings">Settings</TabsTrigger>
+					</TabsList>
+				) : (
+					<TabsList className="grid grid-cols-1 w-full bg-mediumGreen text-light">
+						<TabsTrigger value="forms">Forms</TabsTrigger>
+					</TabsList>
+				)}
 
 				<TabsContent value="forms" className="mt-6">
 					<FormsTab projectId={project.pkid} />
 				</TabsContent>
 
-				<TabsContent value="entity-lists" className="mt-6">
-					<EntityListsTab projectId={project.pkid} />
-				</TabsContent>
+				{project.odk_id && (
+					<>
+						<TabsContent value="entity-lists" className="mt-6">
+							<EntityListsTab projectId={project.pkid} />
+						</TabsContent>
 
-				<TabsContent value="project-roles" className="mt-6">
-					<ProjectRolesTab projectId={project.pkid} />
-				</TabsContent>
+						<TabsContent value="project-roles" className="mt-6">
+							<ProjectRolesTab projectId={project.pkid} />
+						</TabsContent>
 
-				<TabsContent value="app-users" className="mt-6">
-					<AppUsersTab projectId={project.pkid} />
-				</TabsContent>
+						<TabsContent value="app-users" className="mt-6">
+							<AppUsersTab projectId={project.pkid} />
+						</TabsContent>
 
-				<TabsContent value="settings" className="mt-6">
-					<SettingsTab projectId={project.pkid} />
-				</TabsContent>
+						<TabsContent value="settings" className="mt-6">
+							<SettingsTab projectId={project.pkid} />
+						</TabsContent>
+					</>
+				)}
 			</Tabs>
 		</div>
 	);

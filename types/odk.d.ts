@@ -208,9 +208,20 @@ export interface ErrorResponse {
 // ========================
 // Form Draft interfaces
 // ========================
-export interface CreateFormDraftResponse {
+export interface CreateDraftFormResponse {
     status_code: number;
     draft_form: {
         success: boolean;
     }
+}
+export interface createDraftFormData {
+    ignore_warnings?: boolean;
+    projectId: number;
+    formId: string;
+    form: File;
+}
+
+export interface DraftFormResponse {
+    status_code: number;
+    form_draft: Form;
 }

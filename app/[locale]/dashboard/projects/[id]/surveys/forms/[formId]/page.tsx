@@ -25,7 +25,7 @@ export default function FormDetailPage() {
 
 	const form = data?.form;
 	const isPublished = !!form?.publishedAt || form?.publish === true;
-	const defaultTab = isPublished ? "submissions" : "edit-form";
+	const defaultTab = "edit-form";
 
 	if (isLoading) {
 		return (
