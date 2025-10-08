@@ -9,6 +9,7 @@ export const ProjectSchema = z.object({
   description: z
     .string()
     .trim()
+    .optional()
   ,
 });
 

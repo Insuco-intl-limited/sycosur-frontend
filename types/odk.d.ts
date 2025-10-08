@@ -1,12 +1,6 @@
 // ==================
 // Project interfaces
 // ==================
-export interface Project {
-    ID: string | number;
-    name: string;
-    description: string;
-    createdAt: string;
-}
 
 export interface OdkProject {
     id: number;
@@ -59,6 +53,7 @@ export interface Form {
 export interface ProjectFormsResponse {
     status_code: number;
     project_forms: {
+        count?: number;
         forms: Form[];
     };
 }
@@ -99,7 +94,7 @@ export interface CreateAppUserResponse {
 export interface AppUsersResponse {
     status_code: number;
     app_users: {
-        count: number;
+        count?: number;
         results: AppUser[];
     }
 }
@@ -148,6 +143,7 @@ export interface GenFormParams {
 export interface SubmissionsListResponse {
     status_code: number;
     submissions: {
+        count?: number;
         results: Submission[];
     };
 }
@@ -175,6 +171,7 @@ export interface PublicLink {
 export interface PublicLinksResponse {
     status_code: number;
     public_links: {
+        count?: number;
         results: PublicLink[];
     };
 }
@@ -195,6 +192,7 @@ export interface CreatePublicLinkResponse {
 export interface FormVersionsResponse {
     status_code: number;
     form_versions: {
+        count?: number;
         results: Form[];
     };
 }

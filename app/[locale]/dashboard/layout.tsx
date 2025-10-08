@@ -34,7 +34,7 @@ function DashboardLayoutInner({ children }: { children: React.ReactNode }) {
 	const currentProjectForContext = fetchedProject
 		? { pkid: fetchedProject.pkid, id: fetchedProject.pkid, name: fetchedProject.name }
 		: selectedProject
-			? { pkid: (selectedProject as any).pkid ?? (selectedProject as any).ID, id: (selectedProject as any).ID ?? (selectedProject as any).pkid, name: (selectedProject as any).name }
+			? { pkid: selectedProject.pkid, id: selectedProject.pkid, name: selectedProject.name }
 			: undefined;
 
 	// Generate breadcrumbs dynamically based on the current path
@@ -49,8 +49,8 @@ function DashboardLayoutInner({ children }: { children: React.ReactNode }) {
 		viewType,
 		// If we have a fetched project, synthesize a minimal object compatible with view slice for nav paths
 		(fetchedProject
-			? ({ ID: fetchedProject.pkid, name: fetchedProject.name } as any)
-			: (selectedProject as any)) || null,
+			? ({ pkid: fetchedProject.pkid, name: fetchedProject.name } as any)
+			: selectedProject) || null,
 		pathname,
 	);
 

@@ -1,12 +1,16 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { DevicePhoneMobileIcon, ComputerDesktopIcon, TrashIcon, EyeIcon } from "@heroicons/react/24/outline";
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import { DataTable } from "@/components/datatable/datatable";
 import type { Column } from "@/types/datatable";
 import type { Submission } from "@/types/odk";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { PublishDraftModal } from "@/components/forms/odk/PublishDraftModal";
+import { DeleteDraftConfirmation } from "@/components/forms/odk/DeleteDraftConfirmation";
+import { usePublishFormDraftMutation, useDeleteFormDraftMutation } from "@/lib/redux/features/surveys/surveyApiSlice";
+import {toast} from "react-toastify";
 
 
 interface DraftFormContentProps {
@@ -14,7 +18,14 @@ interface DraftFormContentProps {
   projectId: string;
 }
 
-export function DraftFormContent({ formId: _formId, projectId: _projectId }: DraftFormContentProps) {
+export function DraftFormContent({ formId, projectId }: DraftFormContentProps) {
+  const [isPublishModalOpen, setIsPublishModalOpen] = useState(false);
+  const [isDeleteConfirmationOpen, setIsDeleteConfirmationOpen] = useState(false);
+
+  const [publishFormDraft, { isLoading: isPublishing }] = usePublishFormDraftMutation();
+  const [deleteFormDraft, { isLoading: isDeleting }] = useDeleteFormDraftMutation();
+
+
   // Columns for draft test submissions placeholder
   const columns: Column<Submission>[] = [
     { key: "instanceId", header: "Instance ID", sortable: true },
@@ -24,6 +35,26 @@ export function DraftFormContent({ formId: _formId, projectId: _projectId }: Dra
     { key: "reviewState", header: "Review State", sortable: true },
   ];
   const data: Submission[] = [];
+
+  const handlePublishDraft = async (version?: string) => {
+    try {
+      await publishFormDraft({
+        projectId: parseInt(projectId),
+        formId,
+        version,
+      }).unwrap();
+      toast.success("Draft published successfully");
+    } catch (error) {
+      console.log(error)
+    }
+  };
+
+  const handleDeleteDraft = async () => {
+    await deleteFormDraft({
+      projectId: parseInt(projectId),
+      formId,
+    }).unwrap();
+  };
 
   return (
     <div className="space-y-4">
@@ -56,13 +87,7 @@ export function DraftFormContent({ formId: _formId, projectId: _projectId }: Dra
               <ComputerDesktopIcon className="w-4 h-4" />
               Test in browser
             </button>
-            <button
-              className="flex items-center justify-center gap-2 px-4 py-2 bg-amber-600 hover:bg-amber-600/80 text-white rounded-md transition-colors font-medium"
-              onClick={() => { /* TODO: Implement browser test */ }}
-            >
-              <EyeIcon className="w-4 h-4" />
-              Preview draft
-            </button>
+
           </div>
 
         </div>
@@ -89,18 +114,20 @@ export function DraftFormContent({ formId: _formId, projectId: _projectId }: Dra
               <div className="flex flex-col sm:flex-row gap-3">
                 <button
                   className="flex items-center justify-center gap-2 px-4 py-2 border border-red-200 text-red-600 hover:bg-red-50 rounded-md transition-colors font-medium"
-                  onClick={() => { /* TODO: Implement delete draft */ }}
+                  onClick={() => setIsDeleteConfirmationOpen(true)}
+                  disabled={isDeleting}
                 >
                   <TrashIcon className="w-4 h-4" />
-                  Delete Draft
+                  {isDeleting ? "Deleting..." : "Delete Draft"}
                 </button>
 
                 <button
                   className="flex items-center justify-center gap-2 px-4 py-2 bg-mediumGreen hover:bg-mediumGreen/90 text-white rounded-md transition-colors font-medium"
-                  onClick={() => { /* TODO: Implement publish draft */ }}
+                  onClick={() => setIsPublishModalOpen(true)}
+                  disabled={isPublishing}
                 >
                   <CheckCircleIcon className="w-4 h-4" />
-                  Publish Draft
+                  {isPublishing ? "Publishing..." : "Publish Draft"}
                 </button>
               </div>
             </div>
@@ -122,6 +149,21 @@ export function DraftFormContent({ formId: _formId, projectId: _projectId }: Dra
           filterable={false}
         />
       </div>
+
+      {/* Modals */}
+      <PublishDraftModal
+        isOpen={isPublishModalOpen}
+        onClose={() => setIsPublishModalOpen(false)}
+        onPublish={handlePublishDraft}
+        isLoading={isPublishing}
+      />
+
+      <DeleteDraftConfirmation
+        isOpen={isDeleteConfirmationOpen}
+        onClose={() => setIsDeleteConfirmationOpen(false)}
+        onConfirm={handleDeleteDraft}
+        isLoading={isDeleting}
+      />
     </div>
   );
 }

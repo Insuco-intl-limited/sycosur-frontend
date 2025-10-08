@@ -73,7 +73,7 @@ export default function ProjectDetailPage() {
 						<TabsTrigger value="forms">Forms</TabsTrigger>
 						<TabsTrigger value="entity-lists">Entity Lists</TabsTrigger>
 						<TabsTrigger value="project-roles">Project Roles</TabsTrigger>
-						<TabsTrigger value="app-users">App Users</TabsTrigger>
+						<TabsTrigger value="app-users">Mobile Users</TabsTrigger>
 						<TabsTrigger value="settings">Settings</TabsTrigger>
 					</TabsList>
 				) : (

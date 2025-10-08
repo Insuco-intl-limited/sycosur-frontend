@@ -1,7 +1,8 @@
 "use client";
 
 import type { NavigationItem } from "@/app/[locale]/dashboard/types";
-import type { Project, ViewType } from "@/lib/redux/features/view/viewSlice";
+import type { ViewType } from "@/lib/redux/features/view/viewSlice";
+import { Project } from "@/types"
 import {
   ComputerDesktopIcon,
   CircleStackIcon,
@@ -71,7 +72,7 @@ export const getProjectNavigationItems = (
   project: Project,
   pathname: string
 ): NavigationItem[] => {
-  const projectBasePath = `/${locale}/dashboard/projects/${project.ID}`;
+  const projectBasePath = `/${locale}/dashboard/projects/${project.pkid}`;
   
   return [
     {

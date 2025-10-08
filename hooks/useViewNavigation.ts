@@ -11,9 +11,10 @@ import {
   selectProjects,
   selectViewType,
   selectSelectedProject,
-  type Project,
   type ViewType
 } from "@/lib/redux/features/view/viewSlice";
+import {Project} from "@/types";
+
 
 /**
  * Hook for handling view navigation and state updates based on URL
@@ -68,7 +69,7 @@ export const useViewNavigation = () => {
     
     if (project) {
       // Navigate to the project page
-      router.push(`/${locale}/dashboard/projects/${project.ID}`);
+      router.push(`/${locale}/dashboard/projects/${project.pkid}`);
     } else {
       // Navigate to the dashboard
       router.push(`/${locale}/dashboard`);

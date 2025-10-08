@@ -49,16 +49,19 @@ export default function ProjectsPage() {
         toast.info(`Update project: ${project.name}`);
     };
 
-
-    // API operation handlers with consistent error handling
     const showApiError = (operation: string, error: unknown): void => {
-        console.error(`Error ${operation} project:`, error);
         toast.error(`Failed to ${operation} project`);
     };
 
     const handleCreateProject = async (form: { name: string; description?: string }): Promise<void> => {
         try {
-            await createProject({name: form.name, description: form.description}).unwrap();
+            const projectData: { name: string; description?: string } = {
+                name: form.name
+            };
+            if (form.description && form.description.trim() !== '') {
+                projectData.description = form.description;
+            }
+            await createProject(projectData).unwrap();
             toast.success(`Project "${form.name}" created successfully`);
             refetch();
         } catch (error) {
@@ -80,12 +83,12 @@ export default function ProjectsPage() {
     };
     
     const buildColumns = (): Column<Project>[] => [
-        {
-            key: "pkid",
-            header: "ID",
-            width: "80px",
-            sortable: true,
-        },
+        // {
+        //     key: "pkid",
+        //     header: "ID",
+        //     width: "80px",
+        //     sortable: true,
+        // },
         {
             key: "name",
             header: "Project Name",
@@ -97,6 +100,13 @@ export default function ProjectsPage() {
             header: "Description",
             sortable: true,
             filterable: true,
+            accessor: (project) => project.description || "-",
+        },
+        {
+            key: "created_by_name",
+            header: "Created By",
+            sortable: true,
+            accessor: (project) => project.created_by_name || "-",
         },
         {
             key: "created_at",

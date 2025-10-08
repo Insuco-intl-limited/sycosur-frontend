@@ -8,6 +8,8 @@
       "_self": "Dashboard",
 
       "projects": "Projects",
+      "surveys": "Surveys",
+      "forms": "Forms",
       "activities": "Activities",
       "gestion-par": "PAR Management",
       "budget-par": "PAR Budget",

@@ -10,7 +10,7 @@ export default function DashboardPage() {
   
   // Get the three most recent projects
   const latestProjects = [...projects]
-    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+    .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
     .slice(0, 3);
 
   // Format date to a more readable format
@@ -185,7 +185,7 @@ export default function DashboardPage() {
           </CardHeader>
           <CardContent className="space-y-4">
             {latestProjects.map((project, index) => (
-              <div key={project.ID} className="flex items-start space-x-4 p-3 rounded-lg hover:bg-muted/50 transition-colors">
+              <div key={project.pkid} className="flex items-start space-x-4 p-3 rounded-lg hover:bg-muted/50 transition-colors">
                 <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${
                   index === 0 ? 'bg-chart-2' : 
                   index === 1 ? 'bg-chart-1' : 'bg-chart-4'
@@ -199,7 +199,7 @@ export default function DashboardPage() {
                   </p>
                   <div className="flex items-center justify-between mt-2">
                     <span className="text-xs text-muted-foreground">
-                      {formatDate(project.createdAt)}
+                      {formatDate(project.created_at)}
                     </span>
                     <div className="w-6 h-6 bg-muted rounded-full flex items-center justify-center">
                       <span className="text-xs font-medium text-muted-foreground">

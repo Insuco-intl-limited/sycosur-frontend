@@ -196,10 +196,11 @@ export const surveyApiSlice = baseApiSlice.injectEndpoints({
             },
             invalidatesTags: ["Project"],
         }),
-        publishFormDraft: builder.mutation<void, GenFormParams>({
-            query: ({projectId, formId}) => ({
+        publishFormDraft: builder.mutation<void, GenFormParams & { version?: string }>({
+            query: ({projectId, formId, version}) => ({
                 url: `${ODK_ENDPOINTS.VIEW_FORM(projectId, formId)}/draft/publish/`,
                 method: "POST",
+                body: version ? { version } : {},
             }),
             invalidatesTags: ["Project"],
         }),

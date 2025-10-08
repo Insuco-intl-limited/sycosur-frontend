@@ -69,7 +69,6 @@ export function ProjectForm({
 				placeholder="Enter project description"
 				startIcon={<FileTextIcon className="size-4" />}
 				isTextArea
-				required
 			/>
 
 			<div className="flex justify-end space-x-2 pt-4">

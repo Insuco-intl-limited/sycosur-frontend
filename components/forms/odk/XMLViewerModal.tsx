@@ -53,7 +53,7 @@ export function XMLViewerModal({
       console.log("XMLViewerModal - Loading XML for:", {
         projectId: Number(projectId),
         formId,
-        versionId: version.version,
+        versionId: version?.version || 'unknown',
       });
     }
     if (error) {
@@ -88,7 +88,9 @@ export function XMLViewerModal({
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `${version.xmlFormId}_v${version.version}.xml`;
+      const formId = version.xmlFormId || 'unknown_form';
+      const versionNum = version.version || 'unknown';
+      a.download = `${formId}_v${versionNum}.xml`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -97,7 +99,9 @@ export function XMLViewerModal({
     }
   };
 
-  if (!version) return null;
+  if (!version) {
+    return null;
+  }
 
   return (
     <Dialog open={isOpen} onOpenChange={onCloseAction}>
@@ -105,9 +109,9 @@ export function XMLViewerModal({
         <DialogHeader className="flex-shrink-0">
           <div className="flex items-center justify-between">
             <div>
-              <DialogTitle>XML Viewer - Version {version.version}</DialogTitle>
+              <DialogTitle>XML Viewer - Version {version?.version || 'Unknown'}</DialogTitle>
               <p className="text-sm text-muted-foreground mt-1">
-                {version.name}
+                {version?.name || 'Unnamed Form'}
               </p>
             </div>
             <div className="flex items-center gap-2">

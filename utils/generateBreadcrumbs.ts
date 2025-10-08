@@ -1,55 +1,39 @@
-import { BreadcrumbItem } from "@/app/[locale]/dashboard/types";
+import {BreadcrumbItem} from "@/app/[locale]/dashboard/types";
 // @ts-ignore
-import { TFunction } from "next-intl"; // TFunction is the type returned by useTranslation function from next-intl
+import {TFunction} from "next-intl"; // TFunction is the type returned by useTranslation function from next-intl
 
-/**
- * Creates a slug from a project name, limited to 10 characters
- * @param name The project name to convert to a slug
- * @returns A slug of maximum 10 characters
- */
+/* Utility function to create a slug from project name */
 function createSlug(name: string): string {
-  // Convert to lowercase, replace spaces and special chars with hyphens
-  const slug = name
-    .toLowerCase()
-    .replace(/[^\w\s-]/g, '')
-    .replace(/[\s_-]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-  
-  // Limit to 10 characters
-  return slug.substring(0, 10);
+	// Convert to lowercase, replace spaces and special chars with hyphens
+	const slug = name
+		.toLowerCase()
+		.replace(/[^\w\s-]/g, '')
+		.replace(/[\s_-]+/g, '-')
+		.replace(/^-+|-+$/g, '');
+
+	// Limit to 10 characters
+	return slug.substring(0, 10);
 }
 
-/**
- * Generates breadcrumb items based on the current path
- * 
- * Special handling for numeric IDs in paths:
- * - When a numeric ID is detected in the path (e.g., /dashboard/projects/1),
- *   the function attempts to retrieve the corresponding entity (e.g., project)
- *   and uses its name as the breadcrumb label instead of the ID.
- * - For project IDs, it fetches the project name and displays it in the breadcrumb.
- * - The URL path still uses the numeric ID to maintain proper routing.
- * - If the entity cannot be found, it falls back to the default behavior.
- * 
- * @param pathname The current path from usePathname()
- * @param t Translation function from useTranslations()
- * @param locale Current locale
- * @returns Array of breadcrumb items
- */
-type CurrentProject = { id?: string | number; pkid?: number; name: string } | null | undefined;
+type CurrentProject = { id?: string ; pkid?: number; name: string } | null | undefined;
 
 export function generateBreadcrumbs(
-  pathname: string,
-  t: TFunction,
-  locale: string,
-  options?: { currentProject?: CurrentProject }
+	pathname: string,
+	t: TFunction,
+	locale: string,
+	options?: { currentProject?: CurrentProject }
 ): BreadcrumbItem[] {
 	// Skip empty string and locale from path segments
 	const segments = pathname.split("/").filter(Boolean);
-	if (segments.length === 0) return [];
+	if (segments.length === 0) {
+		return [];
+	}
 
 	// Remove locale from segments if it's the first segment
 	const pathSegments = segments[0] === locale ? segments.slice(1) : segments;
-	if (pathSegments.length === 0) return [];
+	if (pathSegments.length === 0) {
+		return [];
+	}
 
 	const breadcrumbs: BreadcrumbItem[] = [];
 	let currentPath = `/${locale}`;
@@ -62,11 +46,13 @@ export function generateBreadcrumbs(
 		currentPath += `/${segment}`;
 
 		// Skip dynamic segments (those in [brackets])
-		if (segment.startsWith("[") && segment.endsWith("]")) continue;
+		if (segment.startsWith("[") && segment.endsWith("]")) {
+			continue;
+		}
 
 		// Check if the segment is a numeric ID (for projects, etc.)
 		const isNumericId = /^\d+$/.test(segment);
-		
+
 		// Handle numeric segments (IDs like project IDs) — never translate IDs
 		if (isNumericId) {
 			if (pathSegments[i - 1] === "projects") {
@@ -92,10 +78,7 @@ export function generateBreadcrumbs(
 			});
 			continue;
 		}
-		
-		// Try to get translation for the segment
-		// With the new nested structure, we need to handle the "_self" key for self-references
-		// Build the key path for accessing the nested structure
+
 		let breadcrumbKey = "";
 		if (i === 0) {
 			// For the first segment (dashboard), use the "_self" key

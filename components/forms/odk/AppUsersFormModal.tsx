@@ -52,7 +52,7 @@ export function AppUsersFormModal({
 				const userData = response.app_user;
 				
 				// Show success message
-				toast.success(`User  added successfully`);
+				toast.success(`Mobile user added successfully`);
 			}
 
 			setOpen(false);
@@ -75,7 +75,7 @@ export function AppUsersFormModal({
 	const defaultTrigger = (
 		<Button className="mt-4 rounded-md bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90">
 			<UserPlus className="h-4 w-4 mr-2" />
-			Add App User
+			New Mobile User
 		</Button>
 	);
 

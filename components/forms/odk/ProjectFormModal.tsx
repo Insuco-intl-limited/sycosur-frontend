@@ -34,7 +34,7 @@ export function ProjectFormModal({
 			setOpen(false);
 		} catch (error) {
 			// Error is handled in the ProjectForm component
-			console.error(error);
+			console.log(error);
 		} finally {
 			setIsLoading(false);
 		}
