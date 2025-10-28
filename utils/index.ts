@@ -9,3 +9,4 @@ export { formatDate } from "@/utils/formatDate";
 export { getCurrentLocale } from "@/utils/locale";
 export { translateWithMyMemory } from "@/utils/translate";
 export { generateBreadcrumbs } from "@/utils/generateBreadcrumbs";
+export { downloadFile } from "@/utils/download";
