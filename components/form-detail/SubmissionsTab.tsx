@@ -3,16 +3,23 @@
 import React from "react";
 import {Badge} from "@/components/ui/badge";
 import {Button} from "@/components/ui/button";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import {Download, Plus} from "lucide-react";
 import {toast} from "react-toastify";
 import {SubmissionsList} from "@/components/lists/SubmissionsList";
 import {
     useGetFormSubmissionsQuery,
-    useLazyExportSubmissionsDataQuery,
     useAddPublicLinkMutation,
-    useGetPublicLinksQuery
+    useGetPublicLinksQuery,
+    useExportSubmissionsDataMutation
 } from "@/lib/redux/features/surveys/surveyApiSlice";
-
+import {downloadFile} from "@/utils";
+import {useTranslations} from "next-intl";
 interface SubmissionsTabProps {
     formId: string;
     projectId: string;
@@ -25,10 +32,11 @@ export function SubmissionsTab({formId, projectId}: SubmissionsTabProps) {
         projectId: Number(projectId),
         formId
     });
-    const [triggerExport, {isFetching: isExporting}] = useLazyExportSubmissionsDataQuery();
+
     const [addPublicLink] = useAddPublicLinkMutation();
     const {data: publicLinksData, refetch} = useGetPublicLinksQuery({projectId: Number(projectId), formId});
-
+    const [exportSubmissionsData, {isLoading: isExporting,  error:exportError}] = useExportSubmissionsDataMutation();
+    const t = useTranslations();
     const handleNewSubmission = async () => {
         try {
             const existingLinks = publicLinksData?.public_links?.results || [];
@@ -58,22 +66,24 @@ export function SubmissionsTab({formId, projectId}: SubmissionsTabProps) {
 
     };
 
-    const handleSubmissionsExport = async () => {
+    const handleSubmissionsExport = async (format: "csv" | "xlsx") => {
         try {
-            const csvText = await triggerExport({projectId: Number(projectId), formId}).unwrap();
-            const blob = new Blob([csvText], {type: "text/csv;charset=utf-8"});
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = `${formId}-submissions.csv`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-        } catch (e) {
-            console.error("Failed to export submissions:", e);
+            const response = await exportSubmissionsData({
+                projectId: parseInt(projectId),
+                formId,
+                to: format
+            }).unwrap();
+            console.log("Export response:", response);
+            const blob = response.data instanceof Blob
+                ? response.data
+                : new Blob([response.data], {type: response.contentType});
+
+            downloadFile({ blob, filename: response.filename || `${formId}-submissions.${format}`});
+        } catch (error) {
+            toast.error(typeof error === 'string' ? error : "Failed to export submissions");
         }
     };
+
 
     const submissions = submissionsData?.submissions?.results || [];
 
@@ -88,14 +98,31 @@ export function SubmissionsTab({formId, projectId}: SubmissionsTabProps) {
                 </div>
 
                 <div className="flex items-center gap-2">
-                    <Button onClick={handleSubmissionsExport} className="gap-2"
-                            disabled={isExporting || submissions.length === 0}>
-                        <Download className="h-4 w-4"/>
-                        {isExporting ? "Exporting..." : "Export to CSV"}
-                    </Button>
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button className="gap-2" disabled={isExporting || submissions.length === 0}>
+                                <Download className="h-4 w-4"/>
+                                {isExporting ? t("forms.buttons.exporting") : t("forms.buttons.export")}
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                            <DropdownMenuItem
+                                onClick={() => handleSubmissionsExport("csv")}
+                                disabled={isExporting}
+                            >
+                             CSV
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                                onClick={() => handleSubmissionsExport("xlsx")}
+                                disabled={isExporting}
+                            >
+                              EXCEL
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
                     <Button onClick={handleNewSubmission} className="gap-2">
                         <Plus className="h-4 w-4"/>
-                        New Web Submission
+                        {t("forms.buttons.newWebSubmission")}
                     </Button>
                 </div>
             </div>

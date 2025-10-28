@@ -9,6 +9,7 @@ import type { Column, ActionItem } from "@/types/datatable";
 import { formatDate } from "@/utils/formatDate";
 import Spinner from "@/components/shared/Spinner";
 import type { Submission } from "@/types/odk";
+import {useTranslations} from "next-intl";
 import { SubmissionDetailsDialog } from "@/components/forms/odk/SubmissionDetailsDialog";
 
 
@@ -31,6 +32,7 @@ export function SubmissionsList({
 
   const [dialogOpen, setDialogOpen] = React.useState(false);
   const [selectedSubmission, setSelectedSubmission] = React.useState<Submission | null>(null);
+  const t = useTranslations();
 
   const handleViewSubmission = (submission: Submission) => {
     setSelectedSubmission(submission);
@@ -50,7 +52,7 @@ export function SubmissionsList({
   const columns: Column<Submission>[] = [
     {
       key: "instanceId",
-      header: "Instance ID",
+      header: t("datatable.columns.instance"),
       sortable: true,
       width: "28%",
       render: (value: string) => (
@@ -61,7 +63,7 @@ export function SubmissionsList({
     },
     {
       key: "submitter",
-      header: "Submitter",
+      header: t("datatable.columns.submitter"),
       accessor: (item) => item.submitter?.displayName ?? "",
       sortable: true,
       width: "22%",
@@ -73,7 +75,7 @@ export function SubmissionsList({
     },
     {
       key: "submitterType",
-      header: "Type",
+      header: t("datatable.columns.type"),
       accessor: (item) => item.submitter?.type ?? "",
       sortable: true,
       width: "15%",
@@ -83,7 +85,7 @@ export function SubmissionsList({
     },
     {
       key: "createdAt",
-      header: "Submitted",
+      header: t("datatable.columns.submissionDate"),
       sortable: true,
       width: "20%",
       render: (value: string) => formatDate(value),
@@ -91,7 +93,7 @@ export function SubmissionsList({
 
     {
       key: "reviewState",
-      header: "Review State",
+      header: t("datatable.columns.reviewState"),
       sortable: true,
       width: "15%",
       render: (value: string | undefined) => {
@@ -108,7 +110,7 @@ export function SubmissionsList({
 
   const actions: ActionItem<Submission>[] = [
     {
-      label: "View",
+      label: t("datatable.actions.view"),
       icon: <Eye className="h-4 w-4" />,
       onClick: handleViewSubmission,
       variant: "default",
@@ -150,7 +152,7 @@ export function SubmissionsList({
         columns={columns}
         actions={actions}
         searchable={true}
-        searchPlaceholder="Search..."
+        searchPlaceholder={t("datatable.search.searchPlaceholder")}
         paginated={true}
         pageSize={10}
         exportable={false}
