@@ -12,20 +12,31 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { PlusCircle } from "lucide-react";
+import { useTranslations} from "next-intl";
 
 interface ProjectFormModalProps {
 	onSubmit: (data: TProjectSchema) => Promise<void>;
 	triggerButton?: React.ReactNode;
 	title?: string;
+	initialData?: TProjectSchema;
+	open?: boolean;
+	onOpenChange?: (open: boolean) => void;
 }
 
 export function ProjectFormModal({
 	onSubmit,
 	triggerButton,
 	title = "Create New Project",
+	initialData,
+	open: externalOpen,
+	onOpenChange: externalOnOpenChange,
 }: ProjectFormModalProps) {
-	const [open, setOpen] = useState(false);
+	const [internalOpen, setInternalOpen] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
+
+	const open = externalOpen !== undefined ? externalOpen : internalOpen;
+	const setOpen = externalOnOpenChange || setInternalOpen;
+    const t = useTranslations();
 
 	const handleSubmit = async (data: TProjectSchema) => {
 		setIsLoading(true);
@@ -33,7 +44,6 @@ export function ProjectFormModal({
 			await onSubmit(data);
 			setOpen(false);
 		} catch (error) {
-			// Error is handled in the ProjectForm component
 			console.log(error);
 		} finally {
 			setIsLoading(false);
@@ -47,13 +57,15 @@ export function ProjectFormModal({
 	const defaultTrigger = (
 		<Button className="bg-[#3189a1] hover:bg-[#276d8a]">
 			<PlusCircle className="h-4 w-4 mr-2" />
-			NEW PROJECT
+            { t("forms.buttons.newProject")}
 		</Button>
 	);
 
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
-			<DialogTrigger asChild>{triggerButton || defaultTrigger}</DialogTrigger>
+			{externalOpen === undefined && (
+				<DialogTrigger asChild>{triggerButton || defaultTrigger}</DialogTrigger>
+			)}
 			<DialogContent className="sm:max-w-[500px]">
 				<DialogHeader>
 					<DialogTitle>{title}</DialogTitle>
@@ -63,6 +75,7 @@ export function ProjectFormModal({
 						onSubmit={handleSubmit}
 						onCancel={handleCancel}
 						isLoading={isLoading}
+						initialData={initialData}
 					/>
 				</div>
 			</DialogContent>

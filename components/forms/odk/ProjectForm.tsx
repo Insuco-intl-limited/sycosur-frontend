@@ -9,17 +9,20 @@ import { Button } from "@/components/ui/button";
 import { FileTextIcon, TextIcon } from "lucide-react";
 import Spinner from "@/components/shared/Spinner";
 import { toast } from "react-toastify";
+import { useTranslations} from "next-intl";
 
 interface ProjectFormProps {
 	onSubmit: (data: TProjectSchema) => Promise<void>;
 	onCancel?: () => void;
 	isLoading?: boolean;
+	initialData?: TProjectSchema;
 }
 
 export function ProjectForm({
 	onSubmit,
 	onCancel,
 	isLoading = false,
+	initialData,
 }: ProjectFormProps) {
 	const {
 		register,
@@ -30,11 +33,11 @@ export function ProjectForm({
 		resolver: zodResolver(ProjectSchema),
 		mode: "all",
 		defaultValues: {
-			name: "",
-			description: "",
+			name: initialData?.name || "",
+			description: initialData?.description || "",
 		},
 	});
-
+    const t = useTranslations();
 	const handleFormSubmit = async (values: z.infer<typeof ProjectSchema>) => {
 		try {
 			await onSubmit(values);
@@ -52,21 +55,21 @@ export function ProjectForm({
 			className="space-y-4"
 		>
 			<FormFieldComponent
-				label="Project Name"
+				label={t("forms.labels.projectName")}
 				name="name"
 				register={register}
 				errors={errors}
-				placeholder="Enter project name"
+				placeholder={t("forms.placeholders.projectName")}
 				startIcon={<TextIcon className="size-4" />}
 				required
 			/>
 
 			<FormFieldComponent
-				label="Description"
+				label={t("forms.labels.projectDescription")}
 				name="description"
 				register={register}
 				errors={errors}
-				placeholder="Enter project description"
+				placeholder={t("forms.placeholders.projectDescription")}
 				startIcon={<FileTextIcon className="size-4" />}
 				isTextArea
 			/>
@@ -79,7 +82,7 @@ export function ProjectForm({
 						onClick={onCancel}
 						disabled={isLoading}
 					>
-						Cancel
+                        {t("forms.buttons.cancel")}
 					</Button>
 				)}
 				<Button
@@ -93,7 +96,7 @@ export function ProjectForm({
 							<span>Saving...</span>
 						</div>
 					) : (
-						<span>Save</span>
+						<span>{t("forms.buttons.save")}</span>
 					)}
 				</Button>
 			</div>

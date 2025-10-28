@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Upload } from "lucide-react";
 import { toast } from "react-toastify";
 import { useUploadProjectFormMutation } from "@/lib/redux/features/surveys/surveyApiSlice";
-
+import { useTranslations } from "next-intl";
 interface FileUploadFormModalProps {
 	projectId: string | number;
 	triggerButton?: React.ReactNode;
@@ -23,12 +23,12 @@ interface FileUploadFormModalProps {
 export function FileUploadFormModal({
 	projectId,
 	triggerButton,
-	title = "Upload Form",
+	title,
 }: FileUploadFormModalProps) {
 	const [open, setOpen] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 	const [uploadProjectForm] = useUploadProjectFormMutation();
-
+    const t = useTranslations();
 	const handleSubmit = async (data: {
 		file: File | null;
 		ignoreWarnings: boolean;
@@ -51,7 +51,7 @@ export function FileUploadFormModal({
 			const formName = response?.form?.name || data.file.name;
 			
 			toast.success(
-				`Form "${formName}" uploaded successfully${data.publish ? " and published" : ""}`,
+				t("msg.success.formUploaded", { formName, published: data.publish ? "true" : "false" })
 			);
 
 			setOpen(false);
@@ -59,7 +59,7 @@ export function FileUploadFormModal({
 			// Extract error message from API response if available
 			const errorMessage = error?.data?.message || 
 				(error?.data?.error && typeof error.data.error === 'string' ? error.data.error : null) ||
-				"Failed to upload form";
+				t("msg.error.formUploadFailed");
 			
 			toast.error(errorMessage);
 		} finally {
@@ -74,7 +74,7 @@ export function FileUploadFormModal({
 	const defaultTrigger = (
 		<Button className="mt-4 rounded-md bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90">
 			<Upload className="h-4 w-4 mr-2" />
-			Upload New Form
+            {t("forms.buttons.uploadNewForm")}
 		</Button>
 	);
 
@@ -83,7 +83,7 @@ export function FileUploadFormModal({
 			<DialogTrigger asChild>{triggerButton || defaultTrigger}</DialogTrigger>
 			<DialogContent className="sm:max-w-[500px]">
 				<DialogHeader>
-					<DialogTitle>{title}</DialogTitle>
+ 				<DialogTitle>{title ?? t("forms.titles.uploadForm")}</DialogTitle>
 				</DialogHeader>
 				<div className="py-4">
 					<FileUploadForm
