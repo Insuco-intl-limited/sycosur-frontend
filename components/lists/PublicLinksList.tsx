@@ -10,6 +10,7 @@ import { formatDate } from "@/utils/formatDate";
 import Spinner from "@/components/shared/Spinner";
 import type { PublicLink } from "@/types/odk";
 import { toast } from "react-toastify";
+import { useTranslations } from "next-intl";
 
 interface PublicLinksListProps {
   formId: string;
@@ -24,6 +25,7 @@ export function PublicLinksList({
   onViewLink,
   onDeleteLink
 }: PublicLinksListProps) {
+  const t = useTranslations();
   const { data: publicLinksData, isLoading, error } = useGetPublicLinksQuery({
     projectId: Number(projectId),
     formId
@@ -58,13 +60,13 @@ export function PublicLinksList({
   const columns: Column<PublicLink>[] = [
     {
       key: "displayName",
-      header: "Display Name",
+      header: t("datatable.columns.name"),
       sortable: true,
       width: "25%",
     },
     {
       key: "once",
-      header: "Usage Type",
+      header: t("datatable.columns.type"),
       sortable: true,
       width: "15%",
       render: (value: boolean) => (
@@ -75,21 +77,21 @@ export function PublicLinksList({
     },
     {
       key: "createdAt",
-      header: "Created",
+      header: t("datatable.columns.createdOn"),
       sortable: true,
       width: "20%",
       render: (value: string) => formatDate(value),
     },
     {
       key: "updatedAt",
-      header: "Last Updated",
+      header: t("datatable.columns.lastUpdatedOn"),
       sortable: true,
       width: "20%",
       render: (value: string | null) => value ? formatDate(value) : "Never",
     },
     {
       key: "public_url",
-      header: "Public URL",
+      header: t("datatable.columns.publicURL"),
       sortable: false,
       width: "20%",
       render: (value: string) => (
@@ -100,7 +102,7 @@ export function PublicLinksList({
           <button
             onClick={() => handleCopyLink({ public_url: value } as PublicLink)}
             className="text-muted-foreground hover:text-foreground"
-            title="Copy link"
+            title={t("datatable.actions.copyLink")}
           >
             <Copy className="h-3 w-3" />
           </button>
@@ -111,19 +113,19 @@ export function PublicLinksList({
 
   const actions: ActionItem<PublicLink>[] = [
     {
-      label: "View",
+      label: t("datatable.actions.view"),
       icon: <Eye className="h-4 w-4" />,
       onClick: handleViewLink,
       variant: "default",
     },
     {
-      label: "Copy Link",
+      label: t("datatable.actions.copyLink"),
       icon: <Copy className="h-4 w-4" />,
       onClick: handleCopyLink,
       variant: "default",
     },
     {
-      label: "Delete",
+      label: t("datatable.actions.delete"),
       icon: <Trash2 className="h-4 w-4" />,
       onClick: handleDeleteLink,
       variant: "destructive",
@@ -164,7 +166,7 @@ export function PublicLinksList({
       columns={columns}
       actions={actions}
       searchable={true}
-      searchPlaceholder="Search..."
+      searchPlaceholder={t("datatable.search.searchPlaceholder")}
       paginated={true}
       pageSize={10}
       exportable={false}
