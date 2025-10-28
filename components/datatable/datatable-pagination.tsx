@@ -1,5 +1,5 @@
 "use client";
-
+import { BsSkipEndFill ,BsSkipStartFill, BsFillCaretLeftFill, BsFillCaretRightFill   } from "react-icons/bs";
 import { Button } from "@/components/ui/button";
 import {
 	Select,
@@ -58,12 +58,13 @@ export function DataTablePagination({
 						</SelectContent>
 					</Select>
 				</div>
+                <div className="text-sm text-muted-foreground">
+					{t("itemsInfo", { startItem, endItem, totalItems })}
+				</div>
 				<div className="flex w-[100px] items-center justify-center text-sm font-medium">
 					{t("pageInfo", { currentPage, totalPages })}
 				</div>
-				<div className="text-sm text-muted-foreground">
-					{t("itemsInfo", { startItem, endItem, totalItems })}
-				</div>
+
 			</div>
 			<div className="flex items-center space-x-2">
 				<Button
@@ -73,7 +74,7 @@ export function DataTablePagination({
 					disabled={currentPage === 1}
 				>
 					<span className="sr-only">{t("goToFirstPage")}</span>
-					<ChevronsLeft className="h-4 w-4" />
+					<BsSkipStartFill className="h-4 w-4" />
 				</Button>
 				<Button
 					variant="outline"
@@ -82,7 +83,7 @@ export function DataTablePagination({
 					disabled={currentPage === 1}
 				>
 					<span className="sr-only">{t("goToPreviousPage")}</span>
-					<ChevronLeft className="h-4 w-4" />
+					<BsFillCaretLeftFill className="h-4 w-4" />
 				</Button>
 				<Button
 					variant="outline"
@@ -91,7 +92,7 @@ export function DataTablePagination({
 					disabled={currentPage === totalPages}
 				>
 					<span className="sr-only">{t("goToNextPage")}</span>
-					<ChevronRight className="h-4 w-4" />
+					<BsFillCaretRightFill className="h-4 w-4" />
 				</Button>
 				<Button
 					variant="outline"
@@ -100,7 +101,7 @@ export function DataTablePagination({
 					disabled={currentPage === totalPages}
 				>
 					<span className="sr-only">{t("goToLastPage")}</span>
-					<ChevronsRight className="h-4 w-4" />
+					<BsSkipEndFill className="h-4 w-4" />
 				</Button>
 			</div>
 		</div>

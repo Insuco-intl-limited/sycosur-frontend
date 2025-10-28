@@ -26,6 +26,15 @@ export function DataTableActions<T>({
 		return null;
 	}
 
+	// Filter out hidden actions
+	const visibleActions = actions.filter(action => {
+		return !action.hidden || !action.hidden(item);
+	});
+
+	if (visibleActions.length === 0) {
+		return null;
+	}
+
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
@@ -35,7 +44,7 @@ export function DataTableActions<T>({
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align="end">
-				{actions.map((action, index) => {
+				{visibleActions.map((action, index) => {
 					const isDisabled = action.disabled ? action.disabled(item) : false;
 					const isDestructive = action.variant === "destructive";
 
@@ -51,7 +60,7 @@ export function DataTableActions<T>({
 								{action.icon && <span className="mr-2">{action.icon}</span>}
 								{action.label}
 							</DropdownMenuItem>
-							{index < actions.length - 1 &&
+							{index < visibleActions.length - 1 &&
 								action.variant === "destructive" && <DropdownMenuSeparator />}
 						</div>
 					);

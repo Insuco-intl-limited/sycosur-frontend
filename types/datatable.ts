@@ -16,6 +16,7 @@ export interface ActionItem<T = any> {
   onClick: (item: T) => void
   variant?: "default" | "destructive"
   disabled?: (item: T) => boolean
+  hidden?: (item: T) => boolean
 }
 
 export interface DataTableProps<T = any> {
