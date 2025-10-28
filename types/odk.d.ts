@@ -80,6 +80,7 @@ export interface AppUser {
     token: string;
     csrf?: string;
     expiresAt?: string;
+    qr_code?: string;
 }
 
 export interface CreateAppUserData {
@@ -222,4 +223,36 @@ export interface createDraftFormData {
 export interface DraftFormResponse {
     status_code: number;
     form_draft: Form;
+}
+
+// ========================
+// Assignment interfaces
+// ========================
+export interface CreateAssignmentResponse {
+    status_code: number;
+    assignment: {
+        detail: string;
+    }
+}
+interface Assignment {
+    id: number;
+    type: string;
+    displayName: number;
+    createdAt: string;
+    updatedAt: string | null;
+    deletedAt: string | null;
+}
+export interface AssignmentsResponse {
+    status_code: number;
+    assignments: {
+        count?: number;
+        results: Assignment[];
+    };
+}
+interface UsersFormAssignment {
+  [formId: string]: boolean;
+}
+
+export interface Matrix {
+  [userId: string]: UsersFormAssignment;
 }

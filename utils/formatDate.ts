@@ -1,11 +1,16 @@
 export function formatDate(dateString: string | undefined, locale: string = 'en'): string {
-    if (!dateString) return "Date not provided";
+    if (!dateString) {
+      return "Date not provided";
+    }
     const date: Date = new Date(dateString);
 
     // Supported locales: 'en', 'fr', 'es'. Fallback to 'en'.
     let resolvedLocale = 'en-US';
-    if (locale.startsWith('fr')) resolvedLocale = 'fr-FR';
-    else if (locale.startsWith('es')) resolvedLocale = 'es-ES';
+    if (locale.startsWith('fr')) {
+      resolvedLocale = 'fr-FR';
+    } else if (locale.startsWith('es')) {
+             resolvedLocale = 'es-ES';
+           }
 
     // Recommended formats:
     // en: September 24, 2025
