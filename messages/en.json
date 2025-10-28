@@ -1,4 +1,63 @@
 {
+  "projects": "Projects",
+  "surveys": "Surveys",
+  "users": "Users",
+  "submissions": "Submissions",
+  "assignments": "Assignments",
+  "activities": "Activities",
+  "publicAccess": "Public Access",
+  "mobileUsers": "Mobile Users",
+  "versions": "Versions",
+
+  "forms": {
+    "_self": "Forms",
+    "titles": {
+      "newProject": " Create New Project",
+      "editProject": "Update Project",
+      "uploadForm": "Upload Form"
+    },
+    "labels": {
+      "projectName": "Project Name",
+      "projectDescription": "Project Description",
+      "formIdLabel": "Form ID (optional)",
+      "fileLabel": "Form File"
+    },
+    "buttons": {
+      "cancel": "Cancel",
+      "close": "Close",
+      "delete": "Delete",
+      "save": "Save",
+      "submit": "Submit",
+      "update": "Update",
+      "view": "View",
+      "export": "Export",
+      "newProject": "NEW PROJECT",
+      "newMobileUser": "New Mobile User",
+      "uploadNewForm": "Upload New Form",
+      "uploadForm": "Upload Form",
+      "exporting": "Exporting...",
+      "uploading": "Uploading...",
+      "newWebSubmission": "New Web Submission",
+      "chooseFile": "Choose file"
+    },
+    "placeholders": {
+      "projectName": "Enter project name",
+      "projectDescription": "Enter project description",
+      "formIdPlaceholder": "Custom form ID (leave empty to use default)"
+    },
+    "upload": {
+      "formIdHelp": "Provide a custom xmlFormId or leave empty to use the ID from the form file",
+      "selectedFile": "Selected file: {fileName}",
+      "ignoreWarnings": "Ignore warnings",
+      "publishAfter": "Publish form after upload",
+      "errors": {
+        "noFile": "Please select a file to upload",
+        "generic": "An error occurred while uploading the file"
+      },
+      "noFileSelected": "No file selected"
+    }
+  },
+
   "common": {
     "loading": "Loading"
   },
@@ -6,7 +65,7 @@
     "dashboard": {
       "profile": "Profile",
       "_self": "Dashboard",
-
+      "users": "Users",
       "projects": "Projects",
       "surveys": "Surveys",
       "forms": "Forms",
@@ -63,7 +122,9 @@
       "settings": "Settings"
     }
   },
+
   "project": {
+    "_self": "Project",
     "notFound": "Project Not Found",
     "notFoundDescription": "The project you are looking for does not exist or has been removed.",
     "createdOn": "Created on",
@@ -74,7 +135,27 @@
     "users": "Users",
     "usersDescription": "Manage users and their roles in the project",
     "settings": "Settings",
-    "settingsDescription": "Configure project settings and preferences"
+    "settingsDescription": "Configure project settings and preferences",
+    "info": {
+      "totalForms": "Total Forms",
+      "dataAnalysisReports": "Data Analysis Reports",
+      "complaintsReceived": "Complaints Received",
+      "socialImpactScore": "Social Impact Score"
+    }
+  },
+  "months": {
+    "jan": "Jan",
+    "feb": "Feb",
+    "mar": "Mar",
+    "apr": "Apr",
+    "may": "May",
+    "jun": "Jun",
+    "jul": "Jul",
+    "aug": "Aug",
+    "sep": "Sep",
+    "oct": "Oct",
+    "nov": "Nov",
+    "dec": "Dec"
   },
   "notFound": {
     "description": "The page you are looking for does not exist.",
@@ -86,13 +167,13 @@
     "pagination": {
       "rowsPerPage": "Rows per page",
       "pageInfo": "Page {currentPage} of {totalPages}",
-      "itemsInfo": "{startItem}-{endItem} of {totalItems}",
+      "itemsInfo": "Rows {startItem}-{endItem} of {totalItems}",
       "goToFirstPage": "Go to first page",
       "goToPreviousPage": "Go to previous page",
       "goToNextPage": "Go to next page",
       "goToLastPage": "Go to last page"
     },
-    "export": {
+      "export": {
       "exportButton": "Export",
       "format": {
         "csv": "CSV",
@@ -119,7 +200,45 @@
       "searchPlaceholder": "Search..."
     },
     "actions": {
-      "openMenu": "Open menu"
+      "openMenu": "Open menu",
+      "view": "View",
+      "edit": "Edit",
+      "delete": "Delete",
+      "update": "Update",
+      "revoke": "Revoke",
+      "copyLink": "Copy Link"
+    },
+    "columns": {
+      "name": "Name",
+      "description": "Description",
+      "createdOn": "Created on",
+      "lastUpdatedOn": "Last updated on",
+      "lastUsed": "Last used",
+      "lastSeen": "Last seen",
+      "status": "Status",
+      "type": "Type",
+      "role": "Role",
+      "createdBy": "Created by",
+      "publicURL": "Public URL",
+      "instance": "Instance",
+      "submitter": "Submitter",
+      "submissionDate": "Submission Date",
+      "reviewState": "Review State",
+      "version": "Version",
+      "formName": "Form Name",
+      "state" : "State",
+      "publishedDate" : "Published Date"
+    }
+  },
+  "msg": {
+    "success": {
+      "formUploaded": "Form \"{formName}\" uploaded successfully{published, select, true { and published} other {}}"
+    },
+    "warning": {
+
+    },
+    "error": {
+      "formUploadFailed": "Failed to upload form"
     }
   }
 }

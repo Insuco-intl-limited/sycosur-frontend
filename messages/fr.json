@@ -2,11 +2,60 @@
   "common": {
     "loading": "Chargement"
   },
+    "forms": {
+    "_self": "Formulaires",
+    "titles": {
+      "newProject": "Créer un Nouveau Projet",
+      "editProject": "Modifier le Projet",
+      "uploadForm": "Importer un formulaire"
+    },
+    "labels": {
+      "projectName": "Nom du Projet",
+      "projectDescription": "Description du Projet",
+      "formIdLabel": "ID du formulaire (optionnel)",
+      "fileLabel": "Fichier du formulaire"
+    },
+    "buttons": {
+      "cancel": "Annuler",
+      "close": "Fermer",
+      "delete": "Supprimer",
+      "save": "Enregistrer",
+      "submit": "Soumettre",
+      "update": "Mettre à jour",
+      "view": "Voir",
+      "export": "Exporter",
+      "newProject": "NOUVEAU PROJET",
+      "newMobileUser": "Nouvel Utilisateur Mobile",
+      "uploadNewForm": "Importer Formulaire",
+      "uploadForm": "Importer le formulaire",
+      "exporting": "Exportation...",
+      "uploading": "Importation...",
+      "newWebSubmission": "Nouvelle soumission web",
+      "chooseFile": "Choisir un fichier"
+      },
+      "placeholders": {
+        "projectName": "Saisir le nom du projet",
+        "projectDescription": "Saisir la description du projet",
+        "formIdPlaceholder": "ID de formulaire personnalisé (ignorer pour valeur par défaut)"
+      },
+      "upload": {
+        "formIdHelp": "Fournissez un xmlFormId personnalisé ou laissez vide pour utiliser l'ID du fichier du formulaire",
+        "selectedFile": "Fichier sélectionné : {fileName}",
+        "ignoreWarnings": "Ignorer les avertissements",
+        "publishAfter": "Publier le formulaire après l'import",
+        "errors": {
+          "noFile": "Veuillez sélectionner un fichier à importer",
+          "generic": "Une erreur est survenue lors de l'import du fichier"
+        },
+        "noFileSelected": "Aucun fichier choisi"
+      }
+  },
   "breadcrumbs": {
     "dashboard": {
       "profile": "Profil",
       "_self": "Tableau de bord",
       "projects": "Projets",
+      "users": "Utilisateurs",
       "surveys": "Enquêtes",
       "forms": "Formulaires",
       "submissions": "Soumissions",
@@ -23,9 +72,15 @@
     }
   },
   "dashboard": {
+    "totalForms": "Total des formulaires",
+    "activeUsers": "Utilisateurs actifs",
+    "completionRate": "Taux d'achèvement",
+    "fromLastMonth": "depuis le mois dernier",
     "monthlyActivity": "Activité mensuelle",
     "forms": "Formulaires",
     "surveys": "Enquêtes",
+    "userDistribution": "Répartition des utilisateurs",
+    "completionRateTrend": "Tendance du taux d'achèvement",
     "menu": {
       "activities": "Activités",
       "analysis": "Analyse",
@@ -58,6 +113,40 @@
       "settings": "Paramètres"
     }
   },
+  "project": {
+    "_self": "Projet",
+    "notFound": "Projet introuvable",
+    "notFoundDescription": "Le projet que vous recherchez n'existe pas ou a été supprimé.",
+    "createdOn": "Créé le",
+    "description": "Description",
+    "sections": "Sections du projet",
+    "surveys": "Enquêtes",
+    "surveysDescription": "Gérer les formulaires et enquêtes pour la collecte de données",
+    "users": "Utilisateurs",
+    "usersDescription": "Gérer les utilisateurs et leurs rôles dans le projet",
+    "settings": "Paramètres",
+    "settingsDescription": "Configurer les paramètres et préférences du projet",
+    "info": {
+      "totalForms": "Total des formulaires",
+      "dataAnalysisReports": "Rapports d'analyse de données",
+      "complaintsReceived": "Plaintes reçues",
+      "socialImpactScore": "Indice d'impact social"
+    }
+  },
+  "months": {
+    "jan": "janv.",
+    "feb": "févr.",
+    "mar": "mars",
+    "apr": "avr.",
+    "may": "mai",
+    "jun": "juin",
+    "jul": "juil.",
+    "aug": "août",
+    "sep": "sept.",
+    "oct": "oct.",
+    "nov": "nov.",
+    "dec": "déc."
+  },
   "notFound": {
     "description": "La page que vous recherchez n'existe pas.",
     "title": "Page non trouvée"
@@ -68,7 +157,7 @@
     "pagination": {
       "rowsPerPage": "Lignes par page",
       "pageInfo": "Page {currentPage} sur {totalPages}",
-      "itemsInfo": "{startItem}-{endItem} sur {totalItems}",
+      "itemsInfo": "Ligne(s) {startItem}-{endItem} sur {totalItems}",
       "goToFirstPage": "Aller à la première page",
       "goToPreviousPage": "Aller à la page précédente",
       "goToNextPage": "Aller à la page suivante",
@@ -101,7 +190,45 @@
       "searchPlaceholder": "Rechercher..."
     },
     "actions": {
-      "openMenu": "Ouvrir le menu"
+      "openMenu": "Ouvrir le menu",
+      "view": "Voir",
+      "edit": "Modifier",
+      "delete": "Supprimer",
+      "update": "Mettre à jour",
+      "revoke": "Révoquer",
+      "copyLink": "Copier le lien"
+    },
+      "columns": {
+      "name": "Nom",
+      "description": "Description",
+      "createdOn": "Date de création",
+      "lastUpdatedOn": "Dernière mise à jour",
+      "lastUsed": "Dernière utilisation",
+      "lastSeen": "Dernière vue",
+      "status": "Statut",
+      "type": "Type",
+      "role": "Rôle",
+      "createdBy": "Créé par",
+      "publicURL": "URL publique",
+        "instance": "Instance",
+      "submitter": "Soumetteur",
+      "submissionDate": "Date de soumission",
+      "reviewState": "État de révision",
+      "version": "Version",
+      "formName": "Nom du formulaire",
+      "state" : "État",
+      "publishedDate" : "Date de publication"
+    }
+  },
+  "msg": {
+    "success": {
+      "formUploaded": "Formulaire \"{formName}\" importé avec succès{published, select, true { et publié} other {}}"
+    },
+    "warning": {
+
+    },
+    "error": {
+      "formUploadFailed": "Échec de l'import du formulaire"
     }
   }
 }

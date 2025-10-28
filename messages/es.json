@@ -1,17 +1,67 @@
 {
+
   "common": {
     "loading": "Cargando"
+  },
+  "forms": {
+    "_self": "Formularios",
+    "titles": {
+      "newProject": "Crear Nuevo Proyecto",
+      "editProject": "Actualizar Proyecto",
+      "uploadForm": "Subir Formulario"
+    },
+    "labels": {
+      "projectName": "Nombre del Proyecto",
+      "projectDescription": "Descripción del Proyecto",
+      "formIdLabel": "ID de formulario (opcional)",
+      "fileLabel": "Archivo del formulario"
+    },
+    "buttons": {
+    "cancel": "Cancelar",
+    "close": "Cerrar",
+    "delete": "Eliminar",
+    "save": "Guardar",
+    "submit": "Enviar",
+    "update": "Actualizar",
+    "view": "Ver",
+    "export": "Exportar",
+    "newProject": "NUEVO PROYECTO",
+    "newMobileUser": "Nuevo Usario Móvil",
+    "uploadNewForm": "Subir Nuevo Formulario",
+    "uploadForm": "Subir Formulario",
+      "exporting": "Exportando...",
+      "uploading": "Subiendo...",
+      "newWebSubmission": "Nuevo envío web",
+      "chooseFile": "Seleccionar archivo"
+     },
+    "placeholders": {
+      "projectName": "Ingrese el nombre del proyecto",
+      "projectDescription": "Ingrese la descripción del proyecto",
+      "formIdPlaceholder": "ID de formulario personalizado"
+    },
+    "upload": {
+      "formIdHelp": "Proporcione un xmlFormId personalizado o deje vacío para usar el ID del archivo del formulario",
+      "selectedFile": "Archivo seleccionado: {fileName}",
+      "ignoreWarnings": "Ignorar advertencias",
+      "publishAfter": "Publicar formulario después de subir",
+      "errors": {
+        "noFile": "Seleccione un archivo para subir",
+        "generic": "Ocurrió un error al subir el archivo"
+      },
+      "noFileSelected": "Ningún archivo seleccionado"
+    }
   },
   "breadcrumbs": {
     "dashboard": {
       "_self": "Tablero",
+      "profile": "Perfil",
 
         "projects": "Proyectos",
         "surveys": "Encuestas",
         "forms": "Formularios",
         "submissions": "Envíos",
         "assignments": "Asignaciones",
-
+      "users": "Usuarios",
       "activities": "Actividades",
       "gestion-par": "Gestión PAR",
       "budget-par": "Presupuesto PAR",
@@ -67,6 +117,7 @@
     }
   },
   "project": {
+    "_self": "Proyecto",
     "notFound": "Proyecto No Encontrado",
     "notFoundDescription": "El proyecto que está buscando no existe o ha sido eliminado.",
     "createdOn": "Creado el",
@@ -77,7 +128,27 @@
     "users": "Usuarios",
     "usersDescription": "Gestionar usuarios y sus roles en el proyecto",
     "settings": "Configuración",
-    "settingsDescription": "Configurar ajustes y preferencias del proyecto"
+    "settingsDescription": "Configurar ajustes y preferencias del proyecto",
+    "info": {
+      "totalForms": "Formularios totales",
+      "dataAnalysisReports": "Informes de análisis de datos",
+      "complaintsReceived": "Quejas recibidas",
+      "socialImpactScore": "Puntuación de impacto social"
+    }
+  },
+  "months": {
+    "jan": "ene.",
+    "feb": "feb.",
+    "mar": "mar.",
+    "apr": "abr.",
+    "may": "may.",
+    "jun": "jun.",
+    "jul": "jul.",
+    "aug": "ago.",
+    "sep": "sept.",
+    "oct": "oct.",
+    "nov": "nov.",
+    "dec": "dic."
   },
   "notFound": {
     "description": "La página que busca no existe.",
@@ -89,7 +160,7 @@
     "pagination": {
       "rowsPerPage": "Filas por página",
       "pageInfo": "Página {currentPage} de {totalPages}",
-      "itemsInfo": "{startItem}-{endItem} de {totalItems}",
+      "itemsInfo": "Filas {startItem}-{endItem} de {totalItems}",
       "goToFirstPage": "Ir a la primera página",
       "goToPreviousPage": "Ir a la página anterior",
       "goToNextPage": "Ir a la página siguiente",
@@ -122,7 +193,45 @@
       "searchPlaceholder": "Buscar..."
     },
     "actions": {
-      "openMenu": "Abrir menú"
+      "openMenu": "Abrir menú",
+      "view": "Ver",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "update": "Actualizar",
+      "revoke": "Revocar",
+      "copyLink": "Copiar enlace"
+    },
+      "columns": {
+      "name": "Nombre",
+      "description": "Descripción",
+      "createdOn": "Creado el",
+      "lastUpdatedOn": "Última actualización el",
+      "lastUsed": "Último uso",
+      "lastSeen": "Última vez visto",
+      "status": "Estado",
+      "type": "Tipo",
+      "role": "Rol",
+      "createdBy": "Creado por",
+      "publicURL": "URL pública",
+        "instance": "Instancia",
+      "submitter": "Remitente",
+      "submissionDate": "Fecha de envío",
+      "reviewState": "Estado de revisión",
+        "version": "Versión",
+      "formName": "Nombre del formulario",
+      "state" : "Estado",
+      "publishedDate" : "Fecha de publicación"
+    }
+  },
+  "msg": {
+    "success": {
+      "formUploaded": "Formulario \"{formName}\" subido correctamente{published, select, true { y publicado} other {}}"
+    },
+    "warning": {
+
+    },
+    "error": {
+      "formUploadFailed": "Error al subir el formulario"
     }
   }
 }
