@@ -5,12 +5,23 @@ import {
     CreateFormResponse,
     CreatePublicLinkData,
     CreatePublicLinkResponse,
-    FormDetailResponse, FormVersionsResponse, GenFormParams,
-    ProjectFormsResponse, PublicLinksResponse, SubmissionsListResponse, SubmissionDetailResponse,
-    CreateDraftFormResponse, createDraftFormData, DraftFormResponse
+    FormDetailResponse,
+    FormVersionsResponse,
+    GenFormParams,
+    ProjectFormsResponse,
+    PublicLinksResponse,
+    SubmissionsListResponse,
+    SubmissionDetailResponse,
+    CreateDraftFormResponse,
+    createDraftFormData,
+    DraftFormResponse,
+    CreateAssignmentResponse,
+    AssignmentsResponse,
+    UsersFormAssignment, Matrix
 } from "@/types/odk";
 
 const ODK_ENDPOINTS = {
+    MATRIX:(projectId: number| string) => `/odk/projects/${projectId}/matrix`,
     ADD_FORMS: (projectId: number | string) => `/odk/projects/${projectId}/forms/`,
     LIST_FORMS: (projectId: number | string) => `/odk/projects/${projectId}/forms`,
     VIEW_FORM: (projectId: number | string, formId: string) => `/odk/projects/${projectId}/forms/${formId}`,
@@ -26,6 +37,16 @@ interface UploadFormParams {
     ignoreWarnings?: boolean;
     publish?: boolean;
     formId?: string;
+}
+
+interface ExportData extends GenFormParams {
+    to?: "csv" | "xlsx";
+}
+
+interface ExportResponse {
+    data: string | Blob;
+    contentType?: string;
+    filename?: string;
 }
 
 interface XMLVersionParams extends GenFormParams {
@@ -106,6 +127,42 @@ export const surveyApiSlice = baseApiSlice.injectEndpoints({
             }),
             providesTags: ["Project"],
         }),
+        revokeAppUser: builder.mutation<void, {projectId:number, token:string }>({
+                query: ({projectId, token}) => ({
+                url: `${ODK_ENDPOINTS.ADD_APP_USER(projectId)}${token}/revoke/`,
+                method: "DELETE",
+            }),
+            invalidatesTags: ["Project"],
+        }),
+        assignForm: builder.mutation<CreateAssignmentResponse, GenFormParams & {user_id:number}>({
+            query: ({projectId, formId, user_id}) => ({
+                url: `${ODK_ENDPOINTS.VIEW_FORM(projectId, formId)}/app-users/${user_id}/`,
+                method: "POST",
+                body: {}
+            }),
+            invalidatesTags: ["Project"],
+        }),
+        unassignForm: builder.mutation<void, GenFormParams & {user_id:number}>({
+            query: ({projectId, formId, user_id}) => ({
+                url: `${ODK_ENDPOINTS.VIEW_FORM(projectId, formId)}/app-users/${user_id}/`,
+                method: "DELETE",
+            }),
+            invalidatesTags: ["Project"],
+        }),
+        assignments: builder.query<AssignmentsResponse, GenFormParams>({
+            query: ({projectId, formId}) => ({
+                url: `${ODK_ENDPOINTS.VIEW_FORM(projectId, formId)}/app-users`,
+                method: "GET",
+            }),
+            providesTags: ["Project"],
+        }),
+        matrix: builder.query<Matrix, { projectId: number }>({
+            query: ({projectId}) => ({
+                url: ODK_ENDPOINTS.MATRIX(projectId),
+                method: "GET",
+            }),
+            providesTags: ["Project"],
+        }),
         addSubmission: builder.mutation<SubmissionDetailResponse, GenFormParams & CreateSubmissionData>({
             query: ({projectId, formId, instanceName, submitterId}) => ({
                 url: ODK_ENDPOINTS.ADD_SUBMISSION(projectId, formId),
@@ -128,16 +185,28 @@ export const surveyApiSlice = baseApiSlice.injectEndpoints({
             }),
             providesTags: ["Project"],
         }),
-        exportSubmissionsData: builder.query<string, GenFormParams>({
-            query: ({projectId, formId}) => ({
-                url: `${ODK_ENDPOINTS.VIEW_FORM(projectId, formId)}/submissions.csv`,
-                method: "GET",
-                headers: {
-                    'Accept': 'text/csv, text/plain, */*',
-                },
-                responseHandler: 'text',
-            }),
-            providesTags: ["Project"],
+        exportSubmissionsData: builder.mutation<ExportResponse, ExportData>({
+            query: ({projectId, formId, to = "csv"}) => {
+                return {
+                    url: `${ODK_ENDPOINTS.VIEW_FORM(projectId, formId)}/submissions.csv`,
+                    method: "POST",
+                    headers: {
+                        "to": to,
+                        Accept: 'text/csv, text/plain, */*, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                    },
+                    responseHandler: async (response) => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        const contentType = response.headers.get("Content-Type") || "";
+                        const filename = response.headers.get("Content-Disposition")?.split("filename=")[1]?.replace(/["']/g, "");
+                        const data = to === "xlsx"
+                            ? await response.blob()
+                            : await response.text();
+                        return {data, contentType, filename};
+                    }
+                };
+            },
         }),
         getPublicLinks: builder.query<PublicLinksResponse, GenFormParams>({
             query: ({projectId, formId}) => ({
@@ -200,7 +269,7 @@ export const surveyApiSlice = baseApiSlice.injectEndpoints({
             query: ({projectId, formId, version}) => ({
                 url: `${ODK_ENDPOINTS.VIEW_FORM(projectId, formId)}/draft/publish/`,
                 method: "POST",
-                body: version ? { version } : {},
+                body: version ? {version} : {},
             }),
             invalidatesTags: ["Project"],
         }),
@@ -211,6 +280,7 @@ export const surveyApiSlice = baseApiSlice.injectEndpoints({
             }),
             invalidatesTags: ["Project"],
         }),
+
 
     }),
 });
@@ -232,7 +302,11 @@ export const {
     usePublishFormDraftMutation,
     useDeleteFormDraftMutation,
     useAddSubmissionMutation,
-    useExportSubmissionsDataQuery,
-    useLazyExportSubmissionsDataQuery,
+    useExportSubmissionsDataMutation,
     useAddFormDraftMutation,
+    useRevokeAppUserMutation,
+    useAssignFormMutation,
+    useUnassignFormMutation,
+    useMatrixQuery,
+    useAssignmentsQuery,
 } = surveyApiSlice;

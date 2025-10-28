@@ -37,6 +37,14 @@ export const projectApiSlice = baseApiSlice.injectEndpoints({
             }),
             invalidatesTags: ["Project"],
         }),
+        updateProject: builder.mutation<ProjectResponse, ProjectCreateData & {pkid:number}>({
+            query: ({pkid, ...body}) => ({
+                url: PROJECT_ENDPOINTS.BY_ID(pkid),
+                method: "PATCH",
+                body,
+            }),
+            invalidatesTags: ["Project"],
+        })
     }),
 });
 
@@ -44,6 +52,6 @@ export const {
     useGetProjectsQuery,
     useGetProjectByIdQuery,
     useCreateProjectMutation,
-    // useUpdateProjectMutation,
+    useUpdateProjectMutation,
     useDeleteProjectMutation,
 } = projectApiSlice;

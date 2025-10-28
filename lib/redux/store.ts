@@ -7,7 +7,9 @@ export const makeStore = () => {
 	return configureStore({
 		reducer: rootReducer,
 		middleware: (getDefaultMiddleware) =>
-			getDefaultMiddleware().concat(baseApiSlice.middleware),
+			getDefaultMiddleware(
+				{thunk: true, serializableCheck: false}
+			).concat(baseApiSlice.middleware),
 		devTools: process.env.NODE_ENV !== "production",
 	});
 };
