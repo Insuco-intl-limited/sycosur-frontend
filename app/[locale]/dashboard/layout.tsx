@@ -32,9 +32,9 @@ function DashboardLayoutInner({ children }: { children: React.ReactNode }) {
 
 	// Build a current project context preferring fetched project, then selectedProject
 	const currentProjectForContext = fetchedProject
-		? { pkid: fetchedProject.pkid, id: fetchedProject.pkid, name: fetchedProject.name }
+		? { pkid: fetchedProject.pkid, id: fetchedProject.id, name: fetchedProject.name }
 		: selectedProject
-			? { pkid: selectedProject.pkid, id: selectedProject.pkid, name: selectedProject.name }
+			? { pkid: selectedProject.pkid, id: selectedProject.id, name: selectedProject.name }
 			: undefined;
 
 	// Generate breadcrumbs dynamically based on the current path

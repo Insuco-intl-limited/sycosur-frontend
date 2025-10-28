@@ -1,4 +1,5 @@
 "use client";
+import {useState} from "react";
 import {Badge} from "@/components/ui/badge";
 import {Edit, Trash2, Eye} from "lucide-react";
 import type {Column, ActionItem} from "@/types/datatable";
@@ -7,10 +8,11 @@ import {DataTable} from "@/components/datatable/datatable";
 import {ProjectFormModal} from "@/components/forms/odk/ProjectFormModal";
 import {toast} from "react-toastify";
 import {useRouter, usePathname} from "next/navigation";
+
 import {
     useCreateProjectMutation,
     useGetProjectsQuery,
-    useDeleteProjectMutation
+    useDeleteProjectMutation, useUpdateProjectMutation
 } from "@/lib/redux/features/projects/projectApiSlice";
 import type {Project} from "@/types";
 import { formatDate as formatDateUtil } from "@/utils/formatDate";
@@ -27,6 +29,11 @@ export default function ProjectsPage() {
     const totalCount = data?.projects?.count ?? 0;
     const [createProject, {isLoading: isCreating}] = useCreateProjectMutation();
     const [deleteProject, {isLoading: isDeleting}] = useDeleteProjectMutation();
+    const [updateProject, {isLoading: isUpdating}] = useUpdateProjectMutation();
+
+    // State for update modal
+    const [updateModalOpen, setUpdateModalOpen] = useState(false);
+    const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
     // Helper function to format date
     const formatDate = (dateString: string): string => {
@@ -45,8 +52,32 @@ export default function ProjectsPage() {
     };
 
     const handleUpdateProject = (project: Project): void => {
-        // TODO: implement update flow
-        toast.info(`Update project: ${project.name}`);
+        setSelectedProject(project);
+        setUpdateModalOpen(true);
+    };
+
+    const handleUpdateProjectSubmit = async (form: { name: string; description?: string }): Promise<void> => {
+        if (!selectedProject) {
+          return;
+        }
+        
+        try {
+            const projectData: { pkid: number; name: string; description?: string } = {
+                pkid: selectedProject.pkid,
+                name: form.name
+            };
+            if (form.description && form.description.trim() !== '') {
+                projectData.description = form.description;
+            }
+            await updateProject(projectData).unwrap();
+            toast.success(`Project "${form.name}" updated successfully`);
+            setUpdateModalOpen(false);
+            setSelectedProject(null);
+            refetch();
+        } catch (error) {
+            showApiError("updating", error);
+            throw error as Error;
+        }
     };
 
     const showApiError = (operation: string, error: unknown): void => {
@@ -83,34 +114,29 @@ export default function ProjectsPage() {
     };
     
     const buildColumns = (): Column<Project>[] => [
-        // {
-        //     key: "pkid",
-        //     header: "ID",
-        //     width: "80px",
-        //     sortable: true,
-        // },
+
         {
             key: "name",
-            header: "Project Name",
+            header: t("datatable.columns.name"),
             sortable: true,
             filterable: true,
         },
         {
             key: "description",
-            header: "Description",
+            header: t("datatable.columns.description"),
             sortable: true,
             filterable: true,
             accessor: (project) => project.description || "-",
         },
         {
             key: "created_by_name",
-            header: "Created By",
+            header: t("datatable.columns.createdBy"),
             sortable: true,
             accessor: (project) => project.created_by_name || "-",
         },
         {
             key: "created_at",
-            header: "Created On",
+            header: t("datatable.columns.createdOn"),
             sortable: true,
             accessor: (project) => formatDate(project.created_at),
         },
@@ -118,17 +144,17 @@ export default function ProjectsPage() {
 
     const buildActions = (): ActionItem<Project>[] => [
         {
-            label: "View",
+            label: t("datatable.actions.view"),
             icon: <Eye className="h-4 w-4"/>,
             onClick: handleViewProject,
         },
         {
-            label: "Update",
+            label: t("datatable.actions.edit"),
             icon: <Edit className="h-4 w-4"/>,
             onClick: handleUpdateProject,
         },
         {
-            label: "Delete",
+            label: t("datatable.actions.delete"),
             icon: <Trash2 className="h-4 w-4"/>,
             variant: "destructive" as const,
             onClick: handleDeleteProject,
@@ -143,14 +169,14 @@ export default function ProjectsPage() {
             {/* Header with title, total items count as badge, and add button */}
             <div className="flex justify-between items-center">
                 <div className="flex items-center gap-2">
-                    <h1 className="text-2xl font-bold">Projects</h1>
+                    <h1 className="text-2xl font-bold">{t("project._self")}</h1>
                     <Badge variant="default" className="text-sm bg-accentBlue">
                         {isLoading ? "..." : totalCount}
                     </Badge>
                 </div>
                 <ProjectFormModal
                     onSubmit={handleCreateProject}
-                    title="Create New Project"
+                    title={t("forms.titles.newProject")}
                 />
             </div>
 
@@ -168,6 +194,20 @@ export default function ProjectsPage() {
                     exportable={true}
                     filterable={true}
                     sortable={true}
+                />
+            )}
+
+            {/* Update Project Modal */}
+            {selectedProject && (
+                <ProjectFormModal
+                    open={updateModalOpen}
+                    onOpenChange={setUpdateModalOpen}
+                    onSubmit={handleUpdateProjectSubmit}
+                    title={t("forms.titles.editProject")}
+                    initialData={{
+                        name: selectedProject.name,
+                        description: selectedProject.description || "",
+                    }}
                 />
             )}
         </div>

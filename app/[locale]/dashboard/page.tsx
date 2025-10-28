@@ -123,7 +123,7 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
         {/* Progress Chart */}
-        <Card>
+        <Card className="order-2">
           <CardHeader>
             <CardTitle>Monthly Progress</CardTitle>
           </CardHeader>
@@ -176,12 +176,12 @@ export default function DashboardPage() {
         </Card>
 
         {/* Recent Projects */}
-        <Card>
+        <Card className="order-1">
           <CardHeader className="flex flex-row items-center justify-between">
             <CardTitle>Recent Projects</CardTitle>
-            <button className="text-sm font-medium text-blue-600 hover:text-blue-700">
-              View all
-            </button>
+            {/*<button className="text-sm font-medium text-blue-600 hover:text-blue-700">*/}
+            {/*  View all*/}
+            {/*</button>*/}
           </CardHeader>
           <CardContent className="space-y-4">
             {latestProjects.map((project, index) => (

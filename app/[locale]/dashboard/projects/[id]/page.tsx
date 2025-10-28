@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useParams } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CalendarIcon, Users, FileText, Settings, BarChart } from "lucide-react";
@@ -17,23 +17,6 @@ import {
 } from "recharts";
 import { useGetProjectByIdQuery } from "@/lib/redux/features/projects/projectApiSlice";
 
-// Mock data for charts
-const activityData = [
-  { name: 'Jan', forms: 4, surveys: 2 },
-  { name: 'Feb', forms: 3, surveys: 4 },
-  { name: 'Mar', forms: 2, surveys: 3 },
-  { name: 'Apr', forms: 5, surveys: 6 },
-  { name: 'May', forms: 7, surveys: 4 },
-  { name: 'Jun', forms: 6, surveys: 3 },
-];
-
-const projectInfoData = [
-  { name: 'Total Forms', value: 42 },
-  { name: 'Data Analysis Reports', value: 8 },
-  { name: 'Complaints Received', value: 15 },
-  { name: 'Social Impact Score', value: 87 },
-];
-
 export default function ProjectDashboardPage() {
   const t = useTranslations();
   const params = useParams();
@@ -44,6 +27,27 @@ export default function ProjectDashboardPage() {
     skip: Number.isNaN(numericId),
   });
   const project = data?.project;
+
+  // Derive current locale from pathname: /{locale}/...
+  const pathname = usePathname();
+  const currentLocale = pathname.split('/')[1] || 'en';
+
+  // Localizable mock data for charts and info cards
+  const activityData = [
+    { name: 'jan', forms: 4, surveys: 2 },
+    { name: 'feb', forms: 3, surveys: 4 },
+    { name: 'mar', forms: 2, surveys: 3 },
+    { name: 'apr', forms: 5, surveys: 6 },
+    { name: 'may', forms: 7, surveys: 4 },
+    { name: 'jun', forms: 6, surveys: 3 },
+  ];
+
+  const projectInfoData = [
+    { key: 'totalForms', value: 42 },
+    { key: 'dataAnalysisReports', value: 8 },
+    { key: 'complaintsReceived', value: 15 },
+    { key: 'socialImpactScore', value: 87 },
+  ] as const;
 
   if (isLoading) {
     return (
@@ -73,7 +77,7 @@ export default function ProjectDashboardPage() {
           <CalendarIcon className="h-4 w-4 mr-1" />
           <span>
             {t('project.createdOn')}{" "}
-            {new Date(project.created_at).toLocaleDateString("en-US", {
+            {new Date(project.created_at).toLocaleDateString(currentLocale, {
               year: "numeric",
               month: "long",
               day: "numeric",
@@ -93,7 +97,7 @@ export default function ProjectDashboardPage() {
         {projectInfoData.map((info, index) => (
           <Card key={index}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">{info.name}</CardTitle>
+              <CardTitle className="text-sm font-medium">{t(`project.info.${info.key}`)}</CardTitle>
               <BarChart className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
@@ -115,7 +119,7 @@ export default function ProjectDashboardPage() {
               margin={{ top: 20, right: 30, left: 10, bottom: 20 }}
             >
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
+              <XAxis dataKey="name" tickFormatter={(value: string) => t(`months.${value}`)} />
               <YAxis allowDecimals={false} domain={[0, 8]} />
               <Tooltip />
               <Legend />
