@@ -9,6 +9,7 @@ import type { Column, ActionItem } from "@/types/datatable";
 import { formatDate } from "@/utils/formatDate";
 import Spinner from "@/components/shared/Spinner";
 import type { Form } from "@/types/odk";
+import { useTranslations} from "next-intl";
 
 interface FormVersionsListProps {
   formId: string;
@@ -27,6 +28,7 @@ export function FormVersionsList({
     projectId: Number(projectId),
     formId
   });
+  const t = useTranslations();
 
   const handleViewXML = (version: Form) => {
     if (onViewXML) {
@@ -49,7 +51,7 @@ export function FormVersionsList({
   const columns: Column<Form>[] = [
     {
       key: "version",
-      header: "Version",
+      header: t("datatable.columns.version"),
       sortable: true,
       width: "15%",
       render: (value: string) => (
@@ -60,13 +62,13 @@ export function FormVersionsList({
     },
     {
       key: "name",
-      header: "Form Name",
+      header: t("datatable.columns.formName"),
       sortable: true,
       width: "35%",
     },
     {
       key: "state",
-      header: "State",
+      header: t("datatable.columns.state"),
       sortable: true,
       width: "10%",
       render: (value: string) => {
@@ -79,14 +81,14 @@ export function FormVersionsList({
     },
     {
       key: "publishedAt",
-      header: "Published",
+      header: t("datatable.columns.publishedDate"),
       sortable: true,
       width: "20%",
       render: (value: string | null) => value ? formatDate(value) : "Not published",
     },
     {
       key: "updatedAt",
-      header: "Last Updated",
+      header: t("datatable.columns.lastUpdatedOn"),
       sortable: true,
       width: "20%",
       render: (value: string | null) => value ? formatDate(value) : "Never",
@@ -95,7 +97,7 @@ export function FormVersionsList({
 
   const actions: ActionItem<Form>[] = [
     {
-      label: "View XML",
+      label: t("datatable.actions.view") + " XML",
       icon: <Eye className="h-4 w-4" />,
       onClick: handleViewXML,
       variant: "default",
@@ -136,7 +138,7 @@ export function FormVersionsList({
       columns={columns}
       actions={actions}
       searchable={true}
-      searchPlaceholder="Search..."
+      searchPlaceholder={t("datatable.search.searchPlaceholder")}
       paginated={true}
       pageSize={10}
       exportable={false}

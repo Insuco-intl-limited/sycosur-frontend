@@ -8,6 +8,7 @@ import {Form} from "@/types/odk";
 import {EyeIcon, PencilIcon} from "@heroicons/react/24/solid";
 import {useFormDraft} from "@/hooks";
 import {Badge} from "@/components/ui/badge";
+import {useTranslations} from "next-intl";
 
 interface FormsTabProps {
     projectId: string | number;
@@ -16,20 +17,23 @@ interface FormsTabProps {
 export function FormsTab({projectId}: FormsTabProps) {
     const {data, isLoading, isError, error} = useGetProjectFormsQuery(projectId);
     const forms = data?.project_forms?.forms || [];
-
+    const t = useTranslations();
     return (
         <div className="space-y-4">
             <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-2"><h2 className="text-xl font-semibold">Forms</h2>
-                    <Badge variant="destructive" className="bg-accentBlue ml-2">
-                        {forms.length}
-                    </Badge></div>
+                {/*{forms.length>0 &&*/}
+                    <div className="flex items-center gap-2"><h2 className="text-xl font-semibold">{t("forms._self")}</h2>
+                        <Badge variant="destructive" className="bg-accentBlue ml-2">
+                            {forms.length}
+                        </Badge>
+                    </div>
+                {/*}*/}
+
                 <FileUploadFormModal
                     projectId={projectId}
                     title="Upload Form"
                 />
             </div>
-
             <div className="rounded-md border p-4">
                 <FormsList
                     forms={forms}
@@ -42,7 +46,6 @@ export function FormsTab({projectId}: FormsTabProps) {
         </div>
     );
 }
-
 interface FormsListProps {
     forms: Form[];
     isLoading: boolean;
