@@ -6,18 +6,19 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import {
 	FormsTab,
 	EntityListsTab,
-	ProjectRolesTab,
+	FormAccessTab,
 	AppUsersTab,
 	SettingsTab,
 } from "@/components/survey-detail";
 import { CalendarIcon } from "lucide-react";
 import { useGetProjectByIdQuery } from "@/lib/redux/features/projects/projectApiSlice";
+import {useTranslations} from "next-intl";
 
 export default function ProjectDetailPage() {
 	const params = useParams();
 	const projectId = params.id as string;
 	const numericId = Number(projectId);
-
+    const t = useTranslations();
 	const { data, isLoading, isError } = useGetProjectByIdQuery(numericId, {
 		skip: Number.isNaN(numericId),
 	});
@@ -69,16 +70,16 @@ export default function ProjectDetailPage() {
 			{/* Tabs for different sections */}
 			<Tabs defaultValue="forms" className="w-full ">
 				{project.odk_id ? (
-					<TabsList className="grid grid-cols-5 w-full bg-mediumGreen text-light">
-						<TabsTrigger value="forms">Forms</TabsTrigger>
-						<TabsTrigger value="entity-lists">Entity Lists</TabsTrigger>
-						<TabsTrigger value="project-roles">Project Roles</TabsTrigger>
+					<TabsList className="grid grid-cols-3 w-full bg-mediumGreen text-light">
+						<TabsTrigger value="forms">{t("forms._self")}</TabsTrigger>
+						{/*<TabsTrigger value="entity-lists">Entity Lists</TabsTrigger>*/}
+						<TabsTrigger value="form-access">Form Access</TabsTrigger>
 						<TabsTrigger value="app-users">Mobile Users</TabsTrigger>
-						<TabsTrigger value="settings">Settings</TabsTrigger>
+						{/*<TabsTrigger value="settings">Settings</TabsTrigger>*/}
 					</TabsList>
 				) : (
 					<TabsList className="grid grid-cols-1 w-full bg-mediumGreen text-light">
-						<TabsTrigger value="forms">Forms</TabsTrigger>
+						<TabsTrigger value="forms">{t("forms._self")}</TabsTrigger>
 					</TabsList>
 				)}
 
@@ -92,17 +93,17 @@ export default function ProjectDetailPage() {
 							<EntityListsTab projectId={project.pkid} />
 						</TabsContent>
 
-						<TabsContent value="project-roles" className="mt-6">
-							<ProjectRolesTab projectId={project.pkid} />
+						<TabsContent value="form-access" className="mt-6">
+							<FormAccessTab projectId={project.pkid} />
 						</TabsContent>
 
 						<TabsContent value="app-users" className="mt-6">
 							<AppUsersTab projectId={project.pkid} />
 						</TabsContent>
 
-						<TabsContent value="settings" className="mt-6">
-							<SettingsTab projectId={project.pkid} />
-						</TabsContent>
+						{/*<TabsContent value="settings" className="mt-6">*/}
+						{/*	<SettingsTab projectId={project.pkid} />*/}
+						{/*</TabsContent>*/}
 					</>
 				)}
 			</Tabs>

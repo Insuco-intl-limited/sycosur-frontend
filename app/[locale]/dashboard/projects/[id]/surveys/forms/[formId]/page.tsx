@@ -64,12 +64,12 @@ export default function FormDetailPage() {
 			<Tabs defaultValue={defaultTab} className="w-full">
 				{isPublished ? (
 					<>
-						<TabsList className="grid grid-cols-5 w-full bg-mediumGreen text-light">
+						<TabsList className="grid grid-cols-4 w-full bg-mediumGreen text-light">
 							<TabsTrigger value="submissions">Submissions</TabsTrigger>
 							<TabsTrigger value="public-access">Public Access</TabsTrigger>
 							<TabsTrigger value="edit-form">Edit Form</TabsTrigger>
 							<TabsTrigger value="versions">Versions</TabsTrigger>
-							<TabsTrigger value="settings">Settings</TabsTrigger>
+							{/*<TabsTrigger value="settings">Settings</TabsTrigger>*/}
 						</TabsList>
 
 						<TabsContent value="submissions" className="mt-6">
@@ -88,24 +88,24 @@ export default function FormDetailPage() {
 							<VersionsTab formId={formId} projectId={projectId} />
 						</TabsContent>
 
-						<TabsContent value="settings" className="mt-6">
-							<SettingsTab formId={formId} projectId={projectId} />
-						</TabsContent>
+						{/*<TabsContent value="settings" className="mt-6">*/}
+						{/*	<SettingsTab formId={formId} projectId={projectId} />*/}
+						{/*</TabsContent>*/}
 					</>
 				) : (
 					<>
-						<TabsList className="grid grid-cols-2 w-full bg-mediumGreen text-light">
+						<TabsList className="grid grid-cols-1 w-full bg-mediumGreen text-light">
 							<TabsTrigger value="edit-form">Edit Form</TabsTrigger>
-							<TabsTrigger value="settings">Settings</TabsTrigger>
+							{/*<TabsTrigger value="settings">Settings</TabsTrigger>*/}
 						</TabsList>
 
 						<TabsContent value="edit-form" className="mt-6">
 							<EditFormTab formId={formId} projectId={projectId} />
 						</TabsContent>
 
-						<TabsContent value="settings" className="mt-6">
-							<SettingsTab formId={formId} projectId={projectId} />
-						</TabsContent>
+						{/*<TabsContent value="settings" className="mt-6">*/}
+						{/*	<SettingsTab formId={formId} projectId={projectId} />*/}
+						{/*</TabsContent>*/}
 					</>
 				)}
 			</Tabs>
