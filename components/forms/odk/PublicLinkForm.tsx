@@ -11,6 +11,7 @@ import { Label } from "@/components/ui/label";
 import { LinkIcon } from "lucide-react";
 import Spinner from "@/components/shared/Spinner";
 import { toast } from "react-toastify";
+import { useTranslations} from "next-intl";
 
 interface PublicLinkFormProps {
   onSubmit: (data: TPublicLinkSchema) => Promise<void>;
@@ -40,7 +41,7 @@ export function PublicLinkForm({
   });
 
   const onceValue = watch("once");
-
+  const t = useTranslations();
   const handleFormSubmit = async (values: z.infer<typeof PublicLinkSchema>) => {
     try {
       await onSubmit(values);
@@ -58,11 +59,11 @@ export function PublicLinkForm({
       className="space-y-4"
     >
       <FormFieldComponent
-        label="Display Name"
+        label={t("forms.labels.displayName")}
         name="displayName"
         register={register}
         errors={errors}
-        placeholder="Enter display name for the public link"
+        placeholder={t("forms.placeholders.displayName") }
         startIcon={<LinkIcon className="size-4" />}
         required
       />
@@ -77,7 +78,7 @@ export function PublicLinkForm({
           htmlFor="once"
           className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
         >
-          Single-use link (can only be used once)
+            {t("forms.labels.singleUse")}
         </Label>
       </div>
 
@@ -89,7 +90,7 @@ export function PublicLinkForm({
             onClick={onCancel}
             disabled={isLoading}
           >
-            Cancel
+            {t("forms.buttons.cancel")}
           </Button>
         )}
         <Button
@@ -100,10 +101,10 @@ export function PublicLinkForm({
           {isLoading ? (
             <div className="flex items-center gap-2">
               <Spinner size="sm" />
-              <span>Creating...</span>
+              <span>...</span>
             </div>
           ) : (
-            <span>Create Public Link</span>
+            <span>{t("forms.buttons.save")}</span>
           )}
         </Button>
       </div>

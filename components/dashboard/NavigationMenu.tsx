@@ -13,27 +13,26 @@ interface NavigationMenuProps {
 const NavigationMenuItem = ({ item }: { item: NavigationItem }) => {
 	const [isExpanded, setIsExpanded] = useState(false);
 	const hasChildren = item.children && item.children.length > 0;
+	const isDisabled = !!item.disabled;
 
-	// Function to handle click on menu item
 	const handleItemClick = (e: React.MouseEvent) => {
+		if (isDisabled) {
+			e.preventDefault();
+			return ;
+		}
 		if (hasChildren) {
-			// If item has children, toggle expanded state
 			setIsExpanded(!isExpanded);
-			
-			// If the item also has an href, don't prevent default navigation
-			// This allows both expanding and navigation
 		}
 	};
-
 	// Determine the content of the menu item
 	const menuItemContent = (
 		<>
 			<div className="flex items-center space-x-3">
 				{item.icon}
-				<span className="font-[900] text-[1.15rem]">{item.label}</span>
+				<span className={`font-[900] text-[1.15rem] ${isDisabled ? "opacity-60" : ""}`}>{item.label}</span>
 			</div>
 
-			{hasChildren && (
+			{hasChildren && !isDisabled && (
 				<button 
 					className="p-1"
 					onClick={(e) => {
@@ -55,7 +54,7 @@ const NavigationMenuItem = ({ item }: { item: NavigationItem }) => {
 
 	return (
 		<div className="w-full">
-			{item.href ? (
+			{item.href && !isDisabled ? (
 				// If the item has an href, wrap it in a Link
 				<Link 
 					href={item.href}
@@ -63,19 +62,21 @@ const NavigationMenuItem = ({ item }: { item: NavigationItem }) => {
 						item.isActive
 							? "bg-[#3189a1] text-white"
 							: "text-white/90 hover:bg-white/10 hover:text-white"
-					}`}
+						}`}
 					onClick={handleItemClick}
 				>
 					{menuItemContent}
 				</Link>
 			) : (
-				// If no href, just use a div (not clickable for navigation)
+				// If no href, or disabled, just use a div (not clickable for navigation)
 				<div
 					className={`flex items-center justify-between w-full px-4 py-3 text-left transition-all duration-200 ${
-						item.isActive
+						item.isActive && !isDisabled
 							? "bg-[#3189a1] text-white"
-							: "text-white/90 hover:bg-white/10 hover:text-white"
-					}`}
+							: isDisabled
+								? "text-white/60 cursor-not-allowed opacity-60"
+								: "text-white/90 hover:bg-white/10 hover:text-white"
+						}`}
 					onClick={handleItemClick}
 				>
 					{menuItemContent}
@@ -88,17 +89,19 @@ const NavigationMenuItem = ({ item }: { item: NavigationItem }) => {
 						<div
 							key={child.id}
 							className={`pl-12 pr-4 py-2 text-sm transition-colors ${
-								child.isActive
+								child.isActive && !child.disabled
 									? "bg-[#3189a1] text-white"
-									: "text-white/80 hover:bg-white/10 hover:text-white"
+									: child.disabled
+										? "text-white/60 cursor-not-allowed opacity-60"
+										: "text-white/80 hover:bg-white/10 hover:text-white"
 							}`}
 						>
-							{child.href ? (
+							{child.href && !child.disabled ? (
 								<Link href={child.href} className="block font-roboto">
 									{child.label}
 								</Link>
 							) : (
-								<span className="block font-roboto cursor-not-allowed opacity-50">
+								<span className="block font-roboto cursor-not-allowed opacity-60">
 									{child.label}
 								</span>
 							)}

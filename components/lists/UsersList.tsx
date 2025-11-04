@@ -15,6 +15,7 @@ import type { Profile, Project } from "@/types";
 import { formatDate } from "@/utils/formatDate";
 import Spinner from "@/components/shared/Spinner";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 interface UsersListProps {
   showPermissionManagement?: boolean;
@@ -38,6 +39,7 @@ export function UsersList({ showPermissionManagement = false, projectId }: Users
   const { data: projectsData } = useGetProjectsQuery();
   const [assignUser] = useAssignUserToProjectMutation();
   const [removeUser] = useRemoveUserFromProjectMutation();
+  const t = useTranslations();
 
   const handleAssignPermission = async () => {
     const targetProjectId = projectId || Number(selectedProject);
@@ -198,7 +200,7 @@ export function UsersList({ showPermissionManagement = false, projectId }: Users
             columns={columns}
             actions={actions}
             searchable={true}
-            searchPlaceholder="Search users by name..."
+            searchPlaceholder={t("datatable.search.searchPlaceholder")}
             paginated={true}
             pageSize={10}
             exportable={true}

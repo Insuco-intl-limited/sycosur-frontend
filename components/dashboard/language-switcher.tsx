@@ -1,7 +1,6 @@
 "use client";
 
 import { useRouter, usePathname } from "next/navigation";
-import { Button } from "@/components/ui/button";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -9,6 +8,7 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { GlobeAltIcon } from "@heroicons/react/24/solid";
+import { setCookie } from "cookies-next";
 
 const languages = [
 	{ code: "en", name: "English", flag: "🇺🇸" },
@@ -21,8 +21,13 @@ export function LanguageSwitcher() {
 	const pathname = usePathname();
 
 	const handleLanguageChange = (locale: string) => {
+		// Update URL locale segment
 		const segments = pathname.split("/");
 		segments[1] = locale;
+
+		// Persist choice in cookie so getCurrentLocale() reflects it immediately on re-render
+		setCookie("NEXT_LOCALE", locale, { path: "/" });
+
 		router.push(segments.join("/"));
 	};
 

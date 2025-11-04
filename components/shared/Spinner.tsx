@@ -4,6 +4,7 @@ import Image from "next/image"; /* Composant optimisé pour les images dans Next
 
 interface SpinnerProps {
 	size?:
+        | "xs"
 		| "sm"
 		| "md"
 		| "lg"
@@ -12,6 +13,7 @@ interface SpinnerProps {
 
 /* Objet qui mappe les tailles aux classes Tailwind CSS correspondantes */
 const sizeClasses = {
+    xs: "size-4",  // Minuscule spinner
 	sm: "size-10", // Petit spinner
 	md: "size-20", // Spinner moyen (par défaut)
 	lg: "size-32", // Grand spinner
@@ -31,6 +33,7 @@ export default function Spinner({ size = "sm" }: SpinnerProps) {
 
 	/* Mapping des dimensions en pixels pour chaque taille */
 	const dimensionMap = {
+        xs: 10,
 		sm: 40,
 		md: 80,
 		lg: 128,

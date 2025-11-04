@@ -3,6 +3,7 @@
 import React from "react";
 import { PencilSquareIcon, EyeIcon, ArrowDownTrayIcon } from "@heroicons/react/24/outline";
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
+import {VersionsTab} from "@/components/form-detail";
 
 interface PublishFormContentProps {
   formId: string;
@@ -19,10 +20,11 @@ export function PublishFormContent({ formId, projectId }: PublishFormContentProp
             <CheckCircleIcon className="w-5 h-5 text-mediumGreen flex-shrink-0 mt-0.5"/>
             <div className="flex-1">
               <h3 className="text-lg font-semibold mb-2">Form Published</h3>
-              <p className="text-sm text-muted-foreground mb-4">
-                This form is currently published and accepting submissions.
-              </p>
-
+                <div className="bg-muted/50 rounded-md p-3 mb-4">
+                    <p className="text-sm text-muted-foreground">
+                      This form is currently published and accepting submissions.
+                    </p>
+                </div>
               {/* View Actions */}
               <div className="flex flex-col sm:flex-row gap-3">
                 <button
@@ -34,17 +36,11 @@ export function PublishFormContent({ formId, projectId }: PublishFormContentProp
                   Preview Form
                 </button>
 
-                <button
-                    className="flex items-center justify-center gap-2 px-4 py-2 border border-gray-200 text-gray-700 hover:bg-gray-50 rounded-md transition-colors font-medium"
-                    onClick={() => {/* No functionality implemented */
-                    }}
-                >
-                  <ArrowDownTrayIcon className="w-4 h-4"/>
-                  Download XML
-                </button>
               </div>
+
             </div>
           </div>
+
         </div>
 
         {/* Update Form Section */}
@@ -69,7 +65,11 @@ export function PublishFormContent({ formId, projectId }: PublishFormContentProp
         </div>
       </div>
 
-      {/* Current Draft form detail */}
+                           {/*Form Version Section */}
+              <div className="rounded-md border p-4">
+                    <VersionsTab formId={formId} projectId={projectId} />
+              </div>
+
 
 
     </div>

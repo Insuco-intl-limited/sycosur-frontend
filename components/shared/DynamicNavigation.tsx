@@ -27,13 +27,13 @@ export const getGeneralNavigationItems = (
   pathname: string
 ): NavigationItem[] => {
   return [
-    {
-      id: "dashboard",
-      label: t("dashboard.menu.dashboard"),
-      icon: <ComputerDesktopIcon className="w-5 h-5" />,
-      href: `/${locale}/dashboard`,
-      isActive: pathname === `/${locale}/dashboard` || pathname === `/${locale}/dashboard/`,
-    },
+    // {
+    //   id: "dashboard",
+    //   label: t("dashboard.menu.dashboard"),
+    //   icon: <ComputerDesktopIcon className="w-5 h-5" />,
+    //   href: `/${locale}/dashboard`,
+    //   isActive: pathname === `/${locale}/dashboard` || pathname === `/${locale}/dashboard/`,
+    // },
     {
       id: "projects",
       label: t("dashboard.menu.projects"),
@@ -47,6 +47,7 @@ export const getGeneralNavigationItems = (
       icon: <UsersIcon className="w-5 h-5" />,
       href: `/${locale}/dashboard/users`,
       isActive: pathname.startsWith(`/${locale}/dashboard/users`),
+      disabled: true,
     },
     {
       id: "settings",
@@ -54,6 +55,7 @@ export const getGeneralNavigationItems = (
       icon: <Cog6ToothIcon className="w-5 h-5" />,
       href: `/${locale}/dashboard/settings`,
       isActive: pathname.startsWith(`/${locale}/dashboard/settings`),
+      disabled: true,
     },
   ];
 };
@@ -95,6 +97,7 @@ export const getProjectNavigationItems = (
       icon: <CircleStackIcon className="w-5 h-5" />,
       ///href: `${projectBasePath}/data`,
       isActive: pathname.startsWith(`${projectBasePath}/data`),
+      disabled: true,
       children: [
 				{
 					id: "sandbox",
@@ -117,8 +120,20 @@ export const getProjectNavigationItems = (
       id: "project-users",
       label: t("dashboard.menu.users"),
       icon: <UsersIcon className="w-5 h-5" />,
-      href: `${projectBasePath}/users`,
+      //href: `${projectBasePath}/users`,
       isActive: pathname.startsWith(`${projectBasePath}/users`),
+      children: [
+          {
+            id: "web-users",
+            label: t("dashboard.menu.webUsers"),
+            href: `${projectBasePath}/users/web`,
+          },
+          {
+            id: "mobile-users",
+            label: t("dashboard.menu.mobileUsers"),
+            href: `${projectBasePath}/users/mobile`,
+          }
+      ]
     },
     {
       id: "project-settings",
@@ -126,6 +141,7 @@ export const getProjectNavigationItems = (
       icon: <Cog6ToothIcon className="w-5 h-5" />,
       href: `${projectBasePath}/settings`,
       isActive: pathname.startsWith(`${projectBasePath}/settings`),
+        disabled: true,
     },
   ];
 };

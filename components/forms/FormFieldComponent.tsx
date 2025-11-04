@@ -112,7 +112,7 @@ export function FormFieldComponent<TFieldValues extends FieldValues>({
 				{link && (
 					<Link
 						href={link.linkUrl}
-						className="h4-semibold cursor-pointer hover:text-deepGreen dark:text-lime-500 dark:hover:text-indigo-500"
+						className="h5-semibold cursor-pointer hover:text-deepGreen dark:text-lime-500 dark:hover:text-indigo-500"
 					>
 						{link.linkText}
 					</Link>

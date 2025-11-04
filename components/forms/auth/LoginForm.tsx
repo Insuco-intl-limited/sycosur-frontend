@@ -2,7 +2,7 @@
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useState } from "react";
-
+import { BsFileLock } from "react-icons/bs";
 import { useParams, useRouter } from "next/navigation";
 import { useAppDispatch } from "@/lib/redux/hooks/typedHooks";
 import { useForm } from "react-hook-form";
@@ -11,12 +11,13 @@ import { extractErrorMessage } from "@/utils";
 import { toast } from "react-toastify";
 import { setAuth } from "@/lib/redux/features/auth/authSlice";
 import { FormFieldComponent } from "@/components/forms/FormFieldComponent";
-import { MailIcon } from "lucide-react";
+import {LockIcon, MailIcon} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Spinner from "@/components/shared/Spinner";
 import { useLoginUserMutation } from "@/lib/redux/features/auth/authApiSlice";
 import { LoginUserSchema, TLoginUserSchema } from "@/lib/validationSchemas";
 import { useTranslations } from "next-intl";
+import OauthButtons from "@/components/shared/OauthButtons";
 /**
  * LoginForm component for user authentication.
  * Uses react-hook-form for form management, Zod for validation, and RTK Query for API calls.
@@ -95,6 +96,7 @@ function LoginForm() {
 
 	return (
 		<main>
+            <OauthButtons />
 			<form
 				noValidate
 				onSubmit={handleSubmit(onSubmit)}
@@ -106,7 +108,7 @@ function LoginForm() {
 					register={register}
 					errors={errors}
 					placeholder="Email Address"
-					startIcon={<MailIcon className="dark:text-babyPowder size-4" />}
+					startIcon={<MailIcon className="size-4" />}
 					className="border"
 				/>
 
@@ -117,6 +119,7 @@ function LoginForm() {
 					errors={errors}
 					placeholder="Password"
 					isPassword={true}
+                    startIcon={<BsFileLock className="size-4" />}
 					link={{ linkText: "Forgot Password?", linkUrl: "/forgot-password" }}
 				/>
 

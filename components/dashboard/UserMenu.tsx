@@ -25,7 +25,7 @@ interface UserMenuProps {
 export const UserMenu = ({ user, className = "" }: UserMenuProps) => {
 	const router = useRouter();
 	const pathname = usePathname();
-	const [logoutUser, { isLoading, isSuccess }] = useLogoutUserMutation();
+	const [logoutUser, ] = useLogoutUserMutation();
 	const dispatch = useAppDispatch();
 
 	const handleLogout = useCallback(async () => {

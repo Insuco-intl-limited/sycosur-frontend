@@ -14,18 +14,15 @@ import {toast} from "react-toastify";
 import {SubmissionsList} from "@/components/lists/SubmissionsList";
 import {
     useGetFormSubmissionsQuery,
-    useAddPublicLinkMutation,
-    useGetPublicLinksQuery,
     useExportSubmissionsDataMutation
 } from "@/lib/redux/features/surveys/surveyApiSlice";
 import {downloadFile} from "@/utils";
 import {useTranslations} from "next-intl";
+import { useWebSubmissionLink } from "@/hooks";
 interface SubmissionsTabProps {
     formId: string;
     projectId: string;
 }
-
-const LINK_DISPLAY_NAME = "For_Web_Submissions";
 
 export function SubmissionsTab({formId, projectId}: SubmissionsTabProps) {
     const {data: submissionsData} = useGetFormSubmissionsQuery({
@@ -33,38 +30,9 @@ export function SubmissionsTab({formId, projectId}: SubmissionsTabProps) {
         formId
     });
 
-    const [addPublicLink] = useAddPublicLinkMutation();
-    const {data: publicLinksData, refetch} = useGetPublicLinksQuery({projectId: Number(projectId), formId});
+    const { openWebSubmission } = useWebSubmissionLink({ projectId, formId });
     const [exportSubmissionsData, {isLoading: isExporting,  error:exportError}] = useExportSubmissionsDataMutation();
     const t = useTranslations();
-    const handleNewSubmission = async () => {
-        try {
-            const existingLinks = publicLinksData?.public_links?.results || [];
-            const existingWebLink = existingLinks.find(
-                link => link.displayName === LINK_DISPLAY_NAME && !link.deletedAt
-            );
-            let publicUrl: string;
-
-            if (existingWebLink) {
-                publicUrl = existingWebLink.public_url;
-            } else {
-                const result = await addPublicLink({
-                    projectId: parseInt(projectId),
-                    formId,
-                    displayName: LINK_DISPLAY_NAME,
-                    once: false
-                }).unwrap();
-
-                publicUrl = result.public_link.public_url;
-                refetch();
-            }
-            window.open(publicUrl, '_blank');
-
-        } catch (error: any) {
-            toast.error('Failed to create or access web submission link');
-        }
-
-    };
 
     const handleSubmissionsExport = async (format: "csv" | "xlsx") => {
         try {
@@ -120,7 +88,7 @@ export function SubmissionsTab({formId, projectId}: SubmissionsTabProps) {
                             </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
-                    <Button onClick={handleNewSubmission} className="gap-2">
+                    <Button onClick={openWebSubmission} className="gap-2">
                         <Plus className="h-4 w-4"/>
                         {t("forms.buttons.newWebSubmission")}
                     </Button>

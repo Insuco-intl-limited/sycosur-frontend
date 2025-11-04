@@ -53,7 +53,7 @@ export function FormVersionsList({
       key: "version",
       header: t("datatable.columns.version"),
       sortable: true,
-      width: "15%",
+      width: "20%",
       render: (value: string) => (
         <Badge variant="secondary" className="font-mono">
           {value}
@@ -64,7 +64,7 @@ export function FormVersionsList({
       key: "name",
       header: t("datatable.columns.formName"),
       sortable: true,
-      width: "35%",
+      width: "50%",
     },
     {
       key: "state",
@@ -83,16 +83,10 @@ export function FormVersionsList({
       key: "publishedAt",
       header: t("datatable.columns.publishedDate"),
       sortable: true,
-      width: "20%",
+      width: "30%",
       render: (value: string | null) => value ? formatDate(value) : "Not published",
     },
-    {
-      key: "updatedAt",
-      header: t("datatable.columns.lastUpdatedOn"),
-      sortable: true,
-      width: "20%",
-      render: (value: string | null) => value ? formatDate(value) : "Never",
-    },
+
   ];
 
   const actions: ActionItem<Form>[] = [

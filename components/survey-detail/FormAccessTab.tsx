@@ -10,7 +10,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { toast } from "react-toastify";
 import { CheckIcon } from "@heroicons/react/24/solid";
-
+import { useTranslations } from "next-intl";
 interface FormAccessTabProps {
   projectId:number;
 }
@@ -27,6 +27,7 @@ export function FormAccessTab({ projectId }: FormAccessTabProps) {
   const { data: matrixData, isLoading: matrixLoading } = useMatrixQuery({ projectId });
   const [assignForm] = useAssignFormMutation();
   const [unassignForm] = useUnassignFormMutation();
+  const t = useTranslations();
 
   const [assignments, setAssignments] = useState<AssignmentState>(matrixData || {});
   const [initialAssignments, setInitialAssignments] = useState<AssignmentState>(matrixData || {});
@@ -128,7 +129,6 @@ export function FormAccessTab({ projectId }: FormAccessTabProps) {
       setHasUnsavedChanges(false);
       toast.success("Assignments saved successfully");
     } catch (error) {
-      console.error("Failed to save assignments:", error);
       toast.error("Failed to save assignments");
     } finally {
       setSaving(false);
@@ -177,14 +177,14 @@ export function FormAccessTab({ projectId }: FormAccessTabProps) {
           <button
             onClick={handleSaveChanges}
             disabled={saving}
-            className="flex items-center gap-2 px-4 py-2 bg-sky-950 text-white rounded-md hover:bg-deepGreen transition-colors disabled:opacity-50"
+            className="flex items-center gap-2 px-4 py-2 bg-accentBlue text-white rounded-md hover:bg-deepGreen transition-colors disabled:opacity-50"
           >
             {saving ? (
               <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-white"></div>
             ) : (
-              <CheckIcon className="h-4 w-4" />
+              <CheckIcon className="h-4 w-4 bg-accentBlue" />
             )}
-            Save
+              {t("forms.buttons.save")}
           </button>
         )}
       </div>
@@ -192,7 +192,7 @@ export function FormAccessTab({ projectId }: FormAccessTabProps) {
       {hasUnsavedChanges && (
         <div className="flex items-center gap-2 p-3 bg-yellow-50 border border-yellow-200 rounded-md">
           <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
-          <span className="text-sm text-yellow-800">Your updates are not saved</span>
+          <span className="text-sm text-yellow-800">{t("msg.warning.saveChanges")}</span>
         </div>
       )}
 
@@ -237,7 +237,7 @@ export function FormAccessTab({ projectId }: FormAccessTabProps) {
                         type="checkbox"
                         checked={assignments[String(user.id)]?.[form.xmlFormId] || false}
                         onChange={(e) => handleAssignmentChange(String(user.id), form.xmlFormId, e.target.checked)}
-                        className="w-5 h-5 text-mediumGreen bg-gray-100 border-gray-300 rounded focus:ring-mediumGreen focus:ring-2"
+                        className="w-5 h-5 text-mediumGreen bg-accentBlue  rounded focus:ring-mediumGreen focus:ring-2"
                       />
                     </td>
                   ))}

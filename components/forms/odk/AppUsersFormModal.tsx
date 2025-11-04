@@ -20,6 +20,7 @@ interface AppUsersFormModalProps {
 	onSubmit?: (data: TAppUsersSchema) => Promise<void>;
 	triggerButton?: React.ReactNode;
 	title?: string;
+	disabled?: boolean;
 }
 
 export function AppUsersFormModal({
@@ -27,6 +28,7 @@ export function AppUsersFormModal({
 	onSubmit,
 	triggerButton,
 	title = "Add User",
+	disabled = false,
 }: AppUsersFormModalProps) {
 	const [open, setOpen] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
@@ -73,14 +75,22 @@ export function AppUsersFormModal({
 	};
 
 	const defaultTrigger = (
-		<Button className="mt-4 rounded-md bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90">
+		<Button
+			disabled={disabled}
+			aria-disabled={disabled}
+			title={disabled ? "ODK non configuré pour ce projet" : undefined}
+			className="mt-4 rounded-md bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed"
+		>
 			<UserPlus className="h-4 w-4 mr-2" />
 			New Mobile User
 		</Button>
 	);
 
 	return (
-		<Dialog open={open} onOpenChange={setOpen}>
+		<Dialog open={open} onOpenChange={(val) => {
+			if (disabled) return;
+			setOpen(val);
+		}}>
 			<DialogTrigger asChild>{triggerButton || defaultTrigger}</DialogTrigger>
 			<DialogContent className="sm:max-w-[400px]">
 				<DialogHeader>

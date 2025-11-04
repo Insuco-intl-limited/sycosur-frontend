@@ -16,8 +16,8 @@ interface PublicLinkFormModalProps {
 
 export function PublicLinkFormModal({
   onSubmitAction,
-  title = "Create New Public Link",
-  buttonText = "New Public Link",
+  title,
+  buttonText ,
   buttonVariant = "default",
 }: PublicLinkFormModalProps) {
   const [isOpen, setIsOpen] = useState(false);

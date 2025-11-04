@@ -12,6 +12,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { TrashIcon } from "@heroicons/react/24/outline";
+import { toast } from "react-toastify";
 
 interface DeleteDraftConfirmationProps {
   isOpen: boolean;
@@ -31,7 +32,8 @@ export function DeleteDraftConfirmation({
       await onConfirm();
       onClose();
     } catch (error) {
-      console.error("Error deleting draft:", error);
+      console.log("Error deleting draft:", error);
+      toast.error("Error deleting draft");
     }
   };
 
@@ -44,15 +46,15 @@ export function DeleteDraftConfirmation({
             Delete Draft
           </AlertDialogTitle>
           <AlertDialogDescription className="space-y-2">
-            <p>
+            <span className="block">
               Are you sure you want to delete this draft? This action cannot be undone.
-            </p>
-            <div className="bg-amber-50 border border-amber-200 rounded-md p-3">
-              <p className="text-sm text-amber-800">
+            </span>
+            <span className="block bg-amber-50 border border-amber-200 rounded-md p-3">
+              <span className="text-sm text-amber-800">
                 <span className="font-medium">Note:</span> This will only delete the working draft. 
                 The currently published version of the form will remain unchanged.
-              </p>
-            </div>
+              </span>
+            </span>
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
