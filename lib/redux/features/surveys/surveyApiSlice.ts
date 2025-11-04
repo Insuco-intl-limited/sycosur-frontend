@@ -110,7 +110,25 @@ export const surveyApiSlice = baseApiSlice.injectEndpoints({
                 method: "DELETE",
             }),
             invalidatesTags: ["Project"],
-
+        }),
+        downloadForm: builder.query<ExportResponse, GenFormParams>({
+            query: ({projectId, formId}) => ({
+                url: `${ODK_ENDPOINTS.VIEW_FORM(projectId, formId)}/xlsx/`,
+                method: "GET",
+                headers: {
+                        Accept: 'text/csv, text/plain, */*, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                    },
+                responseHandler: async (response) => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    const contentType = response.headers.get("Content-Type") || "";
+                    const filename = response.headers.get("Content-Disposition")?.split("filename=")[1]?.replace(/["']/g, "");
+                    const data = await response.blob();
+                    return {data, contentType, filename};
+                }
+            }),
+            providesTags: ["Project"],
         }),
         addAppUser: builder.mutation<CreateAppUserResponse, { projectId: number; displayName: string }>({
             query: ({projectId, displayName}) => ({
@@ -309,4 +327,6 @@ export const {
     useUnassignFormMutation,
     useMatrixQuery,
     useAssignmentsQuery,
+    useDownloadFormQuery,
+    useLazyDownloadFormQuery,
 } = surveyApiSlice;
