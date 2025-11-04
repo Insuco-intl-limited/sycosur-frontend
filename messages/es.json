@@ -14,7 +14,10 @@
       "projectName": "Nombre del Proyecto",
       "projectDescription": "Descripción del Proyecto",
       "formIdLabel": "ID de formulario (opcional)",
-      "fileLabel": "Archivo del formulario"
+      "fileLabel": "Archivo del formulario",
+      "selectSurveys": "Seleccionar una encuesta",
+      "displayName": "Nombre para mostrar",
+      "singleUse": "Enlace único (solo se puede usar una vez)"
     },
     "buttons": {
     "cancel": "Cancelar",
@@ -29,15 +32,18 @@
     "newMobileUser": "Nuevo Usario Móvil",
     "uploadNewForm": "Subir Nuevo Formulario",
     "uploadForm": "Subir Formulario",
-      "exporting": "Exportando...",
-      "uploading": "Subiendo...",
-      "newWebSubmission": "Nuevo envío web",
-      "chooseFile": "Seleccionar archivo"
+    "exporting": "Exportando...",
+    "uploading": "Subiendo...",
+    "newWebSubmission": "Nuevo envío web",
+    "chooseFile": "Seleccionar archivo",
+    "disableReason": "Agregue un xlsForm a este proyecto para habilitar este botón",
+    "newPl": "Nuevo Enlace Público"
      },
     "placeholders": {
       "projectName": "Ingrese el nombre del proyecto",
       "projectDescription": "Ingrese la descripción del proyecto",
-      "formIdPlaceholder": "ID de formulario personalizado"
+      "formIdPlaceholder": "ID de formulario personalizado",
+      "displayName": "Ingrese el nombre para mostrar"
     },
     "upload": {
       "formIdHelp": "Proporcione un xmlFormId personalizado o deje vacío para usar el ID del archivo del formulario",
@@ -113,7 +119,9 @@
       "no_projects": "No hay proyectos disponibles",
       "project_dashboard": "Tablero",
       "surveys": "Encuestas",
-      "settings": "Configuración"
+      "settings": "Configuración",
+       "webUsers": "Enlaces Públicos",
+      "mobileUsers": "Usuarios Móviles"
     }
   },
   "project": {
@@ -228,10 +236,29 @@
       "formUploaded": "Formulario \"{formName}\" subido correctamente{published, select, true { y publicado} other {}}"
     },
     "warning": {
-
+        "saveChanges": "Sus actualizaciones no están guardadas"
     },
     "error": {
       "formUploadFailed": "Error al subir el formulario"
     }
+  },
+  "alt": {
+    "newWebSubmission": "Nuevo envío web",
+    "viewSubmissions": "Ver envíos",
+    "editForm": "Editar formulario",
+    "downloadForm": "Descargar formulario",
+    "manageWebUsers": "Gestionar enlaces públicos"
+  },
+  "badge": {
+    "updated": "actualizado",
+    "draft": "borrador",
+    "published": "publicado",
+    "archived": "archivado",
+    "active": "activo",
+    "inactive": "inactivo",
+    "completed": "completado",
+    "incomplete": "incompleto",
+    "pending": "pendiente",
+    "open": "abierto"
   }
 }

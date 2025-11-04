@@ -14,13 +14,18 @@
     "titles": {
       "newProject": " Create New Project",
       "editProject": "Update Project",
-      "uploadForm": "Upload Form"
+      "uploadForm": "Upload Form",
+      "newMobileUser": "New Mobile User",
+      "newPl": "Button to add a new public Link"
     },
     "labels": {
       "projectName": "Project Name",
       "projectDescription": "Project Description",
       "formIdLabel": "Form ID (optional)",
-      "fileLabel": "Form File"
+      "fileLabel": "Form File",
+      "selectSurveys": "Select a survey form",
+      "displayName": "Display Name",
+      "singleUse": "Single-use link (can only be used once)"
     },
     "buttons": {
       "cancel": "Cancel",
@@ -38,12 +43,15 @@
       "exporting": "Exporting...",
       "uploading": "Uploading...",
       "newWebSubmission": "New Web Submission",
-      "chooseFile": "Choose file"
+      "chooseFile": "Choose file",
+      "disableReason": "Add an xlsForm to this project to enable this button",
+      "newPl": "New Public Link"
     },
     "placeholders": {
       "projectName": "Enter project name",
       "projectDescription": "Enter project description",
-      "formIdPlaceholder": "Custom form ID (leave empty to use default)"
+      "formIdPlaceholder": "Custom form ID (leave empty to use default)",
+      "DisplayName": "Enter display name"
     },
     "upload": {
       "formIdHelp": "Provide a custom xmlFormId or leave empty to use the ID from the form file",
@@ -119,7 +127,9 @@
       "no_projects": "No projects available",
       "project_dashboard": "Project Dashboard",
       "surveys": "Surveys",
-      "settings": "Settings"
+      "settings": "Settings",
+      "webUsers": "Public Links",
+      "mobileUsers": "Mobile Users"
     }
   },
 
@@ -211,14 +221,14 @@
     "columns": {
       "name": "Name",
       "description": "Description",
-      "createdOn": "Created on",
-      "lastUpdatedOn": "Last updated on",
-      "lastUsed": "Last used",
-      "lastSeen": "Last seen",
+      "createdOn": "Created On",
+      "lastUpdatedOn": "Last Updated On",
+      "lastUsed": "Last Used",
+      "lastSeen": "Last Seen",
       "status": "Status",
       "type": "Type",
       "role": "Role",
-      "createdBy": "Created by",
+      "createdBy": "Created By",
       "publicURL": "Public URL",
       "instance": "Instance",
       "submitter": "Submitter",
@@ -235,10 +245,32 @@
       "formUploaded": "Form \"{formName}\" uploaded successfully{published, select, true { and published} other {}}"
     },
     "warning": {
-
+        "saveChanges": "Your updates are not saved"
     },
     "error": {
       "formUploadFailed": "Failed to upload form"
+    },
+    "info": {
+
     }
+  },
+  "alt": {
+    "newWebSubmission": "New Web Submission",
+    "viewSubmissions": "View Submissions",
+    "editForm": "Edit Form",
+    "downloadForm": "Download Form",
+    "manageWebUsers": "Manage Public Links"
+
+  },
+  "badge": {
+    "draft": "draft",
+    "published": "published",
+    "archived": "archived",
+    "active": "active",
+    "inactive": "inactive",
+    "completed": "Completed",
+    "incomplete": "Incomplete",
+    "pending": "Pending",
+    "open": "open"
   }
 }
