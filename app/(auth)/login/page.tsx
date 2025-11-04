@@ -1,8 +1,7 @@
 "use client";
 import React from "react";
 import LoginForm from "@/components/forms/auth/LoginForm";
-import { AuthFormHeader } from "@/components/forms/auth";
-import OauthButtons from "@/components/shared/OauthButttons";
+import OauthButtons from "@/components/shared/OauthButtons";
 import useRedirectIfAuthenticated from "@/hooks/useRedirectIfAuthenticated";
 import Link from "next/link";
 import bgImg from "@/public/assets/images/sycosur_background.jpg";
@@ -40,7 +39,7 @@ export default function LoginPage() {
 					<div className=" px-6 py-8  sm:px-12">
 						<LoginForm />
 						<div className="flex-center mt-4 space-x-2"></div>
-						<OauthButtons />
+
 						<div className="mt-4 text-center text-sm">
 							<span className="text-muted-foreground">
 								Don't have an account?{" "}

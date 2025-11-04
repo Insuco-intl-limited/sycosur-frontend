@@ -7,6 +7,8 @@ export interface NavigationItem {
 	href?: string;
 	children?: NavigationItem[];
 	isActive?: boolean;
+    disabled?: boolean;
+    title?: string;
 }
 
 export interface BreadcrumbItem {

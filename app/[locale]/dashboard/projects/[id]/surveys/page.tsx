@@ -1,8 +1,7 @@
 "use client";
 
 import React from "react";
-import { useParams } from "next/navigation";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { useParams, usePathname } from "next/navigation";
 import {
 	FormsTab,
 	EntityListsTab,
@@ -23,6 +22,9 @@ export default function ProjectDetailPage() {
 		skip: Number.isNaN(numericId),
 	});
 	const project = data?.project;
+
+    const pathname = usePathname();
+    const currentLocale = pathname.split('/')[1] || 'en';
 
 	if (isLoading) {
 		return (
@@ -51,62 +53,17 @@ export default function ProjectDetailPage() {
 				<div className="flex items-center text-muted-foreground">
 					<CalendarIcon className="h-4 w-4 mr-1" />
 					<span>
-						Created on{" "}
-						{new Date(project.created_at).toLocaleDateString("en-US", {
-							year: "numeric",
-							month: "long",
-							day: "numeric",
-						})}
+                        {t('project.createdOn')}{" "}
+                        {new Date(project.created_at).toLocaleDateString(currentLocale, {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        })}
 					</span>
 				</div>
 			</div>
+            <FormsTab projectId={project.pkid} />
 
-			{/* Project description */}
-			<div className="p-4 bg-muted/50 rounded-lg">
-				{/*<h2 className="text-xl font-semibold mb-2">Description</h2>*/}
-				{/*<p>{project.description}</p>*/}
-			</div>
-
-			{/* Tabs for different sections */}
-			<Tabs defaultValue="forms" className="w-full ">
-				{project.odk_id ? (
-					<TabsList className="grid grid-cols-3 w-full bg-mediumGreen text-light">
-						<TabsTrigger value="forms">{t("forms._self")}</TabsTrigger>
-						{/*<TabsTrigger value="entity-lists">Entity Lists</TabsTrigger>*/}
-						<TabsTrigger value="form-access">Form Access</TabsTrigger>
-						<TabsTrigger value="app-users">Mobile Users</TabsTrigger>
-						{/*<TabsTrigger value="settings">Settings</TabsTrigger>*/}
-					</TabsList>
-				) : (
-					<TabsList className="grid grid-cols-1 w-full bg-mediumGreen text-light">
-						<TabsTrigger value="forms">{t("forms._self")}</TabsTrigger>
-					</TabsList>
-				)}
-
-				<TabsContent value="forms" className="mt-6">
-					<FormsTab projectId={project.pkid} />
-				</TabsContent>
-
-				{project.odk_id && (
-					<>
-						<TabsContent value="entity-lists" className="mt-6">
-							<EntityListsTab projectId={project.pkid} />
-						</TabsContent>
-
-						<TabsContent value="form-access" className="mt-6">
-							<FormAccessTab projectId={project.pkid} />
-						</TabsContent>
-
-						<TabsContent value="app-users" className="mt-6">
-							<AppUsersTab projectId={project.pkid} />
-						</TabsContent>
-
-						{/*<TabsContent value="settings" className="mt-6">*/}
-						{/*	<SettingsTab projectId={project.pkid} />*/}
-						{/*</TabsContent>*/}
-					</>
-				)}
-			</Tabs>
 		</div>
 	);
 }

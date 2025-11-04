@@ -2,13 +2,8 @@
 
 import React from "react";
 import { useParams } from "next/navigation";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import {
-	SubmissionsTab,
-	PublicAccessTab,
 	EditFormTab,
-	VersionsTab,
-	SettingsTab,
 } from "@/components/form-detail";
 import { useGetFormDetailsQuery } from "@/lib/redux/features/surveys/surveyApiSlice";
 
@@ -34,7 +29,6 @@ export default function FormDetailPage() {
 			</div>
 		);
 	}
-
 	if (isError || !form) {
 		return (
 			<div className="flex flex-col items-center justify-center h-64">
@@ -43,16 +37,15 @@ export default function FormDetailPage() {
 			</div>
 		);
 	}
-
 	const formTitle = form?.name || formId;
 
 	return (
 		<div className="space-y-6">
 			{/* Form header */}
 			<div className="space-y-2">
-				<h1 className="text-3xl font-bold">{formTitle}</h1>
+				<h1 className="text-3xl font-bold">Form Management</h1>
 				<div className="flex items-center text-muted-foreground">
-					<span>Form ID: {formId}</span>
+					<span >Form ID: {formId}</span>
 					<span className="mx-2">•</span>
 					<span className={`${isPublished ? "text-green-600" : "text-yellow-600"}`}>
 						{isPublished ? "Published" : "Draft"}
@@ -60,55 +53,7 @@ export default function FormDetailPage() {
 				</div>
 			</div>
 
-			{/* Tabs for different sections */}
-			<Tabs defaultValue={defaultTab} className="w-full">
-				{isPublished ? (
-					<>
-						<TabsList className="grid grid-cols-4 w-full bg-mediumGreen text-light">
-							<TabsTrigger value="submissions">Submissions</TabsTrigger>
-							<TabsTrigger value="public-access">Public Access</TabsTrigger>
-							<TabsTrigger value="edit-form">Edit Form</TabsTrigger>
-							<TabsTrigger value="versions">Versions</TabsTrigger>
-							{/*<TabsTrigger value="settings">Settings</TabsTrigger>*/}
-						</TabsList>
-
-						<TabsContent value="submissions" className="mt-6">
-							<SubmissionsTab formId={formId} projectId={projectId} />
-						</TabsContent>
-
-						<TabsContent value="public-access" className="mt-6">
-							<PublicAccessTab formId={formId} projectId={projectId} />
-						</TabsContent>
-
-						<TabsContent value="edit-form" className="mt-6">
-							<EditFormTab formId={formId} projectId={projectId} />
-						</TabsContent>
-
-						<TabsContent value="versions" className="mt-6">
-							<VersionsTab formId={formId} projectId={projectId} />
-						</TabsContent>
-
-						{/*<TabsContent value="settings" className="mt-6">*/}
-						{/*	<SettingsTab formId={formId} projectId={projectId} />*/}
-						{/*</TabsContent>*/}
-					</>
-				) : (
-					<>
-						<TabsList className="grid grid-cols-1 w-full bg-mediumGreen text-light">
-							<TabsTrigger value="edit-form">Edit Form</TabsTrigger>
-							{/*<TabsTrigger value="settings">Settings</TabsTrigger>*/}
-						</TabsList>
-
-						<TabsContent value="edit-form" className="mt-6">
-							<EditFormTab formId={formId} projectId={projectId} />
-						</TabsContent>
-
-						{/*<TabsContent value="settings" className="mt-6">*/}
-						{/*	<SettingsTab formId={formId} projectId={projectId} />*/}
-						{/*</TabsContent>*/}
-					</>
-				)}
-			</Tabs>
+			<EditFormTab formId={formId} projectId={projectId} />
 		</div>
 	);
 }
