@@ -2,31 +2,31 @@
 // Project interfaces
 // ==================
 
-export interface OdkProject {
-    id: number;
-    name: string;
-    description: string | null;
-    archived: boolean | null;
-    keyId: number | null;
-    createdAt: string;
-    updatedAt: string | null;
-    deletedAt: string | null;
-    verbs: string[];
-}
-
-export interface OdkProjectsResponse {
-    status_code: number;
-    odkProjects: {
-        count: number;
-        results: OdkProject[];
-        cached: boolean;
-        userRole: string;
-    };
-}
-
-export interface ProjectDeleteResponse {
-    detail: string;
-}
+// export interface OdkProject {
+//     id: number;
+//     name: string;
+//     description: string | null;
+//     archived: boolean | null;
+//     keyId: number | null;
+//     createdAt: string;
+//     updatedAt: string | null;
+//     deletedAt: string | null;
+//     verbs: string[];
+// }
+//
+// export interface OdkProjectsResponse {
+//     status_code: number;
+//     odkProjects: {
+//         count: number;
+//         results: OdkProject[];
+//         cached: boolean;
+//         userRole: string;
+//     };
+// }
+//
+// export interface ProjectDeleteResponse {
+//     detail: string;
+// }
 
 // =================
 // Form interfaces
@@ -83,9 +83,9 @@ export interface AppUser {
     qr_code?: string;
 }
 
-export interface CreateAppUserData {
-    displayName: string;
-}
+// export interface CreateAppUserData {
+//     displayName: string;
+// }
 
 export interface CreateAppUserResponse {
     status_code: number;
