@@ -1,16 +1,7 @@
 {
-  "projects": "Projects",
-  "surveys": "Surveys",
-  "users": "Users",
-  "submissions": "Submissions",
-  "assignments": "Assignments",
-  "activities": "Activities",
-  "publicAccess": "Public Access",
-  "mobileUsers": "Mobile Users",
-  "versions": "Versions",
-
   "forms": {
     "_self": "Forms",
+    "empty": "No forms available in this project.",
     "titles": {
       "newProject": " Create New Project",
       "editProject": "Update Project",
@@ -37,7 +28,7 @@
       "view": "View",
       "export": "Export",
       "newProject": "NEW PROJECT",
-      "newMobileUser": "New Mobile User",
+      "newMobileUser": "New Surveyor",
       "uploadNewForm": "Upload New Form",
       "uploadForm": "Upload Form",
       "exporting": "Exporting...",
@@ -45,13 +36,15 @@
       "newWebSubmission": "New Web Submission",
       "chooseFile": "Choose file",
       "disableReason": "Add an xlsForm to this project to enable this button",
-      "newPl": "New Public Link"
+      "newPl": "New Public Link",
+      "previewForm": "Preview Form"
+
     },
     "placeholders": {
       "projectName": "Enter project name",
       "projectDescription": "Enter project description",
       "formIdPlaceholder": "Custom form ID (leave empty to use default)",
-      "DisplayName": "Enter display name"
+      "displayName": "Enter display name"
     },
     "upload": {
       "formIdHelp": "Provide a custom xmlFormId or leave empty to use the ID from the form file",
@@ -72,7 +65,7 @@
   "breadcrumbs": {
     "dashboard": {
       "profile": "Profile",
-      "_self": "Dashboard",
+      "_self": "",
       "users": "Users",
       "projects": "Projects",
       "surveys": "Surveys",
@@ -128,8 +121,8 @@
       "project_dashboard": "Project Dashboard",
       "surveys": "Surveys",
       "settings": "Settings",
-      "webUsers": "Public Links",
-      "mobileUsers": "Mobile Users"
+      "webUsers": "Web Links",
+      "mobileUsers": "Surveyors"
     }
   },
 
@@ -169,7 +162,11 @@
   },
   "notFound": {
     "description": "The page you are looking for does not exist.",
-    "title": "Page not found"
+    "title": "Page not found",
+    "submissions": "No submission found for this form.",
+    "link": "No public link available for this form.",
+    "appUser": "No Mobile user assigned to this project.",
+    "form": "An error occurred while loading forms, this project may not have any forms."
   },
   "datatable": {
     "actionsColumn": "Actions",
@@ -242,7 +239,8 @@
   },
   "msg": {
     "success": {
-      "formUploaded": "Form \"{formName}\" uploaded successfully{published, select, true { and published} other {}}"
+      "formUploaded": "Form \"{formName}\" uploaded successfully{published, select, true { and published} other {}}",
+      "draftPublishedSuccess": "Draft published successfully"
     },
     "warning": {
         "saveChanges": "Your updates are not saved"
@@ -251,7 +249,7 @@
       "formUploadFailed": "Failed to upload form"
     },
     "info": {
-
+      "formAssignInfo": "Check the boxes to associate App Users with forms. Remember to save your changes."
     }
   },
   "alt": {
@@ -259,7 +257,8 @@
     "viewSubmissions": "View Submissions",
     "editForm": "Edit Form",
     "downloadForm": "Download Form",
-    "manageWebUsers": "Manage Public Links"
+    "manageWebUsers": "Manage Public Links",
+    "surveyors": "Surveyors"
 
   },
   "badge": {
@@ -272,5 +271,72 @@
     "incomplete": "Incomplete",
     "pending": "Pending",
     "open": "open"
+  },
+  "sections": {
+    "submissions": "Submissions",
+    "versions": "Versions",
+    "formAccessMatrix": "Form Access Matrix",
+    "mobileUsers": "Surveyors",
+    "formManagement": "Form Management",
+    "editForm": "Edit Form",
+    "formPublished": "Form Published",
+    "publishDraft": "Publish Draft",
+    "formPublishedDescription": "This form is currently published and accepting submissions.",
+    "updateForm": "Update this Form",
+    "updateFormDescription": "Creating a draft will not affect the published version until you publish the changes.",
+    "versionLabel": "Version",
+    "versionPlaceholder": "e.g., 1.1, v2.0, beta-1",
+    "versionHelp": "If left empty, a version will be automatically generated.",
+    "noteLabel": "Note:",
+    "publishWarning": "Publishing this draft will replace the currently published version of the form.",
+    "publishing": "Publishing...",
+    "readyToPublish": "Ready to publish",
+    "whatWillHappen": "What will happen?",
+    "publishDraftInfo": "Publishing this draft will replace the currently published version of the form.",
+    "deleteDraftInfo": "Deleting the draft does not impact the published version; only the working draft is removed.",
+    "deleting": "Deleting...",
+    "deleteDraft": "Delete Draft",
+    "publishDraftButton": "Publish Draft"
+  },
+  "toast": {
+    "success": {
+      "projectUpdated": "Project \"{projectName}\" updated successfully",
+      "projectCreated": "Project \"{projectName}\" created successfully",
+      "projectDeleted": "Project \"{projectName}\" deleted successfully",
+      "userAssignedToProject": "User {userName} assigned to project with {role} role",
+      "userRemovedFromProject": "User {userName} removed from project",
+      "userRevoked": "User revoked successfully",
+      "linkCopied": "Link copied to clipboard!",
+      "xmlCopied": "XML copied to clipboard!",
+      "xmlDownloaded": "XML downloaded successfully!",
+      "mobileUserAdded": "Mobile user added successfully",
+      "assignmentsSaved": "Assignments saved successfully",
+      "loggedOut": "Logged out successfully",
+      "loggedOutAlt": "Bye bye !",
+      "publicLinkCreated": "Public link \"{name}\" created successfully"
+    },
+    "error": {
+      "projectOperationFailed": "Failed to {operation} project",
+      "userAssignFailed": "Failed to assign user to project",
+      "userRemoveFailed": "Failed to remove user from project",
+      "userRevokeFailed": "Failed to revoke user",
+      "linkCopyFailed": "Failed to copy link",
+      "xmlCopyFailed": "Failed to copy XML",
+      "assignmentsSaveFailed": "Failed to save assignments",
+      "submissionsExportFailed": "Failed to export submissions",
+      "logoutError": "Error while logging out. However, you have been redirected to the login page.",
+      "displayNameSaveFailed": "An error occurred while saving the display name",
+      "draftDeleteFailed": "Error deleting draft",
+      "genericError": "An error occurred",
+      "publicLinkCreateFailed": "Failed to create public link",
+      "webSubmissionLinkFailed": "Failed to create or access web submission link"
+    },
+    "loading": {
+      "disconnecting": "Disconnecting you from the system..."
+    },
+    "confirm": {
+      "logoutTitle": "Confirm Logout",
+      "logoutMessage": "Are you sure you want to log out?"
+    }
   }
 }

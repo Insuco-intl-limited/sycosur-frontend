@@ -3,18 +3,19 @@
     "loading": "Chargement"
   },
     "forms": {
-    "_self": "Formulaires",
+    "_self": "Questionnaires",
+    "empty": "Aucun questionnaire disponible dans ce projet.",
     "titles": {
       "newProject": "Créer un Nouveau Projet",
       "editProject": "Modifier le Projet",
-      "uploadForm": "Importer un formulaire"
+      "uploadForm": "Importer un questionnaire"
     },
     "labels": {
       "projectName": "Nom du Projet",
       "projectDescription": "Description du Projet",
       "formIdLabel": "ID du formulaire (optionnel)",
-      "fileLabel": "Fichier du formulaire",
-      "selectSurveys": "Sélectionner une enquête",
+      "fileLabel": "Fichier du questionnaire",
+      "selectSurveys": "Sélectionner un questionnaire",
       "displayName": "Nom d'affichage",
       "singleUse": "Lien unique (seulement utilisable une fois)"
     },
@@ -28,27 +29,28 @@
       "view": "Voir",
       "export": "Exporter",
       "newProject": "NOUVEAU PROJET",
-      "newMobileUser": "Nouvel Utilisateur Mobile",
-      "uploadNewForm": "Importer Formulaire",
-      "uploadForm": "Importer le formulaire",
+      "newMobileUser": "Nouvel enquêteur",
+      "uploadNewForm": "Importer questionnaire",
+      "uploadForm": "Importer le questionnaire",
       "exporting": "Exportation...",
       "uploading": "Importation...",
       "newWebSubmission": "Nouvelle soumission web",
       "chooseFile": "Choisir un fichier",
-      "disableReason": "Ajouter un formulaire xlsForm à ce projet pour activer ce bouton",
-      "newPl": "Nouveau lien public"
+      "disableReason": "Ajouter un questionnaire xlsForm à ce projet pour activer ce bouton",
+      "newPl": "Nouveau lien web",
+      "previewForm": "Aperçu du questionnaire"
       },
       "placeholders": {
         "projectName": "Saisir le nom du projet",
         "projectDescription": "Saisir la description du projet",
-        "formIdPlaceholder": "ID de formulaire personnalisé (ignorer pour valeur par défaut)",
+        "formIdPlaceholder": "ID de questionnaire personnalisé (ignorer pour valeur par défaut)",
         "displayName": "Saisir le nom d'affichage"
       },
       "upload": {
-        "formIdHelp": "Fournissez un xmlFormId personnalisé ou laissez vide pour utiliser l'ID du fichier du formulaire",
+        "formIdHelp": "Fournissez un xmlFormId personnalisé ou laissez vide pour utiliser l'ID du fichier du questionnaire",
         "selectedFile": "Fichier sélectionné : {fileName}",
         "ignoreWarnings": "Ignorer les avertissements",
-        "publishAfter": "Publier le formulaire après l'import",
+        "publishAfter": "Publier le questionnaire après l'import",
         "errors": {
           "noFile": "Veuillez sélectionner un fichier à importer",
           "generic": "Une erreur est survenue lors de l'import du fichier"
@@ -59,11 +61,11 @@
   "breadcrumbs": {
     "dashboard": {
       "profile": "Profil",
-      "_self": "Tableau de bord",
+      "_self": "",
       "projects": "Projets",
       "users": "Utilisateurs",
       "surveys": "Enquêtes",
-      "forms": "Formulaires",
+      "forms": "Questionnaires",
       "submissions": "Soumissions",
       "assignments": "Assignations",
       "activities": "Activités",
@@ -78,12 +80,12 @@
     }
   },
   "dashboard": {
-    "totalForms": "Total des formulaires",
+    "totalForms": "Total des questionnaires",
     "activeUsers": "Utilisateurs actifs",
     "completionRate": "Taux d'achèvement",
     "fromLastMonth": "depuis le mois dernier",
     "monthlyActivity": "Activité mensuelle",
-    "forms": "Formulaires",
+    "forms": "Questionnaires",
     "surveys": "Enquêtes",
     "userDistribution": "Répartition des utilisateurs",
     "completionRateTrend": "Tendance du taux d'achèvement",
@@ -97,7 +99,7 @@
       "data": "Données",
       "documentation": "Documentation",
       "engagement": "Engagement",
-      "forms": "Formulaires",
+      "forms": "Questionnaires",
       "gestion-par": "Gestion du PAR",
       "monitoring": "Suivi",
       "odk": "ODK",
@@ -117,8 +119,8 @@
       "project_dashboard": "Tableau de Bord",
       "surveys": "Enquêtes",
       "settings": "Paramètres",
-      "webUsers": "Liens Publics",
-      "mobileUsers": "Utilisateurs Mobiles"
+      "webUsers": "Liens web",
+      "mobileUsers": "Enquêteurs"
     }
   },
   "project": {
@@ -129,7 +131,7 @@
     "description": "Description",
     "sections": "Sections du projet",
     "surveys": "Enquêtes",
-    "surveysDescription": "Gérer les formulaires et enquêtes pour la collecte de données",
+    "surveysDescription": "Gérer les questionnaires et enquêtes pour la collecte de données",
     "users": "Utilisateurs",
     "usersDescription": "Gérer les utilisateurs et leurs rôles dans le projet",
     "settings": "Paramètres",
@@ -157,7 +159,11 @@
   },
   "notFound": {
     "description": "La page que vous recherchez n'existe pas.",
-    "title": "Page non trouvée"
+    "title": "Page non trouvée",
+    "submissions": "Aucune soumission trouvée pour ce formulaire.",
+    "link": "Aucun lien web disponible pour ce formulaire.",
+    "appUser": "Aucun utilisateur mobile assigné à ce projet.",
+    "form": "Il y a eu une erreur lors du chargement des questionnaires ; il se peut que ce projet n'est aucun questionnaire."
   },
   "datatable": {
     "actionsColumn": "Actions",
@@ -230,21 +236,26 @@
   },
   "msg": {
     "success": {
-      "formUploaded": "Formulaire \"{formName}\" importé avec succès{published, select, true { et publié} other {}}"
+      "formUploaded": "Formulaire \"{formName}\" importé avec succès{published, select, true { et publié} other {}}",
+      "draftPublishedSuccess": "Brouillon publié avec succès"
     },
     "warning": {
       "saveChanges": "Vos modifications ne sont pas enregistrées"
     },
     "error": {
-      "formUploadFailed": "Échec de l'import du formulaire"
+      "formUploadFailed": "Échec de l'import du questionnaire"
+    },
+    "info": {
+      "formAssignInfo": "Cochez les cases pour affecter les utilisateurs aux questionnaires. N'oubliez de sauvegarder vos modifications."
     }
   },
-  "alt": {
+    "alt": {
     "newWebSubmission": "Nouvelle soumission web",
     "viewSubmissions": "Voir les soumissions",
-    "editForm": "Éditer le formulaire",
-    "downloadForm": "Télécharger le formulaire",
-    "manageWebUsers": "Gérer les liens publics"
+    "editForm": "Éditer le questionnaire",
+    "downloadForm": "Télécharger le questionnaire",
+    "manageWebUsers": "Gérer les liens publics",
+      "surveyors": "Enquêteurs"
   },
   "badge": {
     "updated": "Mis à jour",
@@ -258,5 +269,73 @@
     "draft": "brouillon",
     "published": "publié",
     "completed": "Terminé"
+  },
+    "sections": {
+    "submissions": "Soumissions",
+    "versions": "Versions",
+    "formAccessMatrix": "Matrice d'assignation de questionnaires",
+    "mobileUsers": "Enqueteurs",
+    "formManagement": "Gestion de questionnaire",
+    "editForm": "Edition de formulaire",
+    "formPublished": "Formulaire publié",
+    "publishDraft": "Publier le brouillon",
+    "formPublishedDescription": "Ce formulaire est actuellement publié et accepte les soumissions.",
+    "updateForm": "Mise à jour",
+    "updateFormDescription": "La création d'un brouillon n'affectera pas la version publiée tant que vous ne publierez pas les modifications.",
+    "versionLabel": "Version",
+    "versionPlaceholder": "par ex., 1.1, v2.0, beta-1",
+    "versionHelp": "Si laissé vide, une version sera automatiquement générée.",
+    "noteLabel": "Remarque :",
+    "publishWarning": "La publication de ce brouillon remplacera la version actuellement publiée du formulaire.",
+    "publishing": "Publication en cours...",
+    "readyToPublish": "Prêt à publier",
+    "whatWillHappen": "Que va-t-il se passer ?",
+    "publishDraftInfo": "La publication de ce brouillon remplacera la version actuellement publiée du formulaire.",
+    "deleteDraftInfo": "La suppression du brouillon n'affecte pas la version publiée ; seul le brouillon de travail est supprimé.",
+    "deleting": "Suppression en cours...",
+    "deleteDraft": "Supprimer le brouillon",
+    "publishDraftButton": "Publier le brouillon"
+    },
+  "toast": {
+    "success": {
+      "projectUpdated": "Projet \"{projectName}\" mis à jour avec succès",
+      "projectCreated": "Projet \"{projectName}\" créé avec succès",
+      "projectDeleted": "Projet \"{projectName}\" supprimé avec succès",
+      "userAssignedToProject": "Utilisateur {userName} affecté au projet avec le rôle {role}",
+      "userRemovedFromProject": "Utilisateur {userName} retiré du projet",
+      "userRevoked": "Utilisateur révoqué avec succès",
+      "linkCopied": "Lien copié dans le presse-papiers !",
+      "xmlCopied": "XML copié dans le presse-papiers !",
+      "xmlDownloaded": "XML téléchargé avec succès !",
+      "mobileUserAdded": "Utilisateur mobile ajouté avec succès",
+      "assignmentsSaved": "Affectations enregistrées avec succès",
+      "loggedOut": "Déconnexion réussie",
+      "loggedOutAlt": "Au revoir !",
+      "publicLinkCreated": "Lien public \"{name}\" créé avec succès"
+    },
+    "error": {
+      "projectOperationFailed": "Échec de {operation} du projet",
+      "userAssignFailed": "Échec de l'affectation de l'utilisateur au projet",
+      "userRemoveFailed": "Échec de la suppression de l'utilisateur du projet",
+      "userRevokeFailed": "Échec de la révocation de l'utilisateur",
+      "linkCopyFailed": "Échec de la copie du lien",
+      "xmlCopyFailed": "Échec de la copie du XML",
+      "assignmentsSaveFailed": "Échec de l'enregistrement des affectations",
+      "submissionsExportFailed": "Échec de l'exportation des soumissions",
+      "logoutError": "Erreur lors de la déconnexion. Cependant, vous avez été redirigé vers la page de connexion.",
+      "displayNameSaveFailed": "Une erreur est survenue lors de l'enregistrement du nom d'affichage",
+      "draftDeleteFailed": "Erreur lors de la suppression du brouillon",
+      "genericError": "Une erreur est survenue",
+      "publicLinkCreateFailed": "Échec de la création du lien public",
+      "webSubmissionLinkFailed": "Échec de la création ou de l'accès au lien de soumission web"
+    },
+    "loading": {
+      "disconnecting": "Déconnexion du système en cours..."
+    },
+    "confirm": {
+      "logoutTitle": "Confirmer la déconnexion",
+      "logoutMessage": "Êtes-vous sûr de vouloir vous déconnecter ?"
+    }
   }
+
 }

@@ -1,10 +1,10 @@
 {
-
   "common": {
     "loading": "Cargando"
   },
   "forms": {
     "_self": "Formularios",
+    "empty": "No hay formularios disponibles en este proyecto.",
     "titles": {
       "newProject": "Crear Nuevo Proyecto",
       "editProject": "Actualizar Proyecto",
@@ -37,7 +37,8 @@
     "newWebSubmission": "Nuevo envío web",
     "chooseFile": "Seleccionar archivo",
     "disableReason": "Agregue un xlsForm a este proyecto para habilitar este botón",
-    "newPl": "Nuevo Enlace Público"
+    "newPl": "Nuevo Enlace Público",
+    "previewForm": "Vista previa del formulario"
      },
     "placeholders": {
       "projectName": "Ingrese el nombre del proyecto",
@@ -59,14 +60,13 @@
   },
   "breadcrumbs": {
     "dashboard": {
-      "_self": "Tablero",
+      "_self": "",
       "profile": "Perfil",
-
-        "projects": "Proyectos",
-        "surveys": "Encuestas",
-        "forms": "Formularios",
-        "submissions": "Envíos",
-        "assignments": "Asignaciones",
+      "projects": "Proyectos",
+      "surveys": "Encuestas",
+      "forms": "Formularios",
+      "submissions": "Envíos",
+      "assignments": "Asignaciones",
       "users": "Usuarios",
       "activities": "Actividades",
       "gestion-par": "Gestión PAR",
@@ -160,7 +160,11 @@
   },
   "notFound": {
     "description": "La página que busca no existe.",
-    "title": "Página no encontrada"
+    "title": "Página no encontrada",
+    "submissions": "No submission found for this form.",
+    "link": "No public link available for this form.",
+    "appUser": "No Mobile user assigned to this project.",
+    "form": "Formulario no encontrado"
   },
   "datatable": {
     "actionsColumn": "Acciones",
@@ -233,13 +237,17 @@
   },
   "msg": {
     "success": {
-      "formUploaded": "Formulario \"{formName}\" subido correctamente{published, select, true { y publicado} other {}}"
+      "formUploaded": "Formulario \"{formName}\" subido correctamente{published, select, true { y publicado} other {}}",
+      "draftPublishedSuccess": "Borrador publicado con éxito"
     },
     "warning": {
         "saveChanges": "Sus actualizaciones no están guardadas"
     },
     "error": {
       "formUploadFailed": "Error al subir el formulario"
+    },
+    "info": {
+      "formAssignInfo": "El formulario se ha asignado correctamente a los usuarios móviles."
     }
   },
   "alt": {
@@ -247,7 +255,8 @@
     "viewSubmissions": "Ver envíos",
     "editForm": "Editar formulario",
     "downloadForm": "Descargar formulario",
-    "manageWebUsers": "Gestionar enlaces públicos"
+    "manageWebUsers": "Gestionar enlaces públicos",
+    "surveyors": "Nuevo usuario móvil"
   },
   "badge": {
     "updated": "actualizado",
@@ -260,5 +269,69 @@
     "incomplete": "incompleto",
     "pending": "pendiente",
     "open": "abierto"
+  },
+    "sections": {
+    "submissions": "Envíos",
+    "versions": "Versiones",
+    "formAccessMatrix": "Matriz de Acceso al Formulario",
+    "mobileUsers": "Usuarios Móviles",
+    "formManagement": "Gestión de Formularios",
+    "editForm": "Editar Formulario",
+    "formPublished": "Formulario Publicado",
+    "publishDraft": "Publicar Borrador",
+    "formPublishedDescription": "Este formulario está actualmente publicado y acepta envíos.",
+    "updateForm": "Actualizar",
+    "updateFormDescription": "La creación de un borrador no afectará la versión publicada hasta que publique los cambios.",
+    "versionLabel": "Versión",
+    "versionPlaceholder": "p. ej., 1.1, v2.0, beta-1",
+    "versionHelp": "Si se deja vacío, se generará automáticamente una versión.",
+    "noteLabel": "Nota:",
+    "publishWarning": "Publicar este borrador reemplazará la versión publicada actualmente del formulario.",
+    "publishing": "Publicando...",
+    "readyToPublish": "Listo para publicar",
+    "whatWillHappen": "¿Qué sucederá?",
+    "publishDraftInfo": "Publicar este borrador reemplazará la versión publicada actualmente del formulario.",
+    "deleteDraftInfo": "Eliminar el borrador no afecta la versión publicada; solo se elimina el borrador de trabajo.",
+    "deleting": "Eliminando...",
+    "deleteDraft": "Eliminar Borrador",
+    "publishDraftButton": "Publicar Borrador"
+  },
+  "toast": {
+    "success": {
+      "projectUpdated": "Proyecto \"{projectName}\" actualizado con éxito",
+      "projectCreated": "Proyecto \"{projectName}\" creado con éxito",
+      "projectDeleted": "Proyecto \"{projectName}\" eliminado con éxito",
+      "userAssignedToProject": "Usuario {userName} asignado al proyecto con el rol {role}",
+      "userRemovedFromProject": "Usuario {userName} eliminado del proyecto",
+      "userRevoked": "Usuario revocado con éxito",
+      "linkCopied": "¡Enlace copiado al portapapeles!",
+      "xmlCopied": "¡XML copiado al portapapeles!",
+      "xmlDownloaded": "¡XML descargado con éxito!",
+      "mobileUserAdded": "Usuario móvil agregado con éxito",
+      "assignmentsSaved": "Asignaciones guardadas con éxito",
+      "loggedOut": "Sesión cerrada con éxito",
+      "loggedOutAlt": "¡Adiós!",
+      "publicLinkCreated": "Enlace público \"{name}\" creado con éxito"
+    },
+    "error": {
+      "projectOperationFailed": "Error al {operation} el proyecto",
+      "userAssignFailed": "Error al asignar usuario al proyecto",
+      "userRemoveFailed": "Error al eliminar usuario del proyecto",
+      "userRevokeFailed": "Error al revocar usuario",
+      "linkCopyFailed": "Error al copiar enlace",
+      "xmlCopyFailed": "Error al copiar XML",
+      "assignmentsSaveFailed": "Error al guardar asignaciones",
+      "submissionsExportFailed": "Error al exportar envíos",
+      "logoutError": "Error al cerrar sesión. Sin embargo, ha sido redirigido a la página de inicio de sesión.",
+      "displayNameSaveFailed": "Ocurrió un error al guardar el nombre para mostrar",
+      "draftDeleteFailed": "Error al eliminar borrador",
+      "genericError": "Ocurrió un error",
+      "publicLinkCreateFailed": "Error al crear enlace público",
+      "webSubmissionLinkFailed": "Error al crear o acceder al enlace de envío web"
+    },
+    "loading": {
+      "disconnecting": "Desconectándose del sistema..."
+    }
   }
+
 }
