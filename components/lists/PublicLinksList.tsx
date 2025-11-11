@@ -42,9 +42,9 @@ export function PublicLinksList({
 
   const handleCopyLink = (link: PublicLink) => {
     navigator.clipboard.writeText(link.public_url).then(() => {
-      toast.success("Link copied to clipboard!");
+      toast.success(t("toast.success.linkCopied"));
     }).catch(() => {
-      toast.error("Failed to copy link");
+      toast.error(t("toast.error.linkCopyFailed"));
     });
   };
 
@@ -87,7 +87,7 @@ export function PublicLinksList({
       header: t("datatable.columns.lastUpdatedOn"),
       sortable: true,
       width: "20%",
-      render: (value: string | null) => value ? formatDate(value) : "Never",
+      render: (value: string | null) => value ? formatDate(value) : "-",
     },
     {
       key: "public_url",
@@ -154,7 +154,7 @@ export function PublicLinksList({
     return (
       <div className="rounded-md border p-4">
         <div className="text-center text-muted-foreground">
-          No public links available for this form.
+            {t("notFound.link")}
         </div>
       </div>
     );

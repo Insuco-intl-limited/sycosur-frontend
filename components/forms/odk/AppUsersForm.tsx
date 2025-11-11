@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { UserIcon } from "lucide-react";
 import Spinner from "@/components/shared/Spinner";
 import { toast } from "react-toastify";
+import { useTranslations} from "next-intl";
 
 interface AppUsersFormProps {
   onSubmit: (data: TAppUsersSchema) => Promise<void>;
@@ -33,7 +34,7 @@ export function AppUsersForm({
       displayName: "",
     },
   });
-
+  const t = useTranslations()
   const handleFormSubmit = async (values: z.infer<typeof AppUsersSchema>) => {
     try {
       await onSubmit(values);
@@ -51,11 +52,11 @@ export function AppUsersForm({
       className="space-y-4"
     >
       <FormFieldComponent
-        label="Display Name"
+        label={t("forms.labels.displayName")}
         name="displayName"
         register={register}
         errors={errors}
-        placeholder="Enter display name"
+        placeholder={t("forms.placeholders.displayName")}
         startIcon={<UserIcon className="size-4" />}
         required
       />
@@ -68,7 +69,7 @@ export function AppUsersForm({
             onClick={onCancel}
             disabled={isLoading}
           >
-            Cancel
+            {t("forms.buttons.cancel")}
           </Button>
         )}
         <Button
@@ -82,7 +83,7 @@ export function AppUsersForm({
               <span>Saving...</span>
             </div>
           ) : (
-            <span>Save</span>
+            <span>{t("forms.buttons.save")}</span>
           )}
         </Button>
       </div>

@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
+import {useTranslations} from "next-intl";
 
 
 interface PublishDraftModalProps {
@@ -22,6 +23,7 @@ export function PublishDraftModal({
   isLoading = false,
 }: PublishDraftModalProps) {
   const [version, setVersion] = useState("");
+  const t = useTranslations();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -46,30 +48,30 @@ export function PublishDraftModal({
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <CheckCircleIcon className="w-5 h-5 text-mediumGreen" />
-            Publish Draft
+              {t("sections.publishDraft")}
           </DialogTitle>
         </DialogHeader>
         
         <form onSubmit={handleSubmit}>
           <div className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="version">Version (optional)</Label>
+              <Label htmlFor="version">{t("sections.versionLabel")}</Label>
               <Input
                 id="version"
                 type="text"
                 value={version}
                 onChange={(e) => setVersion(e.target.value)}
-                placeholder="e.g., 1.1, v2.0, beta-1"
+                placeholder={t("sections.versionPlaceholder")}
                 disabled={isLoading}
               />
               <p className="text-sm text-muted-foreground">
-                If left empty, a version will be automatically generated.
+                {t("sections.versionHelp")}
               </p>
             </div>
             
             <div className="bg-muted/50 rounded-md p-3">
               <p className="text-sm text-muted-foreground">
-                <span className="font-medium">Note:</span> Publishing this draft will replace the currently published version of the form.
+                <span className="font-medium">{t("sections.noteLabel")}</span> {t("sections.publishWarning")}
               </p>
             </div>
           </div>
@@ -81,14 +83,17 @@ export function PublishDraftModal({
               onClick={handleClose}
               disabled={isLoading}
             >
-              Cancel
+              {t("forms.buttons.cancel")}
             </Button>
             <Button 
               type="submit" 
               className="bg-mediumGreen hover:bg-mediumGreen/90"
               disabled={isLoading}
             >
-              {isLoading ? "Publishing..." : "Publish Draft"}
+              {isLoading ? t("sections.publishing") : t("forms.buttons.save")}
+              {isLoading && (
+                <span className="ml-2 loading loading-spinner loading-xs"></span>
+              )}
             </Button>
           </DialogFooter>
         </form>

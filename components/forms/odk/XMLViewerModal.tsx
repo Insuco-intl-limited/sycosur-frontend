@@ -9,6 +9,7 @@ import Spinner from "@/components/shared/Spinner";
 import { toast } from "react-toastify";
 import type { Form } from "@/types/odk";
 import { XMLFormatter } from "./XMLFormatter";
+import { useTranslations } from "next-intl";
 
 /**
  * Props interface for XMLViewerModal component
@@ -34,6 +35,7 @@ export function XMLViewerModal({
   projectId,
   formId,
 }: XMLViewerModalProps) {
+  const t = useTranslations();
   // Fetch XML data for the specified form version
   // The query is skipped when the modal is closed or no version is selected
   const { data: xmlData, isLoading, error } = useGetXMLVersionQuery(
@@ -71,9 +73,9 @@ export function XMLViewerModal({
   const handleCopyXML = () => {
     if (xmlData) {
       navigator.clipboard.writeText(xmlData).then(() => {
-        toast.success("XML copied to clipboard!");
+        toast.success(t("toast.success.xmlCopied"));
       }).catch(() => {
-        toast.error("Failed to copy XML");
+        toast.error(t("toast.error.xmlCopyFailed"));
       });
     }
   };
@@ -95,7 +97,7 @@ export function XMLViewerModal({
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
-      toast.success("XML downloaded successfully!");
+      toast.success(t("toast.success.xmlDownloaded"));
     }
   };
 
@@ -122,7 +124,7 @@ export function XMLViewerModal({
                 disabled={!xmlData}
               >
                 <Copy className="h-4 w-4 mr-2" />
-                Copy
+
               </Button>
               <Button
                 variant="outline"
@@ -131,7 +133,7 @@ export function XMLViewerModal({
                 disabled={!xmlData}
               >
                 <Download className="h-4 w-4 mr-2" />
-                Download
+
               </Button>
             </div>
           </div>

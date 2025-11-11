@@ -114,6 +114,7 @@ export function SubmissionsList({
       icon: <Eye className="h-4 w-4" />,
       onClick: handleViewSubmission,
       variant: "default",
+      hidden: () => true,
     },
   ];
 
@@ -139,7 +140,7 @@ export function SubmissionsList({
     return (
       <div className="rounded-md border p-4">
         <div className="text-center text-muted-foreground">
-          No submissions available for this form.
+            {t("notFound.submissions")}
         </div>
       </div>
     );

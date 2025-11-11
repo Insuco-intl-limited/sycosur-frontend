@@ -46,9 +46,9 @@ export function AppUsersList({ projectId }: AppUsersListProps) {
           projectId: Number(projectId),
           token: user.token,
         }).unwrap();
-        toast.success("User revoked successfully");
+        toast.success(t("toast.success.userRevoked"));
       } catch (error) {
-        toast.error("Failed to revoke user");
+        toast.error(t("toast.error.userRevokeFailed"));
       }
     }
   };
@@ -76,7 +76,7 @@ const handleViewQRCode = (user: AppUser) => {
       header: t("datatable.columns.lastUpdatedOn"),
       sortable: true,
       width: "30%",
-      render: (value: string) => value ? formatDate(value) : "Never",
+      render: (value: string) => value ? formatDate(value) : "-",
     },
     {
       key:"token",
@@ -126,7 +126,7 @@ const handleViewQRCode = (user: AppUser) => {
   if (appUsers.length === 0) {
     return (
       <div className="rounded-md border p-4 text-center text-gray-500">
-        <p>No App user assigned to this project</p>
+        <p>{t("notFound.appUser")}</p>
       </div>
     );
   }

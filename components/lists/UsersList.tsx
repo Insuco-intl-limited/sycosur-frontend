@@ -52,13 +52,16 @@ export function UsersList({ showPermissionManagement = false, projectId }: Users
         role: selectedRole,
       }).unwrap();
 
-      toast.success(`User ${selectedUser.first_name} ${selectedUser.last_name} assigned to project with ${selectedRole} role`);
+      toast.success(t("toast.success.userAssignedToProject", { 
+        userName: `${selectedUser.first_name} ${selectedUser.last_name}`, 
+        role: selectedRole 
+      }));
       setIsPermissionDialogOpen(false);
       setSelectedUser(null);
       setSelectedRole("");
       setSelectedProject("");
     } catch (error) {
-      toast.error("Failed to assign user to project");
+      toast.error(t("toast.error.userAssignFailed"));
     }
   };
 
@@ -71,9 +74,11 @@ export function UsersList({ showPermissionManagement = false, projectId }: Users
         projectId,
       }).unwrap();
 
-      toast.success(`User ${user.first_name} ${user.last_name} removed from project`);
+      toast.success(t("toast.success.userRemovedFromProject", { 
+        userName: `${user.first_name} ${user.last_name}` 
+      }));
     } catch (error) {
-      toast.error("Failed to remove user from project");
+      toast.error(t("toast.error.userRemoveFailed"));
     }
   };
 

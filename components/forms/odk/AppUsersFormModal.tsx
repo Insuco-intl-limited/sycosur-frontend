@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { UserPlus } from "lucide-react";
 import { toast } from "react-toastify";
 import { useAddAppUserMutation } from "@/lib/redux/features/surveys/surveyApiSlice";
+import { useTranslations } from "next-intl";
 
 interface AppUsersFormModalProps {
 	projectId: string | number;
@@ -30,6 +31,7 @@ export function AppUsersFormModal({
 	title = "Add User",
 	disabled = false,
 }: AppUsersFormModalProps) {
+	const t = useTranslations();
 	const [open, setOpen] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 	const [addAppUser] = useAddAppUserMutation();
@@ -54,7 +56,7 @@ export function AppUsersFormModal({
 				const userData = response.app_user;
 				
 				// Show success message
-				toast.success(`Mobile user added successfully`);
+				toast.success(t("toast.success.mobileUserAdded"));
 			}
 
 			setOpen(false);
