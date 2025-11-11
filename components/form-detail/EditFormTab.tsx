@@ -4,6 +4,7 @@ import React from "react";
 import { DraftFormContent } from "./EditContent/DraftFormContent";
 import { PublishFormContent } from "./EditContent/PublishFormContent";
 import { useGetFormDetailsQuery } from "@/lib/redux/features/surveys/surveyApiSlice";
+import {useTranslations} from "next-intl";
 
 interface EditFormTabProps {
   formId: string;
@@ -12,6 +13,7 @@ interface EditFormTabProps {
 
 export function EditFormTab({ formId, projectId }: EditFormTabProps) {
   const numericProjectId = Number(projectId);
+  const t = useTranslations();
   
   const { data, isLoading } = useGetFormDetailsQuery(
     { projectId: numericProjectId, formId },
@@ -32,7 +34,7 @@ export function EditFormTab({ formId, projectId }: EditFormTabProps) {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between mb-2">
-        <h2 className="text-xl font-semibold">Edit Form</h2>
+        <h2 className="text-xl font-semibold">{t("sections.editForm")}</h2>
       </div>
 
       {/* Render content based on form state */}
