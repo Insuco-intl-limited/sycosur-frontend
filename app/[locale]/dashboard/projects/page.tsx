@@ -70,7 +70,7 @@ export default function ProjectsPage() {
                 projectData.description = form.description;
             }
             await updateProject(projectData).unwrap();
-            toast.success(`Project "${form.name}" updated successfully`);
+            toast.success(t("toast.success.projectUpdated", { projectName: form.name }));
             setUpdateModalOpen(false);
             setSelectedProject(null);
             refetch();
@@ -81,7 +81,7 @@ export default function ProjectsPage() {
     };
 
     const showApiError = (operation: string, error: unknown): void => {
-        toast.error(`Failed to ${operation} project`);
+        toast.error(t("toast.error.projectOperationFailed", { operation }));
     };
 
     const handleCreateProject = async (form: { name: string; description?: string }): Promise<void> => {
@@ -93,7 +93,7 @@ export default function ProjectsPage() {
                 projectData.description = form.description;
             }
             await createProject(projectData).unwrap();
-            toast.success(`Project "${form.name}" created successfully`);
+            toast.success(t("toast.success.projectCreated", { projectName: form.name }));
             refetch();
         } catch (error) {
             showApiError("creating", error);
@@ -105,7 +105,7 @@ export default function ProjectsPage() {
         if (confirm(`Are you sure you want to delete the project "${project.name}"?`)) {
             try {
                 await deleteProject(project.pkid).unwrap();
-                toast.success(`Project "${project.name}" deleted successfully`);
+                toast.success(t("toast.success.projectDeleted", { projectName: project.name }));
                 refetch();
             } catch (error) {
                 showApiError("deleting", error);

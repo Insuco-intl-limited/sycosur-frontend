@@ -6,9 +6,12 @@ import {
 	EditFormTab,
 } from "@/components/form-detail";
 import { useGetFormDetailsQuery } from "@/lib/redux/features/surveys/surveyApiSlice";
+import {useTranslations} from "next-intl";
+import { BsExclamationTriangleFill } from "react-icons/bs";
 
 export default function FormDetailPage() {
 	const params = useParams();
+    const t = useTranslations();
 	const projectId = params.id as string;
 	const formId = params.formId as string; // This should be the form ID from the URL
 	const numericProjectId = Number(projectId);
@@ -43,13 +46,14 @@ export default function FormDetailPage() {
 		<div className="space-y-6">
 			{/* Form header */}
 			<div className="space-y-2">
-				<h1 className="text-3xl font-bold">Form Management</h1>
+				<h1 className="text-2xl font-bold">{t("sections.formManagement")}</h1>
 				<div className="flex items-center text-muted-foreground">
-					<span >Form ID: {formId}</span>
-					<span className="mx-2">•</span>
-					<span className={`${isPublished ? "text-green-600" : "text-yellow-600"}`}>
-						{isPublished ? "Published" : "Draft"}
-					</span>
+                    <span
+                        className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-sm font-medium text-accentBlue ring-1 ring-inset ring-blue-700/10"> {form?.name}</span>
+					{/*<span className="mx-2">•</span>*/}
+					{/*<span className={`${isPublished ? "text-green-600" : "text-yellow-600"}`}>*/}
+					{/*	{isPublished ? "Published" : "Draft"}*/}
+					{/*</span>*/}
 				</div>
 			</div>
 
