@@ -4,22 +4,14 @@ export function formatDate(dateString: string | undefined, locale: string = 'en'
     }
     const date: Date = new Date(dateString);
 
-    // Supported locales: 'en', 'fr', 'es'. Fallback to 'en'.
-    let resolvedLocale = 'en-US';
-    if (locale.startsWith('fr')) {
-      resolvedLocale = 'fr-FR';
-    } else if (locale.startsWith('es')) {
-             resolvedLocale = 'es-ES';
-           }
+    // ISO 8601 format: YYYY-MM-DD HH:mm:ss
+    // This format is language-independent and compatible with all locales (en, fr, es)
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
 
-    // Recommended formats:
-    // en: September 24, 2025
-    // fr: 24 septembre 2025
-    // es: 24 de septiembre de 2025
-    const options: Intl.DateTimeFormatOptions = {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-    };
-    return date.toLocaleDateString(resolvedLocale, options);
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }

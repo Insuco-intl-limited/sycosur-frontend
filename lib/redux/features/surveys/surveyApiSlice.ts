@@ -293,7 +293,7 @@ export const surveyApiSlice = baseApiSlice.injectEndpoints({
         }),
         deleteFormDraft: builder.mutation<void, GenFormParams>({
             query: ({projectId, formId}) => ({
-                url: `${ODK_ENDPOINTS.VIEW_FORM(projectId, formId)}/draft/`,
+                url: `${ODK_ENDPOINTS.VIEW_FORM(projectId, formId)}/draft/`, //TODO: check if this is correct
                 method: "DELETE",
             }),
             invalidatesTags: ["Project"],

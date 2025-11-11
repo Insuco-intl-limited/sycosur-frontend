@@ -90,6 +90,13 @@ export const getProjectNavigationItems = (
       icon: <BugAntIcon className="w-5 h-5" />,
       href: `${projectBasePath}/surveys`,
       isActive: pathname.startsWith(`${projectBasePath}/surveys`),
+      //         children: [
+      //     {
+      //       id: "web-users",
+      //       label: t("dashboard.menu.webUsers"),
+      //       href: `${projectBasePath}/surveys/links`,
+      //     },
+      // ]
     },
     {
       id: "data",
@@ -123,11 +130,11 @@ export const getProjectNavigationItems = (
       //href: `${projectBasePath}/users`,
       isActive: pathname.startsWith(`${projectBasePath}/users`),
       children: [
-          {
-            id: "web-users",
-            label: t("dashboard.menu.webUsers"),
-            href: `${projectBasePath}/users/web`,
-          },
+          // {
+          //   id: "web-users",
+          //   label: t("dashboard.menu.webUsers"),
+          //   href: `${projectBasePath}/users/web`,
+          // },
           {
             id: "mobile-users",
             label: t("dashboard.menu.mobileUsers"),
@@ -141,7 +148,7 @@ export const getProjectNavigationItems = (
       icon: <Cog6ToothIcon className="w-5 h-5" />,
       href: `${projectBasePath}/settings`,
       isActive: pathname.startsWith(`${projectBasePath}/settings`),
-        disabled: true,
+      disabled: true,
     },
   ];
 };
