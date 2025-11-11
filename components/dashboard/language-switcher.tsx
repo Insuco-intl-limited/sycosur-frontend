@@ -33,11 +33,11 @@ export function LanguageSwitcher() {
 
 	return (
 		<DropdownMenu>
-			<DropdownMenuTrigger asChild>
-				<button className="p-4">
-					<GlobeAltIcon className="h-7 w-7 text-white" />
-				</button>
-			</DropdownMenuTrigger>
+ 		<DropdownMenuTrigger asChild>
+ 			<button className="p-4 focus:outline-none">
+ 				<GlobeAltIcon className="h-7 w-7 text-white" />
+ 			</button>
+ 		</DropdownMenuTrigger>
 			<DropdownMenuContent align="end">
 				{languages.map((lang) => (
 					<DropdownMenuItem

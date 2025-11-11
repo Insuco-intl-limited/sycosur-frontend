@@ -88,7 +88,7 @@ const NavigationMenuItem = ({ item }: { item: NavigationItem }) => {
 					{item.children?.map((child) => (
 						<div
 							key={child.id}
-							className={`pl-12 pr-4 py-2 text-sm transition-colors ${
+							className={`pl-12 pr-4 py-2 ml-4 text-sm transition-colors ${
 								child.isActive && !child.disabled
 									? "bg-[#3189a1] text-white"
 									: child.disabled

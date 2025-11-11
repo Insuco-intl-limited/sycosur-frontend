@@ -8,77 +8,119 @@ import { useLogoutUserMutation } from "@/lib/redux/features/auth/authApiSlice";
 import { useAppDispatch } from "@/lib/redux/hooks/typedHooks";
 import { setLogout } from "@/lib/redux/features/auth/authSlice";
 import { toast } from "react-toastify";
-import { useCallback } from "react";
+import { useCallback, useState, useRef, useEffect } from "react";
 import { extractErrorMessage } from "@/utils";
+import { useTranslations } from "next-intl";
 import {
-	UserIcon,
-	QuestionMarkCircleIcon,
-	PowerIcon,
+    UserIcon,
+    QuestionMarkCircleIcon,
+    PowerIcon,
 } from "@heroicons/react/24/solid";
 // import { ViewSelector } from "@/components/dashboard/ViewSelector";
 
 interface UserMenuProps {
-	user: UserType;
-	className?: string;
+    user: UserType;
+    className?: string;
 }
 
 export const UserMenu = ({ user, className = "" }: UserMenuProps) => {
-	const router = useRouter();
-	const pathname = usePathname();
-	const [logoutUser, ] = useLogoutUserMutation();
-	const dispatch = useAppDispatch();
+    const router = useRouter();
+    const pathname = usePathname();
+    const [logoutUser, ] = useLogoutUserMutation();
+    const dispatch = useAppDispatch();
+    const t = useTranslations();
+    const [isOpen, setIsOpen] = useState(false);
+    const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-	const handleLogout = useCallback(async () => {
-		try {
-			const toastId = toast.loading("Disconnecting you from the system...");
-			await logoutUser().unwrap();
-			dispatch(setLogout());
-			toast.dismiss(toastId);
-			toast.success("Bye bye !");
+    const handleMouseEnter = () => {
+        if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current);
+            timeoutRef.current = null;
+        }
+        setIsOpen(true);
+    };
 
-			router.push("/login");
-		} catch (error) {
-			const errorMsg = extractErrorMessage(error);
-			console.error(errorMsg || "Erreur lors de la déconnexion:", error);
-			dispatch(setLogout());
-			// Afficher un message d'erreur mais rediriger quand même
-			toast.error(
-				"Error while logging out. Howevever, you have been redirected to the login page.",
-			);
-			router.push("/login");
-		}
-	}, [logoutUser, dispatch, router]);
+    const handleMouseLeave = () => {
+        timeoutRef.current = setTimeout(() => {
+            setIsOpen(false);
+        }, 300); // 300ms delay before closing
+    };
 
-	return (
-		<div className={`flex items-center space-x-4 ${className}`}>
-			{/* View selector dropdown */}
-			{/*<ViewSelector />*/}
+    useEffect(() => {
+        return () => {
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current);
+            }
+        };
+    }, []);
 
-			<div className="">
-				<LanguageSwitcher />
-			</div>
-			{/* Nom utilisateur */}
-			{/*TODO : Ajouter le lien vers la page de profil en fonction du langage*/}
-			<Link
-				href="/en/dashboard/profile"
-				className="bg-white/20 p-5 flex items-center sapce-x-2 cursor-pointer hover:bg-white/30 transition-colors"
-			>
-				<UserIcon className="w-5 h-5 text-white" />
-				<span className="text-white font-roboto font-medium">
-					{user?.full_name ? user.full_name : user.email}
-				</span>
-			</Link>
-			<button className="text-white hover:text-gray-200 transition-colors p-2">
-				<QuestionMarkCircleIcon className="w-7 h-7" />
-			</button>
-			<div className="bg-accentBlue p-3">
-				<button
-					onClick={handleLogout}
-					className="text-white hover:text-gray-200 transition-colors p-2"
-				>
-					<PowerIcon className="w-6 h-6" />
-				</button>
-			</div>
-		</div>
-	);
+    const handleLogout = useCallback(async () => {
+       const confirmed = window.confirm(t("toast.confirm.logoutMessage"));
+       if (!confirmed) {
+          return;
+       }
+       try {
+          const toastId = toast.loading(t("toast.loading.disconnecting"));
+          await logoutUser().unwrap();
+          dispatch(setLogout());
+          toast.dismiss(toastId);
+          toast.success(t("toast.success.loggedOutAlt"));
+
+          router.push("/login");
+       } catch (error) {
+          const errorMsg = extractErrorMessage(error);
+          console.error(errorMsg || "Erreur lors de la déconnexion:", error);
+          dispatch(setLogout());
+          toast.error(t("toast.error.logoutError"));
+          router.push("/login");
+       }
+    }, [logoutUser, dispatch, router, t]);
+
+    return (
+       <div className={`flex items-center space-x-4 ${className}`}>
+          {/* View selector dropdown */}
+          {/*<ViewSelector />*/}
+
+          <div className="">
+             <LanguageSwitcher />
+          </div>
+          {/* Dropdown pour le menu utilisateur */}
+          <div
+             className="relative"
+             onMouseEnter={handleMouseEnter}
+             onMouseLeave={handleMouseLeave}
+          >
+             <button className="bg-white/20 p-5 flex items-center space-x-2 cursor-pointer hover:bg-white/30 transition-colors">
+                <UserIcon className="w-5 h-5 text-white" />
+                <span className="text-white font-roboto font-medium">
+                   {user?.full_name ? user.full_name : user.email}
+                </span>
+             </button>
+             {isOpen && (
+                <div className="absolute right-0 mt-1 w-32 bg-white mx-2 rounded-md shadow-lg py-1 z-50">
+                   <Link
+                      href="/en/dashboard/profile"
+                      className="block px-4 py-1 text-md text-gray-900 hover:bg-gray-100"
+                   >
+                      Profile
+                   </Link>
+                   <Link
+                      href="#"
+                      className="block px-4 py-1 text-md text-gray-900 hover:bg-gray-100"
+                   >
+                      Help?
+                   </Link>
+                </div>
+             )}
+          </div>
+          <div className="bg-accentBlue p-3">
+             <button
+                onClick={handleLogout}
+                className="text-white hover:text-gray-200 transition-colors p-2"
+             >
+                <PowerIcon className="w-6 h-6" />
+             </button>
+          </div>
+       </div>
+    );
 };

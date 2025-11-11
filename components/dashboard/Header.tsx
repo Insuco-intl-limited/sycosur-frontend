@@ -27,7 +27,7 @@ export const Header = ({
 			{/* Section gauche : Logo + Breadcrumb */}
 			<div className="flex items-center">
 				{/* Reserve space equal to sidebar width on md+ so breadcrumb aligns with its edge */}
-				<div className="flex items-center md:w-64 w-auto">
+				<div className="flex items-center md:w-64 w-auto ml-5">
 					<Link href={`/${locale}/dashboard`}><Logo/></Link>
 				</div>
 
@@ -35,7 +35,7 @@ export const Header = ({
 					<>
 						{/* Mobile: breadcrumb stays near the logo */}
 						<nav className="flex md:hidden items-center space-x-2 ml-4">
-							<MapIcon className="w-8 h-8 text-white" />
+							{/*<MapIcon className="w-8 h-8 text-white" />*/}
 							{breadcrumbs.map((item, index) => (
 								<div key={index} className="flex items-center space-x-2">
 									{index > 0 && <span className="text-white/60">/</span>}
@@ -56,11 +56,11 @@ export const Header = ({
 						</nav>
 
 						{/* Desktop: position breadcrumb so it starts at the sidebar edge */}
-						<nav className="hidden md:flex items-center space-x-2 absolute left-[calc(16rem-0.8rem)]">
-							<MapIcon className="w-8 h-8 text-white" />
+						<nav className="hidden md:flex items-center space-x-2 absolute left-[calc(16rem-0.1rem)]">
+							{/*<MapIcon className="w-8 h-8 text-white" />*/}
 							{breadcrumbs.map((item, index) => (
 								<div key={index} className="flex items-center space-x-2">
-									{index > 0 && <span className="text-white/60">/</span>}
+									{index > 1 && <span className="text-white/60">/</span>}
 									{item.href ? (
 										<a
 											href={item.href}
