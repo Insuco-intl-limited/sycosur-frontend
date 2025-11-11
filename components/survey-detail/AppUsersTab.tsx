@@ -24,7 +24,7 @@ export function AppUsersTab({ projectId }: AppUsersTabProps) {
     <div className="space-y-4">
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-2">
-          <h2 className="text-xl font-semibold">Mobile Users</h2>
+          <h2 className="text-xl font-semibold">{t("sections.mobileUsers")}</h2>
           <Badge variant="destructive" className="bg-accentBlue ml-2">
             {appUsers?.count || 0}
           </Badge>

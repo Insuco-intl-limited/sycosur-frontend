@@ -5,7 +5,7 @@ import {FormItem} from "@/components/survey-detail/FormItemList"
 import {FileUploadFormModal} from "@/components/forms/odk/FileUploadFormModal";
 import {useGetProjectFormsQuery} from "@/lib/redux/features/surveys/surveyApiSlice";
 import {Form} from "@/types/odk";
-
+import { BsExclamationTriangleFill } from "react-icons/bs";
 import {Badge} from "@/components/ui/badge";
 import {useTranslations} from "next-intl";
 
@@ -16,7 +16,7 @@ interface FormsTabProps {
 export function FormsTab({projectId}: FormsTabProps) {
     const {data, isLoading, isError, error} = useGetProjectFormsQuery(projectId);
     const forms = data?.project_forms?.forms || [];
-    const t = useTranslations();
+     const t = useTranslations();
     return (
         <div className="space-y-4">
             <div className="flex items-center justify-between mb-2">
@@ -54,6 +54,7 @@ interface FormsListProps {
 }
 
 function FormsList({forms, isLoading, isError, error, projectId}: FormsListProps) {
+     const t = useTranslations();
     if (isLoading) {
         return (
             <div className="flex items-center justify-center h-64">
@@ -63,12 +64,13 @@ function FormsList({forms, isLoading, isError, error, projectId}: FormsListProps
     }
 
     if (isError) {
-        return <div
-            className="text-center text-amber-600">{error?.data?.message || 'An error occurred while loading forms, this project may not be related to ODK'}</div>;
+        return <div className="text-center text-amber-600">
+                    {error?.data?.message || t("notFound.form")}
+               </div>;
     }
 
     if (forms.length === 0) {
-        return <div className="text-center text-muted-foreground">No forms available for this project.</div>;
+        return <div className="text-center text-muted-foreground">No forms available for this project</div>;
     }
 
     return (

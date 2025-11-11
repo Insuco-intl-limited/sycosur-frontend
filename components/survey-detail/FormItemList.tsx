@@ -5,6 +5,7 @@ import {useRouter, useParams} from "next/navigation";
 import {Form} from "@/types/odk";
 import { ActionButtons, ActionItem } from "@/components/shared/ActionButtons";
 import { BiSolidDownload, BiSolidPencil, BiSolidLayer, BiSolidLayerPlus, BiLink } from "react-icons/bi";
+import { BsGridFill } from "react-icons/bs";
 import {useTranslations} from "next-intl";
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -53,11 +54,6 @@ export function FormItem({form, projectId}: FormItemProps) {
         }
     };
 
-    const handleEditDraft = () => {
-        const locale = (params as any).locale || 'en';
-        router.push(`/${locale}/dashboard/projects/${projectId}/surveys/forms/${form.xmlFormId}?tab=edit-form`);
-    };
-
     const locale = (params as any).locale || 'en';
     const actions: ActionItem[] = [
         {
@@ -66,11 +62,20 @@ export function FormItem({form, projectId}: FormItemProps) {
             className: "bg-gray-100 hover:bg-gray-200 text-gray-900",
             onClick: () => {
                 const locale = (params as any).locale || 'en';
-                router.push(`/${locale}/dashboard/projects/${projectId}/users/web`);
+                router.push(`/${locale}/dashboard/projects/${projectId}/surveys/links?formId=${form.xmlFormId}`);
             },
             disabled: !isPublished,
         },
-
+        {
+           title: t("alt.surveyors"),
+           icon: <BsGridFill  className="w-5 h-5" />,
+           className: "bg-gray-100 hover:bg-gray-200 text-gray-900",
+            onClick: () => {
+                const locale = (params as any).locale || 'en';
+                router.push(`/${locale}/dashboard/projects/${projectId}/users/mobile`);
+            },
+            disabled: !isPublished,
+        },
         {
            title: t("alt.newWebSubmission"),
            icon: <BiSolidLayerPlus  className="w-5 h-5" />,

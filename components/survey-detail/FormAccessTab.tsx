@@ -11,6 +11,8 @@ import { Badge } from "@/components/ui/badge";
 import { toast } from "react-toastify";
 import { CheckIcon } from "@heroicons/react/24/solid";
 import { useTranslations } from "next-intl";
+import { BsExclamationTriangleFill  } from "react-icons/bs";
+
 interface FormAccessTabProps {
   projectId:number;
 }
@@ -125,11 +127,11 @@ export function FormAccessTab({ projectId }: FormAccessTabProps) {
         console.log(`Successfully assigned ${assignPromises.length} form(s) to user(s)`);
       }
       
-      setInitialAssignments(assignments); // Update initial state to current saved state
+      setInitialAssignments(assignments);
       setHasUnsavedChanges(false);
-      toast.success("Assignments saved successfully");
+      toast.success(t("toast.success.assignmentsSaved"));
     } catch (error) {
-      toast.error("Failed to save assignments");
+      toast.error(t("toast.error.assignmentsSaveFailed"));
     } finally {
       setSaving(false);
     }
@@ -145,7 +147,7 @@ export function FormAccessTab({ projectId }: FormAccessTabProps) {
     return (
       <div className="space-y-4">
         <div className="flex items-center justify-between mb-2">
-          <h2 className="text-xl font-semibold">Forms Access Matrix</h2>
+          <h2 className="text-xl font-semibold">{t("sections.formAccessMatrix")}</h2>
         </div>
         <div className="flex items-center justify-center h-64">
           <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
@@ -158,12 +160,10 @@ export function FormAccessTab({ projectId }: FormAccessTabProps) {
     return (
       <div className="space-y-4">
         <div className="flex items-center justify-between mb-2">
-          <h2 className="text-xl font-semibold">Forms Access Matrix</h2>
+          <h2 className="text-xl font-semibold">{t("sections.formAccessMatrix")}</h2>
         </div>
         <div className="rounded-md border p-4 text-center text-muted-foreground">
-          <p>
-            No App user found for this project
-          </p>
+            <BsExclamationTriangleFill  className="h-8 w-8 text-accentBlue mx-auto mb-2" />
         </div>
       </div>
     );
@@ -172,7 +172,7 @@ export function FormAccessTab({ projectId }: FormAccessTabProps) {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between mb-2">
-        <h2 className="text-xl font-semibold">Forms Access Matrix</h2>
+        <h2 className="text-xl font-semibold">{t("sections.formAccessMatrix")}</h2>
         {hasUnsavedChanges && (
           <button
             onClick={handleSaveChanges}
@@ -198,7 +198,7 @@ export function FormAccessTab({ projectId }: FormAccessTabProps) {
 
       <div className="rounded-md border bg-white overflow-hidden">
         <p className="text-sm text-muted-foreground p-4 border-b">
-          Check the boxes to associate App Users with forms. Remember to save your changes.
+            {t("msg.info.formAssignInfo")}
         </p>
         
         <div className="overflow-x-auto">
@@ -207,7 +207,7 @@ export function FormAccessTab({ projectId }: FormAccessTabProps) {
               <tr>
                 <th className="text-left p-3 font-medium text-sm border-r">
                   <div className="flex items-center gap-2">
-                    Mobile User
+                    Surveyors
                     <Badge variant="destructive" className="bg-accentBlue">
                       {appUsers.filter(user => user.token != null).length} /{appUsers.length}
                     </Badge>
@@ -244,7 +244,7 @@ export function FormAccessTab({ projectId }: FormAccessTabProps) {
                 </tr>
               ))}
               <tr className="border-t-2 border-gray-300 bg-gray-50 font-medium">
-                <td className="p-3 border-r">Total per form</td>
+                <td className="p-3 border-r">{/* Place for total text */}</td>
                 {forms.map((form) => (
                   <td key={form.xmlFormId} className="text-center p-3 border-r">
                     <Badge className="bg-mediumGreen text-white">
