@@ -83,7 +83,7 @@ export function FileUploadFormModal({
 			<DialogTrigger asChild>{triggerButton || defaultTrigger}</DialogTrigger>
 			<DialogContent className="sm:max-w-[500px]">
 				<DialogHeader>
- 				<DialogTitle>{title ?? t("forms.titles.uploadForm")}</DialogTitle>
+ 				<DialogTitle>{t("forms.titles.uploadForm")}</DialogTitle>
 				</DialogHeader>
 				<div className="py-4">
 					<FileUploadForm

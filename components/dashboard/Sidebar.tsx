@@ -20,16 +20,16 @@ export const Sidebar = ({ navigationItems, className = "" }: SidebarProps) => {
 			className={`w-64 bg-gradient-to-r from-[#416c78] to-[#2d4a52] shadow-lg relative z-10 flex flex-col gap-0 ${className}`}
 		>
 			{/* En-tête de la sidebar */}
-			{viewType === "project" && selectedProject && (
-				<div className="p-4 border-b border-white/20 pt-6 flex justify-center ">
-					<Badge 
-						variant="destructive"
-						className="bg-gradient-mediumGreen-accentBlue text-white px-3 py-1 text-sm max-w-[90%] truncate rounded-none"
-					>
-						{selectedProject.name}
-					</Badge>
-				</div>
-			)}
+			{/*{viewType === "project" && selectedProject && (*/}
+			{/*	<div className="p-4 border-b border-white/20 pt-6 flex justify-center ">*/}
+			{/*		<Badge */}
+			{/*			variant="destructive"*/}
+			{/*			className="bg-gradient-mediumGreen-accentBlue text-white px-3 py-1 text-sm max-w-[90%] truncate rounded-none"*/}
+			{/*		>*/}
+			{/*			{selectedProject.name}*/}
+			{/*		</Badge>*/}
+			{/*	</div>*/}
+			{/*)}*/}
 
 			{/* Diamonds divider */}
 			<div className="flex justify-center items-center gap-3 py-4">

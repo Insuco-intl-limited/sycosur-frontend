@@ -1,10 +1,10 @@
 "use client";
 import React, { useState } from "react";
-import {useFormDraft, useWebSubmissionLink} from "@/hooks";
+import {useFormDraft, useWebSubmissionLink, useHasSubmissions} from "@/hooks";
 import {useRouter, useParams} from "next/navigation";
 import {Form} from "@/types/odk";
 import { ActionButtons, ActionItem } from "@/components/shared/ActionButtons";
-import { BiSolidDownload, BiSolidPencil, BiSolidLayer, BiSolidLayerPlus, BiLink } from "react-icons/bi";
+import { BiSolidDownload, BiSolidPencil, BiSolidLayer, BiSolidLayerPlus, BiLink, BiTrash} from "react-icons/bi";
 import { BsGridFill } from "react-icons/bs";
 import {useTranslations} from "next-intl";
 
@@ -27,6 +27,7 @@ export function FormItem({form, projectId}: FormItemProps) {
     const formVersion = String(form.version ?? "-");
     const isPublished = form.publish === true;
     const t = useTranslations();
+    const {has, data} = useHasSubmissions({projectId, formId: form.xmlFormId});
 
     const [isSubmissionsOpen, setIsSubmissionsOpen] = useState(false);
 
@@ -103,6 +104,13 @@ export function FormItem({form, projectId}: FormItemProps) {
            onClick: handleDownload,
            disabled: isDownloading || !isPublished ,
         },
+        // {
+        //    title: t("alt.deleteForm"),
+        //    icon: <BiTrash  className="w-4 h-4" />,
+        //    className: "bg-gray-100 hover:bg-gray-200 text-gray-900",
+        //    onClick: ()=>{},
+        //    disabled: has ,
+        // },
     ];
 
     return (

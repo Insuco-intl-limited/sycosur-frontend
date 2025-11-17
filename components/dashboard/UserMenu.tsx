@@ -1,4 +1,5 @@
 "use client";
+import { clearCurrentUser } from "@/lib/redux/features/users/userSlice";
 
 import type { UserResponse as UserType } from "@/types";
 import { LanguageSwitcher } from "@/components/dashboard/language-switcher";
@@ -63,6 +64,7 @@ export const UserMenu = ({ user, className = "" }: UserMenuProps) => {
           const toastId = toast.loading(t("toast.loading.disconnecting"));
           await logoutUser().unwrap();
           dispatch(setLogout());
+          dispatch(clearCurrentUser());
           toast.dismiss(toastId);
           toast.success(t("toast.success.loggedOutAlt"));
 
@@ -71,13 +73,14 @@ export const UserMenu = ({ user, className = "" }: UserMenuProps) => {
           const errorMsg = extractErrorMessage(error);
           console.error(errorMsg || "Erreur lors de la déconnexion:", error);
           dispatch(setLogout());
+          dispatch(clearCurrentUser());
           toast.error(t("toast.error.logoutError"));
           router.push("/login");
        }
     }, [logoutUser, dispatch, router, t]);
 
     return (
-       <div className={`flex items-center space-x-4 ${className}`}>
+       <div className={`flex items-center space-x-0 ${className}`}>
           {/* View selector dropdown */}
           {/*<ViewSelector />*/}
 
@@ -104,12 +107,12 @@ export const UserMenu = ({ user, className = "" }: UserMenuProps) => {
                    >
                       Profile
                    </Link>
-                   <Link
-                      href="#"
-                      className="block px-4 py-1 text-md text-gray-900 hover:bg-gray-100"
-                   >
-                      Help?
-                   </Link>
+                   {/*<Link*/}
+                   {/*   href="#"*/}
+                   {/*   className="block px-4 py-1 text-md text-gray-900 hover:bg-gray-100"*/}
+                   {/*>*/}
+                   {/*   Help?*/}
+                   {/*</Link>*/}
                 </div>
              )}
           </div>

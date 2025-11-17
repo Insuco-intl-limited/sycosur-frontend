@@ -1,6 +1,7 @@
 "use client";
-import type React from "react";
+import type React  from "react";
 import type { BreadcrumbItem } from "./types";
+import { useEffect } from "react";
 import { Header } from "@/components/dashboard/Header";
 import { Sidebar } from "@/components/dashboard/Sidebar";
 import { ContentArea } from "@/components/dashboard/ContentArea";
@@ -12,15 +13,21 @@ import { generateBreadcrumbs } from "@/utils/generateBreadcrumbs";
 import { useViewNavigation } from "@/hooks/useViewNavigation";
 import { getDynamicNavigationItems } from "@/components/shared/DynamicNavigation";
 import { useGetProjectByIdQuery } from "@/lib/redux/features/projects/projectApiSlice";
+import { setCurrentUser } from "@/lib/redux/features/users/userSlice";
+import { useAppDispatch } from "@/lib/redux/hooks/typedHooks";
 
 // Inner layout component that uses Redux for view state
 function DashboardLayoutInner({ children }: { children: React.ReactNode }) {
 	const t = useTranslations();
 	const pathname = usePathname();
 	const { viewType, selectedProject } = useViewNavigation();
-
+    const dispatch = useAppDispatch();
 	const { data: user } = useGetUserQuery();
-	
+    useEffect(() => {
+        if (user) {
+            dispatch(setCurrentUser(user));
+        }
+    }, [user, dispatch]);
 	// Récupération de la locale depuis les cookies
 	const locale = getCurrentLocale();
 

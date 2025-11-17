@@ -89,6 +89,13 @@ const handleViewQRCode = (user: AppUser) => {
   ];
 
   const actions: ActionItem<AppUser>[] = [
+     {
+      label: "QR Code",
+      icon: <QrCodeIcon className="h-4 w-4" />,
+      onClick: handleViewQRCode,
+      variant: "default",
+      hidden: (user: AppUser) => !user.token,
+    },
     {
       label: t("datatable.actions.revoke"),
       icon: <UserIcon className="h-4 w-4" />,
@@ -96,13 +103,7 @@ const handleViewQRCode = (user: AppUser) => {
       variant: "default",
       hidden: (user: AppUser) => !user.token, 
     },
-    {
-      label: "QR Code",
-      icon: <QrCodeIcon className="h-4 w-4" />,
-      onClick: handleViewQRCode,
-      variant: "default",
-      hidden: (user: AppUser) => !user.token,
-    },
+
   ];
 
   if (isLoading) {

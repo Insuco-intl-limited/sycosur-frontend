@@ -4,7 +4,8 @@ import React from "react";
 import { DataTable } from "@/components/datatable/datatable";
 import { useGetFormSubmissionsQuery } from "@/lib/redux/features/surveys/surveyApiSlice";
 import { Badge } from "@/components/ui/badge";
-import { Eye } from "lucide-react";
+import { Eye, Smartphone, Globe } from "lucide-react";
+import { BiMobile,BiLink  } from "react-icons/bi";
 import type { Column, ActionItem } from "@/types/datatable";
 import { formatDate } from "@/utils/formatDate";
 import Spinner from "@/components/shared/Spinner";
@@ -50,63 +51,68 @@ export function SubmissionsList({
   };
 
   const columns: Column<Submission>[] = [
-    {
-      key: "instanceId",
-      header: t("datatable.columns.instance"),
-      sortable: true,
-      width: "28%",
-      render: (value: string) => (
-        <span className="font-mono text-sm truncate" title={value}>
-          {value}
-        </span>
-      ),
+  {
+    key: "createdAt",
+    header: t("datatable.columns.submissionDate"),
+    sortable: true,
+    width: "20%",
+    render: (value: string) => formatDate(value),
+  },
+  {
+    key: "submitter",
+    header: t("datatable.columns.submitter"),
+    accessor: (item) => item.submitter?.displayName ?? "",
+    sortable: true,
+    width: "22%",
+    render: (_: any, submission: Submission) => (
+      <span className="text-sm" title={submission.submitter?.displayName || ''}>
+        {submission.submitter?.displayName || "—"}
+      </span>
+    ),
+  },
+  {
+    key: "submitterType",
+    header: t("datatable.columns.type"),
+    accessor: (item) => item.submitter?.type ?? "",
+    sortable: true,
+    width: "15%",
+    render: (_: any, submission: Submission) => {
+      const submitterType = submission.submitter?.type;
+      const Icon = submitterType === "field_key" ? BiMobile : BiLink;
+      return (
+        <div className="flex items-center gap-2">
+          <Icon className="h-5 w-5" />
+        </div>
+      );
     },
-    {
-      key: "submitter",
-      header: t("datatable.columns.submitter"),
-      accessor: (item) => item.submitter?.displayName ?? "",
-      sortable: true,
-      width: "22%",
-      render: (_: any, submission: Submission) => (
-        <span className="text-sm" title={submission.submitter?.displayName || ''}>
-          {submission.submitter?.displayName || "—"}
-        </span>
-      ),
-    },
-    {
-      key: "submitterType",
-      header: t("datatable.columns.type"),
-      accessor: (item) => item.submitter?.type ?? "",
-      sortable: true,
-      width: "15%",
-      render: (_: any, submission: Submission) => (
-        <Badge variant="outline">{submission.submitter?.type || "—"}</Badge>
-      ),
-    },
-    {
-      key: "createdAt",
-      header: t("datatable.columns.submissionDate"),
-      sortable: true,
-      width: "20%",
-      render: (value: string) => formatDate(value),
-    },
+  },
+  {
+    key: "reviewState",
+    header: t("datatable.columns.reviewState"),
+    sortable: true,
+    width: "15%",
+    render: (value: string | undefined) => {
+      if (!value) return <Badge variant="outline">None</Badge>;
 
-    {
-      key: "reviewState",
-      header: t("datatable.columns.reviewState"),
-      sortable: true,
-      width: "15%",
-      render: (value: string | undefined) => {
-        if (!value) return <Badge variant="outline">None</Badge>;
+      const variant = value === "approved" ? "default" :
+                    value === "rejected" ? "destructive" :
+                    value === "hasIssues" ? "secondary" : "outline";
 
-        const variant = value === "approved" ? "default" :
-                      value === "rejected" ? "destructive" :
-                      value === "hasIssues" ? "secondary" : "outline";
-
-        return <Badge variant={variant}>{value}</Badge>;
-      },
+      return <Badge variant={variant}>{value}</Badge>;
     },
-  ];
+  },
+  {
+    key: "instanceId",
+    header: t("datatable.columns.instance"),
+    sortable: true,
+    width: "28%",
+    render: (value: string) => (
+      <span className="font-mono text-sm truncate" title={value}>
+        {value}
+      </span>
+    ),
+  }
+];
 
   const actions: ActionItem<Submission>[] = [
     {

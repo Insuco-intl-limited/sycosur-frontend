@@ -10,7 +10,7 @@ interface Props {
 
 export default function OauthButton({ provider, children, ...rest }: Props) {
 	const className = clsx(
-		"text-white mt-3 flex-1 rounded-md px-3 py-2 font-medium",
+		"text-white mt-3 flex-1 rounded-md px-3 py-4 font-medium min-h-[44px]",
 		{
 			"bg-red-600 hover:bg-red-700": provider === "google",
 		},

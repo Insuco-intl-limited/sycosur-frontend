@@ -258,7 +258,8 @@
     "editForm": "Edit Form",
     "downloadForm": "Download Form",
     "manageWebUsers": "Manage Public Links",
-    "surveyors": "Surveyors"
+    "surveyors": "Surveyors",
+    "deleteForm": "Delete Form"
 
   },
   "badge": {
@@ -313,7 +314,7 @@
       "assignmentsSaved": "Assignments saved successfully",
       "loggedOut": "Logged out successfully",
       "loggedOutAlt": "Bye bye !",
-      "publicLinkCreated": "Public link \"{name}\" created successfully"
+      "publicLinkCreated": "Public link created successfully"
     },
     "error": {
       "projectOperationFailed": "Failed to {operation} project",

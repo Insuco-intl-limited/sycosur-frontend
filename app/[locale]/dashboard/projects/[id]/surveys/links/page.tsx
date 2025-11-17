@@ -62,11 +62,11 @@ export default function WebPublicAccessPage() {
         displayName: data.displayName,
         once: data.once,
       }).unwrap();
-      toast.success(t("publicLinks.created", { name: data.displayName, default: `Public link "${data.displayName}" created successfully` }));
+      toast.success(t("toast.success.publicLinkCreated"));
 
     } catch (e) {
       const msg = extractErrorMessage(e);
-      toast.error("Public Link Created" + (msg ? `: ${msg}` : ""));
+      toast.error("Error creating public link" + (msg ? `: ${msg}` : ""));
       throw e;
     }
   };

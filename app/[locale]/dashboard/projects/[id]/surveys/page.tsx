@@ -51,15 +51,15 @@ export default function ProjectDetailPage() {
 			<div className="space-y-2">
 				{/*<h1 className="text-3xl font-bold">{project.name}</h1>*/}
 				<div className="flex items-center text-muted-foreground">
-					<CalendarIcon className="h-4 w-4 mr-1" />
-					<span>
-                        {t('project.createdOn')}{" "}
-                        {new Date(project.created_at).toLocaleDateString(currentLocale, {
-                          year: "numeric",
-                          month: "long",
-                          day: "numeric",
-                        })}
-					</span>
+					{/*<CalendarIcon className="h-4 w-4 mr-1" />*/}
+					{/*<span>*/}
+                    {/*    {t('project.createdOn')}{" "}*/}
+                    {/*    {new Date(project.created_at).toLocaleDateString(currentLocale, {*/}
+                    {/*      year: "numeric",*/}
+                    {/*      month: "long",*/}
+                    {/*      day: "numeric",*/}
+                    {/*    })}*/}
+					{/*</span>*/}
 				</div>
 			</div>
             <FormsTab projectId={project.pkid} />

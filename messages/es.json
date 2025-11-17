@@ -256,7 +256,8 @@
     "editForm": "Editar formulario",
     "downloadForm": "Descargar formulario",
     "manageWebUsers": "Gestionar enlaces públicos",
-    "surveyors": "Nuevo usuario móvil"
+    "surveyors": "Nuevo usuario móvil",
+    "deleteForm": "Eliminar formulario"
   },
   "badge": {
     "updated": "actualizado",
@@ -311,7 +312,7 @@
       "assignmentsSaved": "Asignaciones guardadas con éxito",
       "loggedOut": "Sesión cerrada con éxito",
       "loggedOutAlt": "¡Adiós!",
-      "publicLinkCreated": "Enlace público \"{name}\" creado con éxito"
+      "publicLinkCreated": "Enlace público creado con éxito"
     },
     "error": {
       "projectOperationFailed": "Error al {operation} el proyecto",

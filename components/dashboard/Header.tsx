@@ -56,7 +56,7 @@ export const Header = ({
 						</nav>
 
 						{/* Desktop: position breadcrumb so it starts at the sidebar edge */}
-						<nav className="hidden md:flex items-center space-x-2 absolute left-[calc(16rem-0.1rem)]">
+						<nav className="hidden md:flex items-center space-x-2 absolute left-[calc(16rem-0.5rem)]">
 							{/*<MapIcon className="w-8 h-8 text-white" />*/}
 							{breadcrumbs.map((item, index) => (
 								<div key={index} className="flex items-center space-x-2">

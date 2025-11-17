@@ -255,7 +255,8 @@
     "editForm": "Éditer le questionnaire",
     "downloadForm": "Télécharger le questionnaire",
     "manageWebUsers": "Gérer les liens publics",
-      "surveyors": "Enquêteurs"
+    "surveyors": "Enquêteurs",
+    "deleteForm": "Supprimer le questionnaire"
   },
   "badge": {
     "updated": "Mis à jour",
@@ -311,7 +312,7 @@
       "assignmentsSaved": "Affectations enregistrées avec succès",
       "loggedOut": "Déconnexion réussie",
       "loggedOutAlt": "Au revoir !",
-      "publicLinkCreated": "Lien public \"{name}\" créé avec succès"
+      "publicLinkCreated": "Lien public créé"
     },
     "error": {
       "projectOperationFailed": "Échec de {operation} du projet",

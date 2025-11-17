@@ -124,12 +124,12 @@ export function PublicLinksList({
       onClick: handleCopyLink,
       variant: "default",
     },
-    {
-      label: t("datatable.actions.delete"),
-      icon: <Trash2 className="h-4 w-4" />,
-      onClick: handleDeleteLink,
-      variant: "destructive",
-    },
+    // {
+    //   label: t("datatable.actions.delete"),
+    //   icon: <Trash2 className="h-4 w-4" />,
+    //   onClick: handleDeleteLink,
+    //   variant: "destructive",
+    // },
   ];
 
   if (isLoading) {
